@@ -1,5 +1,5 @@
 # P2S Rugbyworks
-## Data stroage and input system for Rugbyworks to help them improve youth lives.
+## Data storage and input system for Rugbyworks to help them improve youth lives.
 
 ### Description
 P2S requires a way to to easily have ther coaches input data about their players, allowing them to keep track on their progress in multiple fields.
