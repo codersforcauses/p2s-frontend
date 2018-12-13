@@ -24,3 +24,43 @@ P2S will highly likely be a webapp that takes advantage of industry standard fro
 The website will use a NodeJS backend with possible intergration with frameworks like **ExpressJS** or **FeathersJS**.
 The database will be developed and tested with **MongoDB** and **Mongoose**, and then shifted to a **SQL** based system in deployment.
 Frontend systems will be created with a framework called **VueJS**. This will be quite easy to learn if you have experience in Javascript before, or have used any other front-end framework before.
+
+# Development
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Run your end-to-end tests
+```
+npm run test:e2e
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
