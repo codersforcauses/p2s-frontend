@@ -1,6 +1,6 @@
 {
-  "name": "p2s-frontend",
-  "short_name": "p2s-frontend",
+  "name": "p2s Rugbyworks",
+  "short_name": "p2s",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
