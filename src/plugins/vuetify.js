@@ -12,7 +12,9 @@ Vue.use(Vuetify, {
     success: '#4CAF50',
     warning: '#FFC107',
   },
-  customProperties: true,
+  options: {
+    customProperties: true,
+  },
   iconfont: 'mdi',
 });
 
