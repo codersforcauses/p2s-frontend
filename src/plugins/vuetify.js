@@ -15,3 +15,6 @@ Vue.use(Vuetify, {
   customProperties: true,
   iconfont: 'mdi',
 });
+
+// MDI icons list: https://materialdesignicons.com/
+// To use the icons, prefix "mdi-" must be used followed by the icon name
