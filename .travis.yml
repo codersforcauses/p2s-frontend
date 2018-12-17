@@ -1,0 +1,13 @@
+dist: xenial
+sudo: true
+language: node_js
+nodejs:
+  - "lts/*"
+cache:
+  npm: true
+  directories:
+    - ~/.cache
+install:
+    - npm ci
+notifications:
+  email: false
