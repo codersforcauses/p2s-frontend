@@ -6,8 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit && npm run test:e2e_ci",
     "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e_ci": "vue-cli-service test:e2e --headless",
     "test:unit": "vue-cli-service test:unit --maxWorkers=4"
   },
   "dependencies": {
