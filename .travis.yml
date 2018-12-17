@@ -7,7 +7,5 @@ cache:
   npm: true
   directories:
     - ~/.cache
-install:
-    - npm ci
 notifications:
   email: false
