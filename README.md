@@ -1,4 +1,8 @@
 # P2S Rugbyworks
+
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/codersforcauses/p2s-frontend.svg?style=for-the-badge)](https://codeclimate.com/github/codersforcauses/p2s-frontend/maintainability) &emsp;
+[![Travis (.com) branch](https://img.shields.io/travis/com/codersforcauses/p2s-frontend.svg?style=for-the-badge)](https://travis-ci.com/codersforcauses/p2s-frontend)
+
 ## Data storage and input system for Rugbyworks to help them improve youth lives.
 
 ### Description
