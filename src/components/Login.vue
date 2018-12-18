@@ -8,6 +8,7 @@
               <v-toolbar dark color="#474755">
                   <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
+              <v-icon size= "256px" class="pa-3">mdi-account-circle</v-icon>
               <v-text-field
                 class="pa-3"
                 label="Email"
