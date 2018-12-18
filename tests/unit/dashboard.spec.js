@@ -1,10 +1,10 @@
 import { shallowMount } from '@vue/test-utils';
-import home from '@/views/Home.vue';
+import dashboard from '@/views/Dashboard.vue';
 
-describe('Home.vue', () => {
+describe('Dashboard.vue', () => {
   it('renders props.msg when passed', () => {
     const msg = 'new message';
-    const wrapper = shallowMount(home, {
+    const wrapper = shallowMount(dashboard, {
       propsData: { msg },
     });
     expect(wrapper.text());
