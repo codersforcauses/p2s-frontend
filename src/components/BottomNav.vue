@@ -3,15 +3,14 @@
     <v-bottom-nav
       :active.sync="bottomNav"
       :value="true"
-      absolute
-      color="transparent"
+      fixed
     >
       <v-btn
         color="teal"
         flat
         value="recent"
       >
-        <span>Coaches</span>
+        <span v-show="$vuetify.breakpoint.mdAndUp">Coaches</span>
         <v-icon>mdi-football</v-icon>
       </v-btn>
 
@@ -20,7 +19,7 @@
       flat
       value="favorites"
       >
-        <span>Regional Managers</span>
+        <span v-show="$vuetify.breakpoint.mdAndUp">Regional Managers</span>
         <v-icon>mdi-sitemap</v-icon>
       </v-btn>
 
@@ -29,8 +28,8 @@
         flat
         value="nearby"
       >
-        <span>Administrators</span>
-        <v-icon></v-icon>
+        <span v-show="$vuetify.breakpoint.mdAndUp">Administrators</span>
+        <v-icon>mdi-security-account</v-icon>
       </v-btn>
     </v-bottom-nav>
   </div>
