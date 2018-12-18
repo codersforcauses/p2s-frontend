@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
 
-const Home = () => import(/* webpackChunkName: "home" */ './views/Home.vue');
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 
 Vue.use(Router);
 
@@ -17,11 +17,11 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'home',
-      component: Home,
-      children: [
-        {},
-      ],
+      name: 'dashboard',
+      component: Dashboard,
+      // children: [
+      //   {},
+      // ],
     },
     // {
     //   path: '/about',
