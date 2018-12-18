@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
 
-const Home = () => import('./views/Home.vue');
+const Home = () => import(/* webpackChunkName: "home" */ './views/Home.vue');
 
 Vue.use(Router);
 
