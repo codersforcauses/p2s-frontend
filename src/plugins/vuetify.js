@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
 import '@/assets/stylus/main.styl';
 
 Vue.use(Vuetify, {
