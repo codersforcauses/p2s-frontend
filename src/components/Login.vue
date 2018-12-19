@@ -10,15 +10,15 @@
                 max-width="720px"
                 style="margin: auto;"
           >
-          <v-toolbar dark color="#474755">
+          <v-toolbar dark flat color="#474755">
             <v-toolbar-title> Login </v-toolbar-title>
           </v-toolbar>
-          <v-icon v-show="$vuetify.breakpoint.smAndDown"
+          <v-icon v-if="$vuetify.breakpoint.smAndDown"
                   size="128px"
                   class="pa-3">
             mdi-account-circle
           </v-icon>
-          <v-icon v-show="$vuetify.breakpoint.mdAndUp"
+          <v-icon v-else
                   size="256px"
                   class="pa-3">
             mdi-account-circle
@@ -27,7 +27,6 @@
             <v-text-field v-model="user.email"
                           label="Email"
                           name="email"
-                          class="auto"
                           light
                           required
                           solo
@@ -36,14 +35,13 @@
                           label="Password"
                           name="password"
                           type="password"
-                          class="auto"
                           light
                           required
                           solo
             ></v-text-field>
           </div>
-          <v-btn light round class="ma-2">Login</v-btn>
-          <v-btn light round class="ma-2">Forgot Password</v-btn>
+          <v-btn light large round class="ma-2">Login</v-btn><br>
+          <v-btn dark flat small disabled class="ma-2">Forgot Password?</v-btn>
         </v-card>
       </v-flex>
     </v-layout>
