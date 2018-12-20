@@ -1,32 +1,39 @@
 <template>
   <div>
+    <div>Active: {{ bottomNav }} </div>
+    <div>Coach: {{ coach }} </div>
+    <div>Manager: {{ manager }} </div>
+    <div>Admin: {{ admin }} </div>
     <v-bottom-nav
       :active.sync="bottomNav"
       :value="true"
       fixed
     >
       <v-btn
+        v-if="coach"
         color="teal"
         flat
-        value="recent"
+        value="Coach Page"
       >
         <span v-show="$vuetify.breakpoint.mdAndUp">Coaches</span>
         <v-icon>mdi-football</v-icon>
       </v-btn>
 
       <v-btn
-      color="teal"
-      flat
-      value="favorites"
+        v-if="manager"
+        color="teal"
+        flat
+        value="Regional Manager Page"
       >
         <span v-show="$vuetify.breakpoint.mdAndUp">Regional Managers</span>
         <v-icon>mdi-sitemap</v-icon>
       </v-btn>
 
       <v-btn
+        v-if="admin"
         color="teal"
         flat
-        value="nearby"
+        value="Admin Page"
       >
         <span v-show="$vuetify.breakpoint.mdAndUp">Administrators</span>
         <v-icon>mdi-security-account</v-icon>
@@ -36,10 +43,14 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      bottomNav: 'recent',
+      bottomNav: 'none',
+      coach: true,
+      manager: true,
+      admin: true,
     };
   },
 };
