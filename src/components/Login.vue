@@ -9,7 +9,7 @@
           <v-toolbar dark flat color="#474755">
             <v-toolbar-title> Login </v-toolbar-title>
           </v-toolbar>
-          <v-icon size="196px"> mdi-account-circle</v-icon>
+          <v-icon size="196px" class="pt-5"> mdi-account-circle</v-icon>
           <div :class="{'margin-large': $vuetify.breakpoint.lgAndUp,
                         'margin-medium': $vuetify.breakpoint.md,
                         'margin-small': $vuetify.breakpoint.smAndDown,}">
