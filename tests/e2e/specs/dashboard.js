@@ -3,6 +3,6 @@
 describe('Landing Test', () => {
   it('Visits the app root url and finds VueJS logo', () => {
     cy.visit('/');
-    cy.get('div[class="home"]').find('img').should('be.visible');
+    cy.get('div').find('img').should('be.visible');
   });
 });

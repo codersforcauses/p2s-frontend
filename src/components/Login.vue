@@ -1,29 +1,18 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center fill-height>
+  <v-container fluid fill-height class="pa-0 ma-0">
+    <v-layout align-center justify-center>
       <v-flex text-xs-center fill-height>
         <v-card dark tile
-                class="elevation-10"
                 color="#36363f"
                 height="100%"
-                max-height="720px"
-                max-width="720px"
-                style="margin: auto;"
           >
           <v-toolbar dark flat color="#474755">
             <v-toolbar-title> Login </v-toolbar-title>
           </v-toolbar>
-          <v-icon v-if="$vuetify.breakpoint.smAndDown"
-                  size="128px"
-                  class="pa-3">
-            mdi-account-circle
-          </v-icon>
-          <v-icon v-else
-                  size="256px"
-                  class="pa-3">
-            mdi-account-circle
-          </v-icon>
-          <div class="login">
+          <v-icon size="196px" class="pt-5"> mdi-account-circle</v-icon>
+          <div :class="{'margin-large': $vuetify.breakpoint.lgAndUp,
+                        'margin-medium': $vuetify.breakpoint.md,
+                        'margin-small': $vuetify.breakpoint.smAndDown,}">
             <v-text-field v-model="user.email"
                           label="Email"
                           name="email"
@@ -62,8 +51,13 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .login {
-    margin-left: 10vh;
-    margin-right: 10vh;
-  }
+.margin-large {
+  margin: 2.5vh 50vh 0vh 50vh;
+}
+.margin-medium {
+  margin: 2.5vh 25vh 0vh 25vh;
+}
+.margin-small {
+  margin: 2.5vh 5vh 0vh 5vh;
+}
 </style>
