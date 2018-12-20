@@ -1,68 +1,100 @@
 <template>
-  <v-container fluid fill-height class="pa-0 ma-0" style="background-color: #474755;">
-    <v-layout align-center justify-center>
-      <v-flex text-xs-center fill-height>
-        <v-toolbar dark flat color="#474755">
-          <v-toolbar-title> Login </v-toolbar-title>
-        </v-toolbar>
-        <v-card dark tile
-                class="card"
-                color="#36363f"
-                height="100%"
-          >
-          <v-icon size="196px" class="pt-5"> mdi-account-circle</v-icon>
-          <div :class="{'margin-large': $vuetify.breakpoint.lgAndUp,
-                        'margin-medium': $vuetify.breakpoint.md,
-                        'margin-small': $vuetify.breakpoint.smAndDown,}">
-            <v-text-field v-model="user.email"
+  <v-content>
+    <v-toolbar dark flat color="#474755">
+      <v-toolbar-title> Login </v-toolbar-title>
+    </v-toolbar>
+
+    <v-card dark class="pa-5">
+      <v-form ref="form" v-model="valid" @keyup.native.enter="valid && login($event)">
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-icon size="20rem" style="margin: 3rem auto 0">  mdi-account-circle  </v-icon>
+          </v-flex>
+
+          <v-flex xs12>
+            <v-text-field v-model.trim="user.email"
                           label="Email"
-                          name="email"
-                          light
+                          :disabled="loading"
                           required
-                          solo
+                          solo-inverted
+                          flat
             ></v-text-field>
+          </v-flex>
+
+          <v-flex xs12>
             <v-text-field v-model="user.password"
                           label="Password"
-                          name="password"
                           type="password"
-                          light
+                          :disabled="loading"
                           required
-                          solo
+                          solo-inverted
+                          flat
             ></v-text-field>
-          </div>
-          <v-btn light large round class="ma-2">Login</v-btn><br>
-          <v-btn dark flat small disabled class="ma-2">Forgot Password?</v-btn>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+          </v-flex>
+
+          <v-flex xs12>
+            <v-btn  light
+                    large
+                    round
+                    depressed
+                    :disabled="!valid || loading"
+                    :loading="loading"
+                    @click.stop.prevent="login"
+            >
+              Login
+            </v-btn>
+          </v-flex>
+
+          <v-flex xs12>
+            <v-btn flat small>Forgot Password?</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-form>
+    </v-card>
+  </v-content>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
+      valid: false,
       user: {
         email: '',
         password: '',
       },
     };
   },
+  computed: {
+    ...mapState('auth', { loading: 'isAuthenticatePending' }),
+  },
+  methods: {
+    ...mapActions('auth', ['authenticate']),
+    async login() {
+      if (this.valid) {
+        await this.authenticate({
+          strategy: 'local',
+          ...this.user,
+        }).then(async () => {
+          await this.authenticate();
+          // logged in
+          this.$router.push({ name: 'Dashboard' }); // eslint-disable-line
+        }).catch(async (e) => {
+          // Error on page
+          // this.showDismissibleAlert = true;
+          // this.error = e.message;
+          console.log(e);
+        });
+      }
+    },
+  },
 };
 </script>
 
-<style lang="css" scoped>
-.card {
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
-}
-.margin-large {
-  margin: 2.5vh 50vh 0vh 50vh;
-}
-.margin-medium {
-  margin: 2.5vh 25vh 0vh 25vh;
-}
-.margin-small {
-  margin: 2.5vh 5vh 0vh 5vh;
+<style scoped>
+.icon {
+  margin: 3em auto 0;
 }
 </style>
