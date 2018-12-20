@@ -1,41 +1,48 @@
 <template>
-  <v-container fluid fill-height class="pa-0 ma-0" style="background-color: #474755;">
-    <v-layout align-center justify-center>
-      <v-flex text-xs-center fill-height>
-        <v-toolbar dark flat color="#474755">
-          <v-toolbar-title> Login </v-toolbar-title>
-        </v-toolbar>
-        <v-card dark tile
-                class="card"
-                color="#36363f"
-                height="100%"
-          >
-          <v-icon size="196px" class="pt-5"> mdi-account-circle</v-icon>
-          <div :class="{'margin-large': $vuetify.breakpoint.lgAndUp,
-                        'margin-medium': $vuetify.breakpoint.md,
-                        'margin-small': $vuetify.breakpoint.smAndDown,}">
-            <v-text-field v-model="user.email"
-                          label="Email"
-                          name="email"
-                          light
-                          required
-                          solo
-            ></v-text-field>
-            <v-text-field v-model="user.password"
-                          label="Password"
-                          name="password"
-                          type="password"
-                          light
-                          required
-                          solo
-            ></v-text-field>
-          </div>
-          <v-btn light large round class="ma-2">Login</v-btn><br>
-          <v-btn dark flat small disabled class="ma-2">Forgot Password?</v-btn>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-content>
+    <v-container class="pa-0 ma-0" style="background-color: #474755;" fluid fill-height >
+      <v-layout align-center justify-center row fill-height>
+        <v-flex style="height: 100%">
+          <v-toolbar color="#474755" dark flat>
+            <v-toolbar-title> Login </v-toolbar-title>
+          </v-toolbar>
+          <v-card dark
+                  class="card text-xs-center"
+                  color="#36363f"
+                  height="100%"
+            >
+            <v-icon size="196px" class="pt-4" color="#e8e8e8"> mdi-account-circle </v-icon>
+            <v-flex xs10 sm8 md6 offset-xs1 offset-sm2 offset-md3>
+              <v-flex tag="p" style="text-align: left;"> Email </v-flex>
+              <v-text-field v-model="user.email"
+                            name="email"
+                            background-color="#e8e8e8"
+                            autofocus
+                            flat
+                            light
+                            required
+                            solo
+              ></v-text-field>
+              <v-flex tag="p" style="text-align: left;"> Password </v-flex>
+              <v-text-field v-model="user.password"
+                            name="password"
+                            type="password"
+                            background-color="#e8e8e8"
+                            flat
+                            light
+                            required
+                            solo
+              ></v-text-field>
+            </v-flex>
+            <v-btn class="ma-2" color="#e8e8e8" depressed large light round > Login </v-btn>
+            <v-spacer/>
+            <v-btn class="ma-2" color="grey lighten-1" flat small>
+              Forgot Password? </v-btn>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
@@ -51,18 +58,9 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .card {
   border-top-left-radius: 5%;
   border-top-right-radius: 5%;
-}
-.margin-large {
-  margin: 2.5vh 50vh 0vh 50vh;
-}
-.margin-medium {
-  margin: 2.5vh 25vh 0vh 25vh;
-}
-.margin-small {
-  margin: 2.5vh 5vh 0vh 5vh;
 }
 </style>
