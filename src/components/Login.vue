@@ -1,14 +1,15 @@
 <template>
-  <v-container fluid fill-height class="pa-0 ma-0">
+  <v-container fluid fill-height class="pa-0 ma-0" style="background-color: #474755;">
     <v-layout align-center justify-center>
       <v-flex text-xs-center fill-height>
+        <v-toolbar dark flat color="#474755">
+          <v-toolbar-title> Login </v-toolbar-title>
+        </v-toolbar>
         <v-card dark tile
+                class="card"
                 color="#36363f"
                 height="100%"
           >
-          <v-toolbar dark flat color="#474755">
-            <v-toolbar-title> Login </v-toolbar-title>
-          </v-toolbar>
           <v-icon size="196px" class="pt-5"> mdi-account-circle</v-icon>
           <div :class="{'margin-large': $vuetify.breakpoint.lgAndUp,
                         'margin-medium': $vuetify.breakpoint.md,
@@ -51,6 +52,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.card {
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+}
 .margin-large {
   margin: 2.5vh 50vh 0vh 50vh;
 }
