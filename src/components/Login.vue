@@ -13,26 +13,30 @@
             >
             <v-icon size="196px" class="pt-4" color="#e8e8e8"> mdi-account-circle </v-icon>
             <v-flex xs10 sm8 md6 offset-xs1 offset-sm2 offset-md3>
-              <v-flex tag="p" style="text-align: left;"> Email </v-flex>
-              <v-text-field v-model="user.email"
-                            name="email"
-                            background-color="#e8e8e8"
-                            autofocus
-                            flat
-                            light
-                            required
-                            solo
-              ></v-text-field>
-              <v-flex tag="p" style="text-align: left;"> Password </v-flex>
-              <v-text-field v-model="user.password"
-                            name="password"
-                            type="password"
-                            background-color="#e8e8e8"
-                            flat
-                            light
-                            required
-                            solo
-              ></v-text-field>
+              <v-form v-model="valid">
+                <v-flex tag="p" style="text-align: left;"> Email </v-flex>
+                <v-text-field :rules="emailRules"
+                              v-model="user.email"
+                              name="email"
+                              background-color="#e8e8e8"
+                              autofocus
+                              flat
+                              light
+                              required
+                              solo
+                ></v-text-field>
+                <v-flex tag="p" style="text-align: left;"> Password </v-flex>
+                <v-text-field :rules="passwordRules"
+                              v-model="user.password"
+                              name="password"
+                              type="password"
+                              background-color="#e8e8e8"
+                              flat
+                              light
+                              required
+                              solo
+                ></v-text-field>
+              </v-form>
             </v-flex>
             <v-btn class="ma-2" color="#e8e8e8" depressed large light round > Login </v-btn>
             <v-spacer/>
@@ -49,6 +53,15 @@
 export default {
   data() {
     return {
+      valid: false,
+      emailRules: [
+        v => !!v || 'Email is required',
+        v => /.+@.+/.test(v) || 'Email must be valid',
+      ],
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v => v.length >= 8 || 'Password must be greater than 8 characters',
+      ],
       user: {
         email: '',
         password: '',
