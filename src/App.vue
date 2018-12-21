@@ -8,6 +8,7 @@
     >
       {{ snackWithBtnText }}
       <v-spacer/>
+
       <v-btn  dark
               flat
               color="info"
@@ -15,12 +16,13 @@
       >
         {{ snackBtnText }}
       </v-btn>
+
       <v-btn  icon
               @click="snackWithButtons = false"
       >
         <v-icon> mdi-close </v-icon>
       </v-btn>
-      </v-snackbar>
+    </v-snackbar>
     <router-view/>
   </v-app>
 </template>
