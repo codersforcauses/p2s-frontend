@@ -1,5 +1,9 @@
 <template>
-  <Login/>
+  <v-app>
+    <v-content>
+      <Login/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
