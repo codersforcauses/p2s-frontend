@@ -51,6 +51,7 @@
 
 export default {
   name: 'dashboard',
+  title: 'Dashboard',
   data() {
     return {
       items: [

@@ -7,5 +7,6 @@
 
 export default {
   name: 'login',
+  title: 'Login',
 };
 </script>
