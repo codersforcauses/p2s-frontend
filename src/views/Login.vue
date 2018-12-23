@@ -1,18 +1,18 @@
 <template>
   <v-app>
     <v-content>
-      <Login/>
+      <!-- <Login/> -->
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Login from '@/components/Login.vue';
+// import Login from '@/components/Login.vue';
 
 export default {
   name: 'login',
-  components: {
-    Login,
-  },
+  // components: {
+  //   Login,
+  // },
 };
 </script>
