@@ -6,32 +6,19 @@
     <v-spacer/>
 
     <v-toolbar-items>
-      <v-btn flat>
-        Link One
+      <v-btn  :flat="$vuetify.breakpoint.mdAndUp"
+              :icon="$vuetify.breakpoint.smAndDown"
+              @click="$emit('dark')"
+      >
+        <v-icon :left="$vuetify.breakpoint.mdAndUp"> mdi-theme-light-dark </v-icon>
+        <span v-show="$vuetify.breakpoint.mdAndUp"> {{ theme }} Theme </span>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon> mdi-theme-light-dark </v-icon>
-      </v-btn>
-
-      <v-menu :nudge-bottom="64">
-        <v-btn flat slot="activator">
-          Forms
-          <v-icon> mdi-menu-down </v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile
-            v-for="item in 5"
-            :key="item"
-            @click="item"
-          >
-            <v-list-tile-title v-text="item"></v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-
-      <v-btn flat>
-        Logout
+      <v-btn  :flat="$vuetify.breakpoint.mdAndUp"
+              :icon="$vuetify.breakpoint.smAndDown"
+      >
+        <span v-show="$vuetify.breakpoint.mdAndUp"> Logout </span>
+        <v-icon :right="$vuetify.breakpoint.mdAndUp"> mdi-logout </v-icon>
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>
@@ -39,7 +26,12 @@
 
 <script>
 export default {
-
+  props: ['dark'],
+  computed: {
+    theme() {
+      return this.dark ? 'Light' : 'Dark';
+    },
+  },
 };
 </script>
 

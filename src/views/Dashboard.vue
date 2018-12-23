@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <toolbar/>
+  <v-app :dark="dark">
+    <toolbar @dark="dark = !dark;" v-bind="{ dark }" />
     <v-content>
       <v-container fluid grid-list-lg>
         <v-layout row wrap>
@@ -18,6 +18,11 @@ export default {
   name: 'dashboard',
   components: {
     toolbar,
+  },
+  data() {
+    return {
+      dark: false,
+    };
   },
 };
 </script>
