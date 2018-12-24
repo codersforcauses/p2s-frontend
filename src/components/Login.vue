@@ -10,6 +10,13 @@
                   color="#ebebeb"
                   height="100%"
             >
+            <v-img  :src="require('@/assets/p2s_massive.png')"
+                    style="padding-top: 35vh; margin: auto;"
+                    alt="P2S Rugbyworks Logo"
+                    max-width="250"
+                    max-height="100"
+                    contain
+            ></v-img>
             <v-flex xs10 sm8 md6 offset-xs1 offset-sm2 offset-md3>
               <v-form v-model="valid">
                 <v-flex tag="label"> Email </v-flex>
