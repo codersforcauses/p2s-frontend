@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container class="pa-0 ma-0" style="background-color: #c22032;" fluid fill-height >
-      <v-layout align-center justify-center row fill-height>
+      <v-layout row fill-height>
         <v-flex style="height: 100%">
           <v-toolbar color="#c22032" dark flat>
             <v-toolbar-title> Login </v-toolbar-title>
@@ -19,7 +19,7 @@
             ></v-img>
             <v-flex xs10 sm8 md6 offset-xs1 offset-sm2 offset-md3>
               <v-form v-model="valid">
-                <v-flex tag="label"> Email </v-flex>
+                <label> Email </label>
                 <v-text-field :rules="emailRules"
                               v-model="user.email"
                               background-color="#cecece"
@@ -28,7 +28,7 @@
                               light
                               solo
                 ></v-text-field>
-                <v-flex tag="label"> Password </v-flex>
+                <label> Password </label>
                 <v-text-field v-model="user.password"
                               type="password"
                               background-color="#cecece"
