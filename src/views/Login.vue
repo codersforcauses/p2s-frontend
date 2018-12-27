@@ -11,7 +11,7 @@
                       flat
                       dark
                       single-line
-                      color="#c22032"
+                      background-color="#cecece"
                       :rules="[rules.required, rules.email]"
                       height="20px"
                       v-model="user.email"
@@ -26,7 +26,7 @@
                       flat
                       dark
                       single-line
-                      color="#c22032"
+                      background-color="#cecece"
                       :rules="[rules.required]"
                       :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
                       :type="show ? 'text' : 'password'"
@@ -48,7 +48,7 @@
           <v-btn  flat
                   small
                   round
-                  color="grey"
+                  color="grey darken-1"
           >
             Forgot Password?
           </v-btn>

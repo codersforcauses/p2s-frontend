@@ -7,7 +7,7 @@
             <v-img  contain
                     class="mx-auto"
                     height="100%"
-                    max-width="27vmax"
+                    max-width="25vmax"
                     :src="require('@/assets/p2s_massive.png')"
             ></v-img>
           </v-card>
