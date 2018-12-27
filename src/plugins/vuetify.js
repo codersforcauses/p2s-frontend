@@ -6,7 +6,7 @@ import '@/assets/stylus/main.styl';
 
 const themeCache = LRU({
   max: 10,
-  maxAge: 1000 * 60 * 60, // 1 hour
+  maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
 });
 
 const minifyTheme = css => (process.env.NODE_ENV === 'production'
