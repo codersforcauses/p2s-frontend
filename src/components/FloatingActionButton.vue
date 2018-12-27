@@ -1,42 +1,38 @@
 <template>
   <v-speed-dial
-    v-model="fab"
-    absolute
-    :top="top"
-    :bottom="bottom"
-    :right="right"
-    :left="left"
-    :direction="direction"
-    :open-on-hover="hover"
-    :transition="transition"
+    bottom
+    right
+    direction="top"
+    transition="slide-x-transition"
+    fixed
   >
     <v-btn
       slot="activator"
-      color="blue darken-2"
+      color="red darken-2"
       fab
     >
-      <v-icon>mdi-circle</v-icon>
+      <v-icon title="Forms">mdi-file-document-box-outline</v-icon>
     </v-btn>
     <v-btn
       fab
       small
       color="green"
     >
-      <v-icon>edit</v-icon>
+      RespecT
     </v-btn>
     <v-btn
       fab
       small
       color="indigo"
     >
-      <v-icon>add</v-icon>
+      Pay
     </v-btn>
     <v-btn
       fab
       small
       color="red"
     >
-      <v-icon>delete</v-icon>
+      F to
     </v-btn>
   </v-speed-dial>
 </template>
@@ -45,14 +41,7 @@
 export default {
   data() {
     return {
-      direction: 'top',
-      fab: false,
-      hover: false,
-      top: false,
-      right: true,
-      bottom: true,
-      left: false,
-      transition: 'slide-y-reverse-transition',
+
     };
   },
 };
