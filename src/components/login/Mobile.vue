@@ -1,11 +1,14 @@
 <template>
   <v-content>
+    <v-toolbar app dark flat color="#c22032">
+      <v-toolbar-title>
+        Login
+      </v-toolbar-title>
+    </v-toolbar>
+
     <v-container grid-list-lg fluid fill-height style="background-color: #c22032;">
       <v-layout fill-height row wrap>
-        <v-flex style="height: 100%" xs12>
-          <v-toolbar color="#c22032" dark flat>
-            <v-toolbar-title> Login </v-toolbar-title>
-          </v-toolbar>
+        <v-flex xs12>
           <v-card color="#ebebeb" class="pa-4" style="margin: -16px" height="100%">
             <v-img  contain
                     class="mx-auto py-5"

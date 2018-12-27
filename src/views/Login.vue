@@ -9,10 +9,11 @@
         </label>
         <v-text-field solo-inverted
                       flat
-                      dark
                       single-line
-                      background-color="#cecece"
+                      color="#c22032"
                       :rules="[rules.required, rules.email]"
+                      :dark="$vuetify.breakpoint.mdAndUp"
+                      :light="$vuetify.breakpoint.smAndDown"
                       height="20px"
                       v-model="user.email"
         ></v-text-field>
@@ -24,12 +25,13 @@
         </label>
         <v-text-field solo-inverted
                       flat
-                      dark
                       single-line
-                      background-color="#cecece"
+                      color="#c22032"
                       :rules="[rules.required]"
                       :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
                       :type="show ? 'text' : 'password'"
+                      :dark="$vuetify.breakpoint.mdAndUp"
+                      :light="$vuetify.breakpoint.smAndDown"
                       @click:append="show = !show"
                       height="20px"
                       v-model="user.password"
@@ -48,7 +50,7 @@
           <v-btn  flat
                   small
                   round
-                  color="grey darken-1"
+                  color="grey"
           >
             Forgot Password?
           </v-btn>
