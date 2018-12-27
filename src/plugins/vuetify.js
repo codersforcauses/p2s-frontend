@@ -9,9 +9,14 @@ const themeCache = LRU({
   maxAge: 1000 * 60 * 60, // 1 hour
 });
 
+const minifyTheme = css => (process.env.NODE_ENV === 'production'
+  ? css.replace(/[\s|\r\n|\r|\n]/g, '')
+  : css);
+
 Vue.use(Vuetify, {
   options: {
     themeCache,
+    minifyTheme,
     customProperties: true,
   },
   iconfont: 'mdi',
