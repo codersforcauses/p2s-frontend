@@ -1,12 +1,15 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png">
+    fuck
+    <FloatingActionButton/>
   </div>
 </template>
 
 <script>
+import FloatingActionButton from '@/components/FloatingActionButton.vue';
 
 export default {
   name: 'dashboard',
+  components: FloatingActionButton,
 };
 </script>
