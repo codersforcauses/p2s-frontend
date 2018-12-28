@@ -1,17 +1,32 @@
-import { shallowMount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
+import VueRouter from 'vue-router';
+import Vuetify from 'vuetify';
 import login from '@/views/Login.vue';
 
-describe('Login.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message';
-    const wrapper = shallowMount(login, {
-      propsData: { msg },
-    });
-    expect(wrapper.text());
+describe('login', () => {
+  const routes = [
+    { path: '/login', name: 'login' },
+  ];
+  const router = new VueRouter({ routes });
+  const localVue = createLocalVue();
+  localVue.use(VueRouter);
+  localVue.use(Vuetify);
+  const wrapper = mount(login, {
+    localVue,
+    router,
   });
-  it('text fields and buttons are present', () => {
-    const wrapper = shallowMount(login);
-    expect(wrapper.find('v-text-field'));
-    expect(wrapper.find('v-btn'));
+  it('login view renders correctly', () => {
+    expect(wrapper.is(login)).toBe(true);
+    expect(wrapper.find('v-text-field[v-model="user.email]'));
+    expect(wrapper.find('v-text-field[v-model="user.password]'));
+    expect(wrapper.find('v-btn[name="Login"]'));
+    expect(wrapper.find('v-btn[name="Forgot Password?"]'));
+  });
+  it('test for input data', () => {
+    expect(wrapper.is(login)).toBe(true);
+    const email = wrapper.find('.email');
+    const password = wrapper.find('.password');
+    email.setData('john.smith@gmail.com');
+    password.setData('qwerty12345');
   });
 });
