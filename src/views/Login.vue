@@ -13,7 +13,6 @@
                       color="#c22032"
                       :rules="[rules.required, rules.email]"
                       :dark="$vuetify.breakpoint.mdAndUp"
-                      :light="$vuetify.breakpoint.smAndDown"
                       height="20px"
                       v-model="user.email"
                       class="email"
@@ -32,7 +31,6 @@
                       :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
                       :type="show ? 'text' : 'password'"
                       :dark="$vuetify.breakpoint.mdAndUp"
-                      :light="$vuetify.breakpoint.smAndDown"
                       @click:append="show = !show"
                       height="20px"
                       v-model="user.password"
@@ -71,15 +69,15 @@ export default {
   title: 'Login',
   data() {
     return {
+      user: {
+        email: '',
+        password: '',
+      },
       valid: false,
       show: false,
       rules: {
         required: v => !!v || 'This field is required',
         email: v => /.+@.+/.test(v) || 'Email must be valid',
-      },
-      user: {
-        email: '',
-        password: '',
       },
     };
   },
@@ -88,7 +86,7 @@ export default {
       return this.$vuetify.breakpoint.smAndDown ? mobile : desktop;
     },
     btnColour() {
-      return this.$vuetify.breakpoint.smAndDown ? '#c22032' : '#e8e8e8';
+      return this.$vuetify.breakpoint.smAndDown ? '#d20020' : '#e8e8e8';
     },
     labelColour() {
       return this.$vuetify.breakpoint.smAndDown ? 'theme--light' : 'theme--dark';
