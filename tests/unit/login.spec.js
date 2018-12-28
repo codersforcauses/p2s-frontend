@@ -15,7 +15,18 @@ describe('login', () => {
     localVue,
     router,
   });
-  it('example test', () => {
+  it('login view renders correctly', () => {
     expect(wrapper.is(login)).toBe(true);
+    expect(wrapper.find('v-text-field[v-model="user.email]'));
+    expect(wrapper.find('v-text-field[v-model="user.password]'));
+    expect(wrapper.find('v-btn[name="Login"]'));
+    expect(wrapper.find('v-btn[name="Forgot Password?"]'));
+  });
+  it('test for input data', () => {
+    expect(wrapper.is(login)).toBe(true);
+    const email = wrapper.find('.email');
+    const password = wrapper.find('.password');
+    email.setData('john.smith@gmail.com');
+    password.setData('qwerty12345');
   });
 });

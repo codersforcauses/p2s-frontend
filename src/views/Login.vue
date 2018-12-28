@@ -16,6 +16,7 @@
                       :light="$vuetify.breakpoint.smAndDown"
                       height="20px"
                       v-model="user.email"
+                      class="email"
         ></v-text-field>
 
         <label  class="v-label"
@@ -35,6 +36,7 @@
                       @click:append="show = !show"
                       height="20px"
                       v-model="user.password"
+                      class="password"
         ></v-text-field>
         <v-flex class="text-xs-center">
           <v-btn  large
