@@ -128,7 +128,6 @@ export default {
           strategy: 'local',
           ...this.user,
         }).then(async () => {
-          await this.authenticate();
           // logged in
           this.$router.push({ name: 'dashboard' }); // eslint-disable-line
         }).catch(async (e) => {
