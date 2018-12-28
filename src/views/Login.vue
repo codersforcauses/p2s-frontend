@@ -6,7 +6,7 @@
                   v-model="alert"
                   type="error"
                   :class="alertClass"
-                  transition="slide-y-transition"
+                  :transition="transitionClass"
         >
           <strong> Error </strong>
         </v-alert>
@@ -109,6 +109,9 @@ export default {
     },
     alertClass() {
       return this.$vuetify.breakpoint.smAndDown ? 'alert_small' : 'alert_large';
+    },
+    transitionClass() {
+      return this.$vuetify.breakpoint.smAndDown ? 'slide-y-reverse-transition' : 'slide-y-transition';
     },
   },
 };
