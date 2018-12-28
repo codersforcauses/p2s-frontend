@@ -4,26 +4,65 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="apple-mobile-web-app-title" content="P2S RugbyWorks">
-    <meta name="application-name" content="P2S RugbyWorks">
-    <meta name="msapplication-TileColor" content="#ebebeb">
-    <meta name="msapplication-config" content="img/icons/browserconfig.xml">
-    <meta name="theme-color" content="#bd342d">
+    <link rel="icon" href="<%= BASE_URL %>favicon.png">
+    <!-- Add to home screen for Android and modern mobile browsers -->
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/icons/apple-touch-icon.png">
-    <link rel="mask-icon" href="img/icons/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Martel:700">
+    <meta name="theme-color" content="">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Martel:800">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
     <title> P2S RugbyWorks </title>
+
+    <style>
+      .background {
+        position: relative;
+        background-color: #d20020;
+        box-sizing: content-box;
+        display: block;
+        height: calc(100vh - 16px);
+        width: calc(100vw - 16px);
+      }
+      .card {
+        background-color: white;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 60vmin;
+        max-height: 450px;
+        width: calc(60vmin - 16px);
+        margin: auto;
+        padding: 32px;
+      }
+      .logo {
+        display: block;
+        margin: 24px auto;
+        max-height: 55%;
+        max-width: 70%;
+      }
+      .text {
+        display: block;
+        font-family: 'Lato', sans-serif;
+        font-size: 12pt;
+        line-height: 1.25;
+        margin: 6vw 0;
+      }
+    </style>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but P2S RugbyWorks does not work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <div class="background">
+        <div class="card">
+          <img src="./img/p2s-logo.svg" alt="p2s rugbyworks logo" class="logo">
+          <div class="text">
+            We're sorry but P2S RugbyWorks does not work properly without JavaScript enabled.
+            Please enable it and refresh the page to continue.
+          </div>
+        </div>
+      </div>
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
   </body>
 </html>

@@ -76,4 +76,8 @@ export default {
 .snack >>> .v-snack__content {
   padding-right: 16px;
 }
+.v-input__slot {
+  border-radius: 24px !important;
+  padding: 0 1rem !important;
+}
 </style>
