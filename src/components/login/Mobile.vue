@@ -1,14 +1,15 @@
 <template>
   <v-content>
-    <v-toolbar app dark flat color="#c22032">
+    <v-toolbar dark flat color="#c22032">
       <v-toolbar-title class="pl-3">
         Login
       </v-toolbar-title>
     </v-toolbar>
-    <v-container fluid fill-height class="background">
+
+    <v-container fluid class="background">
       <v-layout fill-height row wrap>
         <v-flex xs12>
-          <v-card color="#ebebeb" class="pa-5">
+          <v-card>
             <v-img  contain
                     class="mx-auto pt-5"
                     max-width="32vmax"
@@ -26,11 +27,14 @@
 .background {
   background-color: #c22032;
   padding-bottom: 0;
+  height: calc(100vh - 56px);
 }
 .v-card {
   border-top-left-radius: 1.25rem;
   border-top-right-radius: 1.25rem;
+  background-color: #EBEBEB;
   margin: -16px;
+  padding: 3rem;
   height: calc(100% + 16px);
 }
 </style>

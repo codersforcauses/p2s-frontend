@@ -1,9 +1,9 @@
 <template>
   <v-content>
-    <v-container class="pa-0 ma-0" fill-height grid-list-lg fluid>
-      <v-layout fill-height row wrap style="margin: -2rem;">
+    <v-container fill-height grid-list-lg fluid class="pa-0 ma-0">
+      <v-layout fill-height row wrap>
         <v-flex xs5 class="pa-0">
-          <v-card color="#c22032" class="pa-4" height="100%">
+          <v-card tile color="#c22032" class="pa-4" height="100%">
             <v-img  contain
                     class="mx-auto"
                     height="100%"
@@ -14,7 +14,7 @@
         </v-flex>
 
         <v-flex xs7 class="pa-0">
-          <v-card color="#272727" height="100%" style="padding: 28vh 15vw;">
+          <v-card tile color="#272727" height="100%" style="padding: 28vh 15vw;">
             <slot name="form"></slot>
           </v-card>
         </v-flex>
