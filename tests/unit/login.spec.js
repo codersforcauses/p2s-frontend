@@ -1,32 +1,46 @@
-import { mount, createLocalVue } from '@vue/test-utils';
-import VueRouter from 'vue-router';
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+import Vue from 'vue';
+import Vuex from 'vuex';
 import Vuetify from 'vuetify';
-import login from '@/views/Login.vue';
+import { mount } from '@vue/test-utils';
+import router from '@/router.js';
+import Login from '@/views/Login.vue';
+
+Vue.config.silent = true;
+
+Vue.use(router);
+Vue.use(Vuetify);
+Vue.use(Vuex);
 
 describe('login', () => {
-  const routes = [
-    { path: '/login', name: 'login' },
-  ];
-  const router = new VueRouter({ routes });
-  const localVue = createLocalVue();
-  localVue.use(VueRouter);
-  localVue.use(Vuetify);
-  const wrapper = mount(login, {
-    localVue,
-    router,
+  let wrapper;
+  let store;
+
+  beforeEach(() => {
+    store = new Vuex.Store({
+      actions: {
+        authenticate: jest.fn(),
+      },
+    });
+
+    wrapper = mount(Login, { store, router });
+    router.push('/login');
   });
-  it('login view renders correctly', () => {
-    expect(wrapper.is(login)).toBe(true);
-    expect(wrapper.find('v-text-field[v-model="user.email]'));
-    expect(wrapper.find('v-text-field[v-model="user.password]'));
-    expect(wrapper.find('v-btn[name="Login"]'));
-    expect(wrapper.find('v-btn[name="Forgot Password?"]'));
-  });
-  it('test for input data', () => {
-    expect(wrapper.is(login)).toBe(true);
-    const email = wrapper.find('.email');
-    const password = wrapper.find('.password');
+
+  it('test for incorrect input data', () => {
+    expect(wrapper.find(Login).exists()).toBe(true);
+    expect(wrapper.is(Login)).toBe(true);
+
+    const email = wrapper.find({ ref: 'email' });
+    const password = wrapper.find({ ref: 'password' });
+
     email.setData('john.smith@gmail.com');
     password.setData('qwerty12345');
+
+    wrapper.find('form').trigger('submit.prevent');
+    expect(wrapper.find('.v-alert.error > div').text())
+      .toEqual(expect.stringContaining('Error:'));
   });
+  // Currently now way to test if inputs are correct as backend can't be linked
 });

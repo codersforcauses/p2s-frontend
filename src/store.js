@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import router from '@/router/index';
 import feathersVuex from 'feathers-vuex';
 import feathersClient from './feathers-client';
 
@@ -10,7 +9,7 @@ Vue.use(Vuex);
 Vue.use(FeathersVuex);
 
 export default new Vuex.Store({
-  strict: true, // remove when in prod
+  strict: true,
   plugins: [
     service('users', {
       instanceDefaults: {

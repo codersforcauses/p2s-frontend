@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { shallowMount } from '@vue/test-utils';
 import dashboard from '@/views/Dashboard.vue';
 

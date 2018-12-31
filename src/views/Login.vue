@@ -8,7 +8,7 @@
                   :class="alertClass"
                   :transition="transitionClass"
         >
-          {{ error }}
+          Error: {{ error }}
         </v-alert>
 
         <v-form v-model="valid" @keyup.native.enter="valid && login($event)">
@@ -22,7 +22,8 @@
                         single-line
                         color="#c22032"
                         height=20
-                        class="email"
+                        type="email"
+                        ref="email"
                         v-model="user.email"
                         :disabled="loading"
                         :rules="[rules.required, rules.email]"
@@ -39,7 +40,7 @@
                         single-line
                         color="#c22032"
                         height=20
-                        class="password"
+                        ref="password"
                         v-model="user.password"
                         :rules="[rules.required]"
                         :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
@@ -51,7 +52,9 @@
           <v-flex class="text-xs-center">
             <v-btn  large
                     round
+                    ref="login"
                     class="mt-4 px-5"
+                    style="z-index: auto"
                     :outline="$vuetify.breakpoint.smAndDown"
                     :depressed="$vuetify.breakpoint.mdAndUp"
                     :color="btnColour"
@@ -67,6 +70,8 @@
             <v-btn  flat
                     small
                     round
+                    ref="forgotPass"
+                    style="z-index: auto"
                     color="grey"
             >
               Forgot Password?
