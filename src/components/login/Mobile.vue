@@ -9,7 +9,7 @@
     <v-container fluid class="background">
       <v-layout fill-height row wrap>
         <v-flex xs12>
-          <v-card>
+          <v-card flat>
             <v-img  contain
                     class="mx-auto pt-5"
                     max-width="32vmax"
