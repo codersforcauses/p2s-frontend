@@ -20,10 +20,10 @@
           <v-text-field solo-inverted
                         flat
                         single-line
+                        name="email"
                         color="#c22032"
                         height=20
                         type="email"
-                        ref="email"
                         v-model="user.email"
                         :disabled="loading"
                         :rules="[rules.required, rules.email]"
@@ -38,9 +38,9 @@
           <v-text-field solo-inverted
                         flat
                         single-line
+                        name="password"
                         color="#c22032"
                         height=20
-                        ref="password"
                         v-model="user.password"
                         :rules="[rules.required]"
                         :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
@@ -52,7 +52,7 @@
           <v-flex class="text-xs-center">
             <v-btn  large
                     round
-                    ref="login"
+                    name="login"
                     class="mt-4 px-5 btn"
                     :outline="$vuetify.breakpoint.smAndDown"
                     :depressed="$vuetify.breakpoint.mdAndUp"
@@ -69,7 +69,7 @@
             <v-btn  flat
                     small
                     round
-                    ref="forgotPass"
+                    name="forgotPass"
                     class="btn"
                     color="grey"
             >
