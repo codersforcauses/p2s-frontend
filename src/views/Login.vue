@@ -134,7 +134,7 @@ export default {
           ...this.user,
         }).then(async () => {
           // logged in
-          this.$router.go(-1); // eslint-disable-line
+          this.$router.push({ name: 'dashboard' });
         }).catch(async (e) => {
           // Error on page
           this.alert = true;
