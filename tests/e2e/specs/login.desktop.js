@@ -8,12 +8,8 @@ describe('Desktop Login Test', () => {
   const email = fake.internet.email();
   const pass = fake.internet.password(8);
 
-  // const admin = {
-  //   email: 'super@admin.god',
-  //   pass: 'Qwerty123',
-  // };
-
   beforeEach(() => {
+    cy.clearLocalStorage();
     cy.visit('/login');
   });
 
@@ -40,6 +36,6 @@ describe('Desktop Login Test', () => {
 
   // Fails until connected to the backend
   // it('Logs user in, pass', () => {
-  //   cy.login(admin.email, admin.pass);
+  //   cy.login();
   // });
 });
