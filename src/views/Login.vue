@@ -5,6 +5,7 @@
         <v-alert  dismissible
                   v-model="alert"
                   type="error"
+                  name="alert"
                   :class="alertClass"
                   :transition="transitionClass"
         >
