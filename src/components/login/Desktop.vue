@@ -14,7 +14,7 @@
         </v-flex>
 
         <v-flex xs7 class="pa-0">
-          <v-card tile color="#272727" height="100%" style="padding: 28vh 15vw;">
+          <v-card tile flat color="#272727" height="100%" style="padding: 28vh 15vw;">
             <slot name="form"></slot>
           </v-card>
         </v-flex>

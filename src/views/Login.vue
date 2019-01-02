@@ -1,17 +1,18 @@
 <template>
-  <component :is="login">
+  <component :is="loginScreen">
     <template slot="form">
       <div>
         <v-alert  dismissible
                   v-model="alert"
                   type="error"
+                  name="alert"
                   :class="alertClass"
                   :transition="transitionClass"
         >
-          <strong> Error </strong>
+          Error: {{ error }}
         </v-alert>
 
-        <v-form v-model="valid" class="pt-5">
+        <v-form v-model="valid" @keyup.native.enter="valid && login($event)">
           <label  class="v-label"
                   :class="labelColour"
           >
@@ -20,12 +21,14 @@
           <v-text-field solo-inverted
                         flat
                         single-line
+                        name="email"
                         color="#c22032"
+                        height=20
+                        type="email"
+                        v-model="user.email"
+                        :disabled="loading"
                         :rules="[rules.required, rules.email]"
                         :dark="$vuetify.breakpoint.mdAndUp"
-                        height="20px"
-                        v-model="user.email"
-                        class="email"
           ></v-text-field>
 
           <label  class="v-label"
@@ -36,25 +39,28 @@
           <v-text-field solo-inverted
                         flat
                         single-line
+                        name="password"
                         color="#c22032"
+                        height=20
+                        v-model="user.password"
                         :rules="[rules.required]"
                         :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
                         :type="show ? 'text' : 'password'"
                         :dark="$vuetify.breakpoint.mdAndUp"
                         @click:append="show = !show"
-                        height="20px"
-                        v-model="user.password"
-                        class="password"
           ></v-text-field>
 
           <v-flex class="text-xs-center">
             <v-btn  large
                     round
+                    name="login"
+                    class="mt-4 px-5 btn"
                     :outline="$vuetify.breakpoint.smAndDown"
                     :depressed="$vuetify.breakpoint.mdAndUp"
                     :color="btnColour"
-                    class="mt-4 px-5"
-                    @click="alert = true"
+                    :disabled="!valid || loading"
+                    :loading="loading"
+                    @click.stop.prevent="login"
             >
               Login
             </v-btn>
@@ -64,6 +70,8 @@
             <v-btn  flat
                     small
                     round
+                    name="forgotPass"
+                    class="btn"
                     color="grey"
             >
               Forgot Password?
@@ -76,6 +84,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import mobile from '@/components/login/Mobile.vue';
 import desktop from '@/components/login/Desktop.vue';
 
@@ -91,6 +100,7 @@ export default {
       valid: false,
       show: false,
       alert: false,
+      error: '',
       rules: {
         required: v => !!v || 'This field is required',
         email: v => /.+@.+/.test(v) || 'Email must be valid',
@@ -98,7 +108,8 @@ export default {
     };
   },
   computed: {
-    login() {
+    ...mapState('auth', { loading: 'isAuthenticatePending' }),
+    loginScreen() {
       return this.$vuetify.breakpoint.smAndDown ? mobile : desktop;
     },
     btnColour() {
@@ -114,10 +125,31 @@ export default {
       return this.$vuetify.breakpoint.smAndDown ? 'slide-y-reverse-transition' : 'slide-y-transition';
     },
   },
+  methods: {
+    ...mapActions('auth', ['authenticate']),
+    async login() {
+      if (this.valid) {
+        await this.authenticate({
+          strategy: 'local',
+          ...this.user,
+        }).then(async () => {
+          // logged in
+          this.$router.push({ name: 'dashboard' }); // eslint-disable-line
+        }).catch(async (e) => {
+          // Error on page
+          this.alert = true;
+          this.error = e.message;
+        });
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.btn {
+  z-index: 5 !important;
+}
 .alert_large {
   border: 0;
   border-radius: 30px;
@@ -137,6 +169,6 @@ export default {
   right: 0;
   position: absolute;
   margin: 0;
-  z-index: auto;
+  z-index: 10 !important;
 }
 </style>
