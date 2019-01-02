@@ -53,8 +53,7 @@
             <v-btn  large
                     round
                     ref="login"
-                    class="mt-4 px-5"
-                    style="z-index: auto"
+                    class="mt-4 px-5 btn"
                     :outline="$vuetify.breakpoint.smAndDown"
                     :depressed="$vuetify.breakpoint.mdAndUp"
                     :color="btnColour"
@@ -71,7 +70,7 @@
                     small
                     round
                     ref="forgotPass"
-                    style="z-index: auto"
+                    class="btn"
                     color="grey"
             >
               Forgot Password?
@@ -147,6 +146,9 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  z-index: 5 !important;
+}
 .alert_large {
   border: 0;
   border-radius: 30px;
@@ -166,6 +168,6 @@ export default {
   right: 0;
   position: absolute;
   margin: 0;
-  z-index: auto;
+  z-index: 10 !important;
 }
 </style>
