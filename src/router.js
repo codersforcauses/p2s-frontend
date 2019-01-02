@@ -1,10 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Store from './store';
 import Login from './views/Login.vue';
 
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 
 Vue.use(Router);
+
+const isAuthenticated = (to, from, next) => {
+  Store.dispatch('auth/authenticate')
+    .then(() => next())
+    .catch(() => next('/login'));
+};
 
 export default new Router({
   mode: 'history',
@@ -14,11 +21,17 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      beforeEnter(to, from, next) {
+        Store.dispatch('auth/authenticate')
+          .then(() => next('/'))
+          .catch(() => next());
+      },
     },
     {
       path: '/',
       name: 'dashboard',
       component: Dashboard,
+      beforeEnter: isAuthenticated,
       // children: [
       //   {},
       // ],
