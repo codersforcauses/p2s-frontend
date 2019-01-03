@@ -1,8 +1,19 @@
 // https://docs.cypress.io/api/introduction/api.html
 
 describe('Landing Test', () => {
-  it('Visits the app root url and finds VueJS logo', () => {
+  beforeEach(() => {
+    cy.clearLocalStorage();
     cy.visit('/');
-    cy.get('div[class="home"]').find('img').should('be.visible');
   });
+
+  it('Visits the root app and is redirected to login', () => {
+    cy.url().should('include', '/login');
+  });
+
+  // Works only when connected to a server
+  // it('Visits the app root url and finds VueJS logo', () => {
+  //   cy.visit('/');
+  //   cy.login();
+  //   cy.get('div').find('img').should('be.visible');
+  // });
 });

@@ -1,14 +1,5 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <router-view/>
-  </div>
+  </v-app>
 </template>
-
-<style>
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Martel', serif;
-}
-body {
-  font-family: 'Lato', sans-serif;
-}
-</style>
