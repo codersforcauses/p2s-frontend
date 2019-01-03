@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Store from './store';
-import Login from './views/Login.vue';
 
+const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
+const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
 Vue.use(Router);
 
 const isAuthenticated = (to, from, next) => {
   Store.dispatch('auth/authenticate')
     .then(() => next())
-    .catch(() => next('/login'));
+    .catch(() => next({ name: 'login' }));
 };
 
 export default new Router({
@@ -21,12 +22,17 @@ export default new Router({
   },
   routes: [
     {
+      path: '*',
+      name: 'error',
+      component: Error,
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login,
       beforeEnter(to, from, next) {
         Store.dispatch('auth/authenticate')
-          .then(() => next('/'))
+          .then(() => next({ name: 'dashboard' }))
           .catch(() => next());
       },
     },
