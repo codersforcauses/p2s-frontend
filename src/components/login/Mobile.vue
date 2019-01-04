@@ -15,7 +15,7 @@
           <v-flex xs12 class="pa-0">
             <v-card flat class="px-4">
               <v-img  contain
-                      class="mx-auto pt-5 pb-3"
+                      class="mx-auto pt-5 pb-4"
                       max-width="32vmax"
                       :src="require('@/assets/p2s-logo.svg')"
               ></v-img>
