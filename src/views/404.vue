@@ -1,7 +1,11 @@
 <template>
   <v-content>
     <v-toolbar flat app color="transparent">
-      <v-btn flat color="black" @click="$router.back()">
+      <v-btn  flat
+              name="back"
+              color="black"
+              @click="$router.back()"
+      >
         <v-icon> mdi-arrow-left </v-icon>
         <span class="ml-1"> Go Back </span>
       </v-btn>
