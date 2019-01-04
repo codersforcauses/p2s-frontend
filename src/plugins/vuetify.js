@@ -9,15 +9,12 @@ const minifyTheme = css => (process.env.NODE_ENV === 'production'
 
 Vue.use(Vuetify, {
   theme: {
-    light_primary: '#BD342D',
-    light_secondary: '#2F2F2F',
+    lightPrimary: '#BD342D',
+    lightSecondary: '#2F2F2F',
 
-    dark_primary: '#F87F79',
-    dark_secondary: '#E3E3E3',
-    // light_info: '#2274A5', // 016fb9
-    // light_success: '#002500',
-    // light_warning: '#E28413',
-    // light_error: '#550C18',
+    darkPrimary: '#F87F79',
+    darkSecondary: '#E3E3E3',
+
     info: '#6abecf',
     success: '#82cf6a',
     warning: '#f1d778',
