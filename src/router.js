@@ -5,8 +5,8 @@ import Store from './store';
 // Login page
 const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
 
-// Dashboards
-const Dashboard = () => import('./views/Dashboard.vue');
+// Dashboard
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 
 Vue.use(Router);
 

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <v-snackbar bottom
                 left
                 v-model="snackWithButtons"
