@@ -1,8 +1,22 @@
 <template>
-  <v-toolbar flat>
-    <v-toolbar-title>
-      Dashboard
-    </v-toolbar-title>
+  <v-toolbar dark flat app>
+      <v-btn  icon
+              v-show="$vuetify.breakpoint.mdAndDown"
+              @click="$router.history.back()"
+      >
+        <v-icon> mdi-arrow-left </v-icon>
+      </v-btn>
+
+      <v-divider  inset
+                  vertical
+                  class="mr-3"
+                  v-show="$vuetify.breakpoint.mdAndDown"
+      />
+
+      <v-toolbar-title class="ml-0">
+        Dashboard
+      </v-toolbar-title>
+
     <v-spacer/>
 
     <v-toolbar-items>
@@ -50,7 +64,7 @@ export default {
     logout() {
       this.authLogout()
         .then(() => {
-          this.$router.push('/');
+          this.$router.push('/login');
         });
     },
   },
