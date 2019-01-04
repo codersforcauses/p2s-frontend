@@ -2,7 +2,7 @@
   <v-toolbar dark flat app>
       <v-btn  icon
               v-show="$vuetify.breakpoint.mdAndDown"
-              @click="$router.history.back()"
+              @click="$router.back()"
       >
         <v-icon> mdi-arrow-left </v-icon>
       </v-btn>
