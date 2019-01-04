@@ -8,7 +8,7 @@
                     class="mx-auto"
                     height="100%"
                     max-width="27vmax"
-                    :src="require('@/assets/p2s_massive.png')"
+                    :src="require('@/assets/p2s-logo.svg')"
             ></v-img>
           </v-card>
         </v-flex>

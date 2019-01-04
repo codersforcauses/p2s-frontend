@@ -13,7 +13,7 @@
         </v-alert>
 
         <v-form v-model="valid" @keyup.native.enter="valid && login($event)">
-          <label  class="v-label"
+          <label  class="v-label ml-4"
                   :class="labelColour"
           >
             EMAIL
@@ -31,7 +31,7 @@
                         :dark="$vuetify.breakpoint.mdAndUp"
           ></v-text-field>
 
-          <label  class="v-label"
+          <label  class="v-label ml-4"
                   :class="labelColour"
           >
             PASSWORD
