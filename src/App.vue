@@ -80,4 +80,7 @@ export default {
   border-radius: 24px !important;
   padding: 0 1rem !important;
 }
+.v-card {
+  border-radius: 1.25rem;
+}
 </style>
