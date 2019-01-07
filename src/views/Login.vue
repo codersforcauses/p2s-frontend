@@ -44,7 +44,7 @@
                         height=20
                         v-model="user.password"
                         :rules="[rules.required]"
-                        :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                         :type="show ? 'text' : 'password'"
                         :dark="$vuetify.breakpoint.mdAndUp"
                         @click:append="show = !show"
