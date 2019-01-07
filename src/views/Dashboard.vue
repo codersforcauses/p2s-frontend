@@ -2,11 +2,16 @@
   <v-app :dark="dark">
     <toolbar @dark="setTheme" v-bind="{ dark }" />
     <v-content>
-      <v-container fill-height fluid grid-list-lg>
-        <v-layout fill-height row wrap>
-          <router-view/>
-        </v-layout>
-      </v-container>
+      <v-sheet  tile
+                min-height="100vh"
+                color="#2F2F2F"
+      >
+        <v-container fill-height fluid grid-list-lg>
+          <v-layout fill-height row wrap>
+            <router-view/>
+          </v-layout>
+        </v-container>
+      </v-sheet>
     </v-content>
   </v-app>
 </template>

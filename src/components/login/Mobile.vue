@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-toolbar dark flat color="lightPrimary">
+    <v-toolbar flat color="lightPrimary">
       <v-toolbar-title class="pl-3 headline">
         Login
       </v-toolbar-title>
