@@ -30,8 +30,8 @@
 
 <style scoped>
 .v-card {
-  border-top-left-radius: 1.25rem;
-  border-top-right-radius: 1.25rem;
+  border-top-left-radius: var(--thiccness);
+  border-top-right-radius: var(--thiccness);
   background-color: #EBEBEB;
   height: calc(100vh - 56px);
   margin-left: -8px;

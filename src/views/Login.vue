@@ -23,7 +23,6 @@
                         single-line
                         name="email"
                         color="#c22032"
-                        height=20
                         type="email"
                         v-model="user.email"
                         :disabled="loading"
@@ -41,7 +40,6 @@
                         single-line
                         name="password"
                         color="#c22032"
-                        height=20
                         v-model="user.password"
                         :rules="[rules.required]"
                         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"

@@ -72,15 +72,22 @@ export default {
 </script>
 
 <style>
+:root {
+  --thiccness: 1.25rem;
+}
 /* Provide better right-edge spacing when using an icon button there. */
 .snack >>> .v-snack__content {
   padding-right: 16px;
 }
 .v-input__slot {
-  border-radius: 24px !important;
+  border-radius: var(--thiccness) !important;
   padding: 0 1rem !important;
+  height: calc(2 * var(--thiccness));
 }
 .v-card {
-  border-radius: 1.25rem;
+  border-radius: var(--thiccness);
+}
+.v-btn--round {
+  height: calc(2 * var(--thiccness))
 }
 </style>
