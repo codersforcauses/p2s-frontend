@@ -3,8 +3,8 @@
     <toolbar v-model="dark" />
     <v-content>
       <v-sheet  tile
-                min-height="100vh"
-                color="#2F2F2F"
+                min-height="100%"
+                :color="primary"
       >
         <v-container fill-height fluid grid-list-lg>
           <v-layout fill-height row wrap>
@@ -24,13 +24,25 @@ export default {
   components: {
     toolbar,
   },
-  mounted() {
-    this.dark = this.$store.state.auth.user.darktheme;
-  },
   data() {
     return {
       dark: false,
     };
   },
+  mounted() {
+    this.dark = this.$store.state.auth.user.darktheme;
+  },
+  computed: {
+    primary() {
+      return this.dark ? 'darkPrimary' : 'lightPrimary';
+    },
+  },
 };
 </script>
+
+<style scoped>
+.v-sheet {
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+}
+</style>
