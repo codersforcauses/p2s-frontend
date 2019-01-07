@@ -22,7 +22,7 @@
     <v-toolbar-items>
       <v-btn  :flat="$vuetify.breakpoint.mdAndUp"
               :icon="$vuetify.breakpoint.smAndDown"
-              @click="$emit('dark')"
+              @click="setTheme"
       >
         <v-icon :left="$vuetify.breakpoint.mdAndUp">
           mdi-theme-light-dark
@@ -53,19 +53,36 @@
 import { mapActions } from 'vuex';
 
 export default {
-  props: ['dark'],
+  props: ['value'],
   computed: {
+    dark: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      },
+    },
     theme() {
       return this.dark ? 'Light' : 'Dark';
     },
   },
   methods: {
     ...mapActions('auth', { authLogout: 'logout' }),
+    ...mapActions('users', { patchTheme: 'patch' }),
     logout() {
       this.authLogout()
         .then(() => {
           this.$router.push('/login');
         });
+    },
+    async setTheme() {
+      const tempDark = !this.dark;
+      await this.patchTheme([
+        this.$store.state.auth.payload.userId,
+        { darktheme: tempDark },
+      ]);
+      this.dark = tempDark;
     },
   },
 };

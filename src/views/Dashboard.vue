@@ -1,6 +1,6 @@
 <template>
   <v-app :dark="dark">
-    <toolbar @dark="setTheme" v-bind="{ dark }" />
+    <toolbar v-model="dark" />
     <v-content>
       <v-sheet  tile
                 min-height="100vh"
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import toolbar from '@/other/Toolbar.vue';
 
 export default {
@@ -26,23 +25,12 @@ export default {
     toolbar,
   },
   mounted() {
-    this.dark = this.auth.user.darktheme;
+    this.dark = this.$store.state.auth.user.darktheme;
   },
   data() {
     return {
-      auth: this.$store.state.auth,
       dark: false,
     };
-  },
-  methods: {
-    ...mapActions('users', { patchTheme: 'patch' }),
-    setTheme() {
-      this.dark = !this.dark;
-      this.patchTheme([
-        this.auth.payload.userId,
-        { darktheme: this.dark },
-      ]);
-    },
   },
 };
 </script>
