@@ -6,9 +6,9 @@
                 min-height="100%"
                 :color="sheet"
       >
-        <v-container fluid class="pa-0">
+        <v-container fluid grid-list-lg>
           <v-layout fill-height row wrap>
-            <v-flex xs12 sm6 v-for="i in 3" :key="i">
+            <v-flex xs12 sm6 md4 v-for="i in 3" :key="i">
               <v-card flat>
                 <v-sparkline
                   :value="values"
@@ -89,7 +89,10 @@ export default {
   border-radius: var(--thiccness);
 }
 
-.flex + .flex {
-  margin-top: 1rem;
+.container {
+  padding: var(--thiccness);
+}
+.container.grid-list-lg .layout:only-child {
+  margin: calc(-1 * var(--thiccness) - 8px);
 }
 </style>
