@@ -1,13 +1,4 @@
 <template>
-<<<<<<< Bottom-Navigation
-  <div>
-    <BottomNav/>
-  </div>
-</template>
-
-<script>
-import BottomNav from '@/components/BottomNav.vue';
-=======
   <v-app :dark="dark">
     <toolbar v-model="dark" />
     <v-content>
@@ -17,20 +8,19 @@ import BottomNav from '@/components/BottomNav.vue';
         </v-layout>
       </v-container>
     </v-content>
+    <bottomnav/>
   </v-app>
 </template>
 
 <script>
 import toolbar from '@/other/Toolbar.vue';
->>>>>>> dev
+import bottomnav from '@/other/BottomNav.vue';
 
 export default {
   name: 'dashboard',
   components: {
-<<<<<<< Bottom-Navigation
-    BottomNav,
-=======
     toolbar,
+    bottomnav,
   },
   mounted() {
     this.dark = this.$store.state.auth.user.darktheme;
@@ -39,7 +29,6 @@ export default {
     return {
       dark: false,
     };
->>>>>>> dev
   },
 };
 </script>
