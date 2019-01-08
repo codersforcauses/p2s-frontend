@@ -4,9 +4,10 @@
     <div>Coach: {{ coach }} </div>
     <div>Manager: {{ manager }} </div>
     <div>Admin: {{ admin }} </div>
+    <div>Show bar: {{ checkPerm }} </div>
     <v-bottom-nav
       :active.sync="bottomNav"
-      :value="true"
+      :value="checkPerm"
       app
     >
       <v-btn
@@ -48,10 +49,24 @@ export default {
   data() {
     return {
       bottomNav: 'none',
-      coach: true,
-      manager: true,
+      coach: false,
+      manager: false,
       admin: true,
     };
+  },
+  computed: {
+    checkPerm() {
+      if (this.coach && !this.manager && !this.admin) {
+        return false;
+      }
+      if (!this.coach && this.manager && !this.admin) {
+        return false;
+      }
+      if (!this.coach && !this.manager && this.admin) {
+        return false;
+      }
+      return true;
+    },
   },
 };
 </script>
