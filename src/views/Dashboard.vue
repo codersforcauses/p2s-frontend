@@ -8,16 +8,19 @@
         </v-layout>
       </v-container>
     </v-content>
+    <bottomnav/>
   </v-app>
 </template>
 
 <script>
 import toolbar from '@/other/Toolbar.vue';
+import bottomnav from '@/other/BottomNav.vue';
 
 export default {
   name: 'dashboard',
   components: {
     toolbar,
+    bottomnav,
   },
   mounted() {
     this.dark = this.$store.state.auth.user.darktheme;
