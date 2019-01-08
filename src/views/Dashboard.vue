@@ -92,15 +92,4 @@ export default {
 .flex + .flex {
   margin-top: 1rem;
 }
-
-.v-bottom-nav {
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
-.v-bottom-nav.theme--light {
-  background-color: #e4e4e4;
-}
-.v-bottom-nav.theme--dark {
-  background-color: #464646;
-}
 </style>
