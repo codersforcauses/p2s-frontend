@@ -9,16 +9,19 @@
       </v-container>
     </v-content>
     <bottomnav/>
+    <FloatingActionButton/>
   </v-app>
 </template>
 
 <script>
 import toolbar from '@/other/Toolbar.vue';
 import bottomnav from '@/other/BottomNav.vue';
+import FloatingActionButton from '@/components/FloatingActionButton.vue';
 
 export default {
   name: 'dashboard',
   components: {
+    FloatingActionButton,
     toolbar,
     bottomnav,
   },
