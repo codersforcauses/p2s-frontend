@@ -15,7 +15,7 @@
         flat
         value="Coach Page"
       >
-        <span v-show="$vuetify.breakpoint.mdAndUp">Coaches</span>
+        <span v-show="$vuetify.breakpoint.smAndUp">Coaches</span>
         <v-icon>mdi-football</v-icon>
       </v-btn>
 
@@ -25,7 +25,7 @@
         flat
         value="Regional Manager Page"
       >
-        <span v-show="$vuetify.breakpoint.mdAndUp">Regional Managers</span>
+        <span v-show="$vuetify.breakpoint.smAndUp">Regional Managers</span>
         <v-icon>mdi-sitemap</v-icon>
       </v-btn>
 
@@ -35,7 +35,7 @@
         flat
         value="Admin Page"
       >
-        <span v-show="$vuetify.breakpoint.mdAndUp">Administrators</span>
+        <span v-show="$vuetify.breakpoint.smAndUp">Administrators</span>
         <v-icon>mdi-security-account</v-icon>
       </v-btn>
     </v-bottom-nav>
