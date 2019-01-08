@@ -1,5 +1,6 @@
 <template>
   <v-speed-dial
+    v-model="fab"
     bottom
     right
     direction="top"
@@ -8,10 +9,12 @@
   >
     <v-btn
       slot="activator"
+      v-model="fab"
       color="red darken-2"
       fab
     >
       <v-icon title="Forms">mdi-file-document-box-outline</v-icon>
+      <v-icon>mdi-close</v-icon>
     </v-btn>
     <v-btn
       fab
@@ -41,7 +44,7 @@
 export default {
   data() {
     return {
-
+      fab: false,
     };
   },
 };
