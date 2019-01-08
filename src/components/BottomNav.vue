@@ -7,7 +7,7 @@
     <v-bottom-nav
       :active.sync="bottomNav"
       :value="true"
-      fixed
+      app
     >
       <v-btn
         v-if="coach"
