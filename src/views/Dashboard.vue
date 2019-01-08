@@ -47,26 +47,22 @@
         </v-container>
       </v-sheet>
     </v-content>
-    <v-bottom-nav
-      app
-      value=true
-      active.sync="value"
-    >
-      <v-btn flat>
-        <span>text</span>
-        <v-icon>mdi-arrow-up</v-icon>
-      </v-btn>
-    </v-bottom-nav>
+    <bottomnav/>
+    <FloatingActionButton/>
   </v-app>
 </template>
 
 <script>
 import toolbar from '@/other/Toolbar.vue';
+import bottomnav from '@/other/BottomNav.vue';
+import FloatingActionButton from '@/components/FloatingActionButton.vue';
 
 export default {
   name: 'dashboard',
   components: {
+    FloatingActionButton,
     toolbar,
+    bottomnav,
   },
   data() {
     return {
