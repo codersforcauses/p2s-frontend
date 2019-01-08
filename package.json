@@ -11,9 +11,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "@feathersjs/authentication-client": "^1.0.9",
-    "@feathersjs/feathers": "^3.3.0",
-    "@feathersjs/socketio-client": "^1.2.0",
+    "@feathersjs/client": "^3.7.7",
     "feathers-vuex": "^1.6.2",
     "register-service-worker": "^1.5.2",
     "socket.io-client": "^2.2.0",
