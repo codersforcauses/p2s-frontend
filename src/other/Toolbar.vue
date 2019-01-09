@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar flat app>
+  <v-toolbar flat app height=64>
       <v-btn  icon
               v-show="$vuetify.breakpoint.mdAndDown"
               @click="$router.back()"
