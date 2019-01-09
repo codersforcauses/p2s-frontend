@@ -8,7 +8,7 @@
       >
         <v-container fluid grid-list-lg>
           <v-layout fill-height row wrap>
-            <v-flex xs12 sm6 md4 v-for="i in 3" :key="i">
+            <v-flex xs12 sm6 md4 v-for="i in 12" :key="i">
               <v-card flat>
                 <v-sparkline
                   :value="values"
@@ -47,20 +47,20 @@
         </v-container>
       </v-sheet>
     </v-content>
-    <bottomnav/>
-    <FloatingActionButton/>
+    <fab v-bind="{ dark }" />
+    <bottomnav v-bind="{ dark }" />
   </v-app>
 </template>
 
 <script>
 import toolbar from '@/other/Toolbar.vue';
 import bottomnav from '@/other/BottomNav.vue';
-import FloatingActionButton from '@/components/FloatingActionButton.vue';
+import fab from '@/other/FAB.vue';
 
 export default {
   name: 'dashboard',
   components: {
-    FloatingActionButton,
+    fab,
     toolbar,
     bottomnav,
   },

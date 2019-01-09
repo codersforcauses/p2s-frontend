@@ -1,37 +1,35 @@
 <template>
-  <v-bottom-nav
-    :active.sync="bottomNav"
-    :value="checkPerm"
-    app
+  <v-bottom-nav app
+                shift
+                mandatory
+                :active.sync="bottomNav"
+                :value="checkPerm"
   >
-    <v-btn
-      v-if="coach"
-      color="teal"
-      flat
-      value="Coach Page"
+    <v-btn  flat
+            v-show="coach"
+            :color="primary"
+            value="Coach Page"
     >
-      <span v-show="$vuetify.breakpoint.smAndUp">Coaches</span>
-      <v-icon>mdi-football</v-icon>
+      <span> Coach </span>
+      <v-icon> mdi-football </v-icon>
     </v-btn>
 
-    <v-btn
-      v-if="manager"
-      color="teal"
-      flat
-      value="Regional Manager Page"
+    <v-btn  flat
+            v-show="manager"
+            :color="primary"
+            value="Regional Manager Page"
     >
-      <span v-show="$vuetify.breakpoint.smAndUp">Regional Managers</span>
-      <v-icon>mdi-sitemap</v-icon>
+      <span> Regional Manager </span>
+      <v-icon> mdi-sitemap </v-icon>
     </v-btn>
 
-    <v-btn
-      v-if="admin"
-      color="teal"
-      flat
-      value="Admin Page"
+    <v-btn  flat
+            v-show="admin"
+            :color="primary"
+            value="Admin Page"
     >
-      <span v-show="$vuetify.breakpoint.smAndUp">Administrators</span>
-      <v-icon>mdi-security-account</v-icon>
+      <span> Administrator </span>
+      <v-icon> mdi-shield-account </v-icon>
     </v-btn>
   </v-bottom-nav>
 </template>
@@ -39,10 +37,11 @@
 <script>
 
 export default {
+  props: ['dark'],
   data() {
     return {
-      bottomNav: 'none',
-      coach: false,
+      bottomNav: 'Admin Page',
+      coach: true,
       manager: true,
       admin: true,
     };
@@ -59,6 +58,9 @@ export default {
         return false;
       }
       return true;
+    },
+    primary() {
+      return this.dark ? 'darkPrimary' : 'lightPrimary';
     },
   },
 };
