@@ -72,7 +72,7 @@ export default {
   -webkit-box-shadow: none;
 }
 .v-bottom-nav.theme--light {
-  background-color: #e4e4e4;
+  background-color: #e0e0e0;
 }
 .v-bottom-nav.theme--dark {
   background-color: #464646;
