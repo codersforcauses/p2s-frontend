@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-toolbar flat color="lightPrimary">
+    <v-toolbar flat dark color="lightPrimary">
       <v-toolbar-title class="pl-3 headline">
         Login
       </v-toolbar-title>
@@ -13,14 +13,14 @@
       <v-container fill-height fluid grid-list-lg class="py-0">
         <v-layout fill-height row wrap>
           <v-flex xs12 class="pa-0">
-            <v-card flat class="px-4">
+            <v-sheet flat class="px-4 login">
               <v-img  contain
                       class="mx-auto pt-5 pb-4"
                       max-width="32vmax"
                       :src="require('@/assets/p2s-logo.svg')"
               ></v-img>
               <slot name="form"></slot>
-            </v-card>
+            </v-sheet>
           </v-flex>
         </v-layout>
       </v-container>
@@ -29,7 +29,7 @@
 </template>
 
 <style scoped>
-.v-card {
+.login.v-sheet {
   border-top-left-radius: var(--thiccness);
   border-top-right-radius: var(--thiccness);
   background-color: #EBEBEB;
