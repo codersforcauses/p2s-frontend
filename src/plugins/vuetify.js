@@ -1,18 +1,27 @@
+/* eslint-disable import/no-unresolved */
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
+import '@/assets/stylus/main.styl';
+
+const minifyTheme = css => (process.env.NODE_ENV === 'production'
+  ? css.replace(/[\s|\r\n|\r|\n]/g, '')
+  : css);
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#ee44aa',
-    secondary: '#424242',
-    accent: '#82B1FF',
-    error: '#FF5252',
-    info: '#2196F3',
-    success: '#4CAF50',
-    warning: '#FFC107',
+    lightPrimary: '#BD342D',
+    lightSecondary: '#2F2F2F',
+
+    darkPrimary: '#F87F79',
+    darkSecondary: '#E3E3E3',
+
+    info: '#6abecf',
+    success: '#82cf6a',
+    warning: '#f1d778',
+    error: '#ff4848',
   },
   options: {
+    minifyTheme,
     customProperties: true,
   },
   iconfont: 'mdi',

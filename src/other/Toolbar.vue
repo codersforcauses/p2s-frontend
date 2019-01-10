@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dark flat app>
+  <v-toolbar flat app height=64>
       <v-btn  icon
               v-show="$vuetify.breakpoint.mdAndDown"
               @click="$router.back()"
@@ -13,7 +13,7 @@
                   v-show="$vuetify.breakpoint.mdAndDown"
       />
 
-      <v-toolbar-title class="ml-0">
+      <v-toolbar-title class="ml-0 headline">
         Dashboard
       </v-toolbar-title>
 

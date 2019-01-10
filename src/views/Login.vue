@@ -13,7 +13,7 @@
         </v-alert>
 
         <v-form v-model="valid" @keyup.native.enter="valid && login($event)">
-          <label  class="v-label"
+          <label  class="v-label ml-4"
                   :class="labelColour"
           >
             EMAIL
@@ -23,7 +23,6 @@
                         single-line
                         name="email"
                         color="#c22032"
-                        height=20
                         type="email"
                         v-model="user.email"
                         :disabled="loading"
@@ -31,7 +30,7 @@
                         :dark="$vuetify.breakpoint.mdAndUp"
           ></v-text-field>
 
-          <label  class="v-label"
+          <label  class="v-label ml-4"
                   :class="labelColour"
           >
             PASSWORD
@@ -41,10 +40,9 @@
                         single-line
                         name="password"
                         color="#c22032"
-                        height=20
                         v-model="user.password"
                         :rules="[rules.required]"
-                        :append-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                         :type="show ? 'text' : 'password'"
                         :dark="$vuetify.breakpoint.mdAndUp"
                         @click:append="show = !show"

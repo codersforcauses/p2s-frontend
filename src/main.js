@@ -5,6 +5,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
+import titleMixin from './mixins/title';
+
+Vue.mixin(titleMixin);
 
 Vue.config.productionTip = false;
 

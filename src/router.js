@@ -2,7 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Store from './store';
 
+// Login page
 const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
+
+// Dashboard
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
@@ -45,13 +48,5 @@ export default new Router({
       //   {},
       // ],
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-    // },
   ],
 });

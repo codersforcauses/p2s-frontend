@@ -1,0 +1,204 @@
+// Theme
+// ======================================================
+
+$heading-font-family = 'Martel'
+$body-font-family = 'Lato'
+$font-size-root = 12pt
+
+@import '~vuetify/src/stylus/settings/_variables'
+
+
+// Theme
+// ============================================================
+
+// Material Design - https://material.io/guidelines/style/color.html#color-usability
+// ============================================================
+$material-light = {
+  status-bar: { // TODO
+    regular: #E0E0E0,
+    lights-out: rgba(#fff, .7)
+  },
+  app-bar: #e0e0e0,
+  background: #e0e0e0,
+  cards: #fafafa,
+  chips: { // TODO
+    background: $grey.lighten-2,
+    color: rgba(#000, .87)
+  },
+  dividers: rgba(#000, .12), // TODO
+  text: {
+    theme: #fff, // TODO
+    primary: #2f2f2f,
+    secondary: rgba(#2f2f2f, 0.65),
+    disabled: rgba(#000, .38), // TODO
+    link: $blue.darken-2, // TODO
+    link-hover: $grey.darken-3 // TODO
+  },
+  icons: {
+    active: rgba(#000, .54),
+    inactive: rgba(#000, .38)
+  },
+  inputs: {
+    box: rgba(#000, .04), // TODO
+    solo-inverted: rgba(#000, .16), // TODO
+    solo-inverted-focused: #424242, // TODO
+    solo-inverted-focused-text: #fff // TODO
+  },
+  buttons: { // TODO
+    disabled: rgba(#000, .26),
+    focused: rgba(#000, .12),
+    focused-alt: rgba(#fff, .6),
+    pressed: rgba(#999, .4)
+  },
+  expansion-panels: { // TODO
+    focus: #EEEEEE
+  },
+  list-tile: { // TODO
+    hover: rgba(#000, .04)
+  },
+  selection-controls: { // TODO
+    thumb: {
+      inactive: $grey.lighten-5,
+      disabled: $grey.lighten-1
+    },
+    track: {
+      inactive: rgba(#000, .38),
+      disabled: rgba(#000, .12)
+    }
+  },
+  slider: { // TODO
+    active: rgba(#000, .38),
+    inactive: rgba(#000, .26),
+    disabled: rgba(#000, .26),
+    discrete: #000
+  },
+  tabs: { // TODO
+    active: rgba(#000, .87)
+  },
+  text-fields: { // TODO
+    box: rgba(#000, .06),
+    box-hover: rgba(#000, .12)
+  },
+  input-bottom-line: rgba(#000, .42), // TODO
+  stepper: { // TODO
+    active: rgba(#fff, 1),
+    completed: rgba(#000, 0.87),
+    hover: rgba(#000, 0.54)
+  },
+  table: { // TODO
+    active: $grey.lighten-4
+    hover: $grey.lighten-3
+  },
+  picker: { // TODO
+    body: #fff,
+    clock: $grey.lighten-2,
+    indeterminateTime: $grey.lighten-1,
+    title: $grey.lighten-2
+  },
+  bg-color: #fff
+  fg-color: #000
+  text-color: #000
+  primary-text-percent: .87
+  secondary-text-percent: .54
+  disabledORhints-text-percent: .38
+  divider-percent: .12
+  active-icon-percent: .54
+  inactive-icon-percent: .38
+}
+
+$material-dark = {
+  status-bar: { // TODO
+    regular: #000000,
+    lights-out: rgba(#000, .2)
+  },
+  app-bar: #464646,
+  background: #464646,
+  cards: #383838,
+  chips: { // TODO
+    background: #555,
+    color: #fff
+  },
+  dividers: rgba(#fff, .12), // TODO
+  text: {
+    theme: yellow,
+    primary: #E3E3E3,
+    secondary: rgba(#E3E3E3, 0.65),
+    disabled: rgba(#fff, .50), // TODO
+    link: $blue.accent-1, // TODO
+    link-hover: $grey.lighten-3 // TODO
+  },
+  icons: {
+    active: #E3E3E3,
+    inactive: rgba(#fff, .5) // TODO
+  },
+  inputs: {
+    box: #fff, // TODO
+    solo-inverted: rgba(#fff, .16), // TODO
+    solo-inverted-focused: #fff, // TODO
+    solo-inverted-focused-text: $material-light.text.primary
+  },
+  list-tile: {
+    hover: rgba(#fff, .08)
+  },
+  buttons: {
+    disabled: rgba(#fff, .3),
+    focused: rgba(#fff, .12),
+    focused-alt: rgba(#fff, .1),
+    pressed: rgba(#ccc, .25)
+  },
+  expansion-panels: {
+    focus: #494949 // TODO
+  },
+  selection-controls: { // TODO
+    thumb: {
+      inactive: $grey.lighten-1,
+      disabled: $grey.darken-3
+    },
+    track: {
+      inactive: rgba(#fff, .3),
+      disabled: rgba(#fff, .1)
+    }
+  },
+  slider: {
+    active: rgba(#fff, .3),
+    inactive: rgba(#fff, .2),
+    disabled: rgba(#fff, .2),
+    discrete: #fff
+  },
+  tabs: {
+    active: #fff
+  },
+  text-fields: {
+    box: rgba(#000, .1),
+    box-hover: rgba(#000, .2),
+    box-focus: rgba(#000, .3)
+  },
+  input-bottom-line: rgba(#fff, .7),
+
+  stepper: {
+    active: rgba(#fff, 1),
+    completed: rgba(#fff, 0.87),
+    hover: rgba(#fff, 0.75)
+  },
+  table: {
+    active: #505050
+    hover: $grey.darken-2
+  },
+  picker: {
+    body: #424242,
+    clock: $grey.darken-2,
+    indeterminateTime: $grey.darken-1,
+    title: $grey.darken-2
+  },
+  bg-color: #303030
+  fg-color: #fff
+  text-color: #fff
+  primary-text-percent: 1
+  secondary-text-percent: .70
+  disabledORhints-text-percent: .50
+  divider-percent: .12
+  active-icon-percent: 1
+  inactive-icon-percent: .50
+}
+
+@require '~vuetify/src/stylus/main'
