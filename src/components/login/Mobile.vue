@@ -1,40 +1,40 @@
 <template>
   <v-content>
-    <v-toolbar dark flat color="#c22032">
-      <v-toolbar-title class="pl-3">
+    <v-toolbar flat dark color="lightPrimary" height=64>
+      <v-toolbar-title class="pl-3 headline">
         Login
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-container fluid class="background">
-      <v-layout fill-height row wrap>
-        <v-flex xs12>
-          <v-card flat>
-            <v-img  contain
-                    class="mx-auto pt-5"
-                    max-width="32vmax"
-                    :src="require('@/assets/p2s_massive.png')"
-            ></v-img>
-            <slot name="form"></slot>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-sheet  tile
+              height="calc(100% - 56px)"
+              color="lightPrimary"
+    >
+      <v-container fill-height fluid grid-list-lg class="py-0">
+        <v-layout fill-height row wrap>
+          <v-flex xs12 class="pa-0">
+            <v-sheet flat class="px-4 login">
+              <v-img  contain
+                      class="mx-auto pt-5 pb-4"
+                      max-width="32vmax"
+                      :src="require('@/assets/p2s-logo.svg')"
+              ></v-img>
+              <slot name="form"></slot>
+            </v-sheet>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-sheet>
   </v-content>
 </template>
 
 <style scoped>
-.background {
-  background-color: #c22032;
-  padding-bottom: 0;
-  height: calc(100vh - 56px);
-}
-.v-card {
-  border-top-left-radius: 1.25rem;
-  border-top-right-radius: 1.25rem;
+.login.v-sheet {
+  border-top-left-radius: var(--thiccness);
+  border-top-right-radius: var(--thiccness);
   background-color: #EBEBEB;
-  margin: -16px;
-  padding: 3rem;
-  height: calc(100% + 16px);
+  height: calc(100vh - 56px);
+  margin-left: -8px;
+  margin-right: -8px;
 }
 </style>
