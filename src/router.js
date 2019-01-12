@@ -19,7 +19,6 @@ Vue.use(Router);
 //     .catch(() => next({ name: 'login' }));
 // };
 
-
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -52,33 +51,32 @@ const router = new Router({
           path: 'admin',
           name: 'admin',
           component: Admin,
-          meta: { requiresAuth: true, permission: 'admin' },
+          meta: { permission: 'admin' },
         },
       ],
     },
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth === true)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    Store.dispatch('auth/authenticate')
-      .then(() => {
-        const requiredPerm = to.matched.find(record => record.meta.permission);
-        if (requiredPerm !== undefined) {
-          if (Store.getters['users/current'][requiredPerm.meta.permission].is === true) {
-            next();
-          } else {
-            next({ name: 'error' });
-          }
-        } else {
-          next();
-        }
-      })
-      .catch(() => {
-        next({ name: 'login' });
-      });
+    try {
+      await Store.dispatch('auth/authenticate');
+    } catch {
+      next({ name: 'login' });
+    }
+    const requiredPerm = to.matched.find(record => record.meta.permission);
+    if (requiredPerm !== undefined) {
+      if (Store.getters['users/current'][requiredPerm.meta.permission].is === true) {
+        next();
+      } else {
+        next({ name: 'error' });
+      }
+    } else {
+      next();
+    }
   } else {
     next(); // make sure to always call next()!
   }
