@@ -39,7 +39,7 @@ const router = new Router({
       beforeEnter(to, from, next) {
         Store.dispatch('auth/authenticate')
           .then(() => next({ name: 'dashboard' }))
-          .catch(next);
+          .catch(() => next());
       },
     },
     {
@@ -47,14 +47,12 @@ const router = new Router({
       name: 'dashboard',
       component: Dashboard,
       meta: { requiresAuth: true },
-      // beforeEnter: isAuthenticated,
       children: [
         {
           path: 'admin',
           name: 'admin',
           component: Admin,
           meta: { requiresAuth: true, permission: 'admin' },
-          // beforeEnter: isAuthenticated,
         },
       ],
     },
