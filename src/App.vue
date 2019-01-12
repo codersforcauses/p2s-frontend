@@ -79,14 +79,21 @@ export default {
 .snack >>> .v-snack__content {
   padding-right: 16px;
 }
+
 .v-input__slot {
   border-radius: var(--thiccness) !important;
   padding: 0 1rem !important;
   height: calc(2 * var(--thiccness));
 }
-.v-card {
+.v-messages__message {
+  margin: 0 0.75rem;
+  min-height: 1rem;
+}
+
+.v-card, .v-dialog {
   border-radius: var(--thiccness);
 }
+
 .v-btn--round {
   height: calc(2 * var(--thiccness))
 }

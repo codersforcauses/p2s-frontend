@@ -38,10 +38,12 @@
                   <v-btn
                     flat
                     round
+                    @click="dialog = true"
                   >Explore</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
+            <invite v-model="dialog" v-bind="{ dark }"/>
             <router-view/>
           </v-layout>
         </v-container>
@@ -57,16 +59,24 @@ import toolbar from '@/other/Toolbar.vue';
 import bottomnav from '@/other/BottomNav.vue';
 import fab from '@/other/FAB.vue';
 
+const invite = import('@/components/admin/modals/UserInvite.vue');
+
 export default {
   name: 'dashboard',
   components: {
     fab,
     toolbar,
     bottomnav,
+    invite: () => ({
+      component: invite,
+      delay: 100,
+      setTimeout: 3000,
+    }),
   },
   data() {
     return {
       dark: false,
+      dialog: false,
       values: [0, 5, 2, 7, 8, 2, 7, 5, 3, 7, 9, 1, 7, 2, 4],
     };
   },
