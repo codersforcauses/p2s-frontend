@@ -3,7 +3,7 @@
                 shift
                 mandatory
                 :active.sync="bottomNav"
-                :value="checkPerm"
+                value=true
   >
     <v-btn  flat
             v-show="coach"

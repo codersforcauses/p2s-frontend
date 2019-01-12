@@ -10,14 +10,10 @@ const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dash
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
 const Admin = () => import(/* webpackChunkName: "admin" */ './components/Admin/Index.vue');
+const Manager = () => import(/* webpackChunkName: "manager" */ './components/Manager/Index.vue');
+const Coach = () => import(/* webpackChunkName: "coach" */ './components/Coach/Index.vue');
 
 Vue.use(Router);
-
-// const isAuthenticated = (to, from, next) => {
-//   Store.dispatch('auth/authenticate')
-//     .then(() => next())
-//     .catch(() => next({ name: 'login' }));
-// };
 
 const router = new Router({
   mode: 'history',
@@ -68,6 +64,18 @@ const router = new Router({
           name: 'admin',
           component: Admin,
           meta: { permission: 'admin' },
+        },
+        {
+          path: 'manager',
+          name: 'manager',
+          component: Manager,
+          meta: { permission: 'manager' },
+        },
+        {
+          path: 'coach',
+          name: 'coach',
+          component: Coach,
+          meta: { permission: 'coach' },
         },
       ],
     },
