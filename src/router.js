@@ -46,6 +46,22 @@ const router = new Router({
       name: 'dashboard',
       component: Dashboard,
       meta: { requiresAuth: true },
+      beforeEnter(to, from, next) {
+        if (to.fullPath === '/') {
+          const user = Store.getters['users/current'];
+          if (user.admin.is) {
+            next({ name: 'admin' });
+          } else if (user.manager.is) {
+            next({ name: 'manager' });
+          } else if (user.coach.is) {
+            next({ name: 'coach' });
+          } else {
+            next({ name: 'error' });
+          }
+        } else {
+          next();
+        }
+      },
       children: [
         {
           path: 'admin',
