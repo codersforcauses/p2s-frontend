@@ -14,7 +14,7 @@
       />
 
       <v-toolbar-title class="ml-0 headline">
-        Dashboard
+        {{ $route.name.charAt(0).toUpperCase() + $route.name.slice(1) }} Dashboard
       </v-toolbar-title>
 
     <v-spacer/>
