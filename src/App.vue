@@ -93,6 +93,12 @@ export default {
 .v-card, .v-dialog {
   border-radius: var(--thiccness);
 }
+.v-card__title {
+  padding: var(--thiccness);
+}
+.v-card__title--primary {
+  padding-top: calc(var(--thiccness) * 1.5);
+}
 
 .v-btn {
   height: calc(var(--thiccness) * 2);
