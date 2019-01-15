@@ -13,7 +13,7 @@
                   v-show="$vuetify.breakpoint.mdAndDown"
       />
 
-      <v-toolbar-title class="ml-0 headline">
+      <v-toolbar-title class="ml-0 headline mt-2">
         Dashboard
       </v-toolbar-title>
 
