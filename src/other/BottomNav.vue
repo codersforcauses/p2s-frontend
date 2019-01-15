@@ -35,7 +35,7 @@
 </template>
 
 <script>
-const { mapState } = require('vuex');
+import { mapState } from 'vuex';
 
 export default {
   props: ['dark'],
