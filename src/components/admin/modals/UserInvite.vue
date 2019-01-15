@@ -41,16 +41,15 @@
           <v-select solo-inverted
                     flat
                     persistent-hint
-                    type="email"
+                    type="text"
                     hint="Important for coaches and regional managers"
-                    class="mb-2 mt-1"
+                    class="mb-2 mt-1 select__flat"
+                    :menu-props="{ offsetY: true, light: dark, dark: !dark }"
                     :items="[]"
                     :color="primary"
                     :disabled="loading"
                     :rules="[validation.required]"
                     v-model.trim="user.region"
-                    @focus="isFocused.region = true"
-                    @blur="isFocused.region = false"
           >
           </v-select>
 
@@ -60,10 +59,10 @@
           <v-select solo-inverted
                     flat
                     persistent-hint
-                    type="email"
+                    type="text"
                     hint="Important for coaches and regional managers"
-                    class="mb-2 mt-1 selectFlat"
-                    menu-props="offsetY, light"
+                    class="mb-2 mt-1 select__flat"
+                    :menu-props="{ offsetY: true, light: dark, dark: !dark }"
                     :items="['Coach', 'Regional Manager', 'Administrator']"
                     :color="primary"
                     :disabled="loading"
@@ -71,10 +70,6 @@
                     v-model.trim="user.permission"
           >
           </v-select>
-
-          <pre>
-            {{isFocused}}
-          </pre>
 
           <v-alert  dismissible
                     v-model="alert"
@@ -126,10 +121,6 @@ export default {
             is: false,
           },
         },
-      },
-      isFocused: {
-        region: false,
-        role: false,
       },
       permError: undefined,
       alert: false,
