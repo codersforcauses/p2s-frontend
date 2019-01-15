@@ -103,6 +103,11 @@ export default {
 .v-btn--round {
   min-height: calc(2 * var(--thiccness));
   height: calc(2 * var(--thiccness));
+  border-radius: var(--thiccness);
+}
+.v-btn--floating {
+  width: calc(3 * var(--thiccness));
+  height: calc(3 * var(--thiccness));
 }
 
 .v-menu__content {
