@@ -102,7 +102,7 @@ export default {
   box-shadow: none !important;
 }
 
-.selectFlat .v-input__slot:focus {
+.select__flat:focus-within .v-input__slot {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
