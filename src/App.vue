@@ -97,4 +97,13 @@ export default {
 .v-btn--round {
   height: calc(2 * var(--thiccness))
 }
+
+.v-menu__content {
+  box-shadow: none !important;
+}
+
+.selectFlat .v-input__slot:focus {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
 </style>

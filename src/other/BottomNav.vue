@@ -3,7 +3,7 @@
                 shift
                 mandatory
                 :active.sync="bottomNav"
-                :value="checkPerm"
+                value=true
   >
     <v-btn  flat
             v-show="coach"
@@ -35,29 +35,28 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   props: ['dark'],
   data() {
     return {
       bottomNav: 'Admin Page',
-      coach: true,
-      manager: true,
-      admin: true,
     };
   },
   computed: {
+    ...mapState('auth', { user: 'user' }),
+    coach() {
+      return this.user.coach.is === true;
+    },
+    manager() {
+      return this.user.manager.is === true;
+    },
+    admin() {
+      return this.user.admin.is === true;
+    },
     checkPerm() {
-      if (this.coach && !this.manager && !this.admin) {
-        return false;
-      }
-      if (!this.coach && this.manager && !this.admin) {
-        return false;
-      }
-      if (!this.coach && !this.manager && this.admin) {
-        return false;
-      }
-      return true;
+      return [this.coach, this.manager, this.admin].filter(value => value === true).length !== 1;
     },
     primary() {
       return this.dark ? 'darkPrimary' : 'lightPrimary';
