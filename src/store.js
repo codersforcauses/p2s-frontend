@@ -11,13 +11,42 @@ Vue.use(FeathersVuex);
 export default new Vuex.Store({
   strict: true,
   plugins: [
-    service('users', {
+    service('activities', {
       instanceDefaults: {
-
       },
     }),
-    auth({
-      userService: 'users',
+    service('feedback', {
+      instanceDefaults: {
+      },
     }),
+    service('programs', {
+      instanceDefaults: {
+      },
+    }),
+    service('regions', {
+      instanceDefaults: {
+      },
+    }),
+    service('reports', {
+      instanceDefaults: {
+      },
+    }),
+    service('schools', {
+      instanceDefaults: {
+      },
+    }),
+    service('sessions', {
+      instanceDefaults: {
+      },
+    }),
+    service('students', {
+      instanceDefaults: {
+      },
+    }),
+    service('users', {
+      instanceDefaults: {
+      },
+    }),
+    auth({ userService: 'users' }),
   ],
 });
