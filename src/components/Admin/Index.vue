@@ -6,6 +6,12 @@
     <v-flex xs12 sm6 md4>
       <region-card :primary="primary"/>
     </v-flex>
+    <v-flex xs12 sm6 md4>
+      <program-card :primary="primary"/>
+    </v-flex>
+    <v-flex xs12 sm6 md4>
+      <activity-card :primary="primary"/>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -17,12 +23,18 @@ export default {
     'staff-card': () => ({
       component: import('./StaffCard.vue'),
       loading: spinner,
-      delay: 0,
     }),
     'region-card': () => ({
       component: import('./RegionCard.vue'),
       loading: spinner,
-      delay: 0,
+    }),
+    'program-card': () => ({
+      component: import('./ProgramCard.vue'),
+      loading: spinner,
+    }),
+    'activity-card': () => ({
+      component: import('./ActivityCard.vue'),
+      loading: spinner,
     }),
   },
   props: {
@@ -38,7 +50,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>
