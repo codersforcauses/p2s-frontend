@@ -9,9 +9,9 @@ const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
-const Admin = () => import(/* webpackChunkName: "admin" */ './components/Admin/Index.vue');
-const Manager = () => import(/* webpackChunkName: "manager" */ './components/Manager/Index.vue');
-const Coach = () => import(/* webpackChunkName: "coach" */ './components/Coach/Index.vue');
+const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/Index.vue');
+const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
+const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');
 
 Vue.use(Router);
 
