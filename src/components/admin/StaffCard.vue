@@ -16,9 +16,9 @@
         </v-list-tile-content>
 
         <v-list-tile-content>
-          <v-list-tile-subtitle>
+          <v-list-tile-sub-title>
             {{ user.region }}
-          </v-list-tile-subtitle>
+          </v-list-tile-sub-title>
         </v-list-tile-content>
 
         <v-list-tile-action>
