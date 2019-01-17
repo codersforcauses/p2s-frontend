@@ -108,12 +108,16 @@ export default {
 .v-menu__content {
   box-shadow: none !important;
 }
+.v-autocomplete__content.v-menu__content {
+  border-bottom-left-radius: var(--thiccness) !important;
+  border-bottom-right-radius: var(--thiccness) !important;
+}
 
 .v-list__tile {
   height: calc(var(--thiccness) * 2);
 }
 
-.select__flat:focus-within .v-input__slot {
+.select__flat:focus-within .v-input__slot, .select__flat:active .v-input__slot {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }

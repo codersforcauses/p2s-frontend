@@ -13,9 +13,9 @@
         </v-btn>
       </v-toolbar>
 
-      <v-card-text class="pa-4 pt-5">
+      <v-card-text class="pa-4">
         <v-form v-model="valid"
-                class="px-2"
+                class="px-2 pt-2"
                 @keyup.native.enter="valid && createUser($event)"
         >
           <label class="v-label ml-4">
@@ -36,40 +36,99 @@
           </v-text-field>
 
           <label class="v-label ml-4">
-            ASSIGN REGION
-          </label>
-          <v-select solo-inverted
-                    flat
-                    persistent-hint
-                    type="text"
-                    hint="Important for coaches and regional managers"
-                    class="mb-2 mt-1 select__flat"
-                    :menu-props="{ offsetY: true, light: dark, dark: !dark }"
-                    :items="[]"
-                    :color="primary"
-                    :disabled="loading"
-                    :rules="[validation.required]"
-                    v-model.trim="user.region"
-          >
-          </v-select>
-
-          <label class="v-label ml-4">
             PRIMARY ROLE
           </label>
           <v-select solo-inverted
                     flat
                     persistent-hint
                     type="text"
-                    hint="Important for coaches and regional managers"
+                    hint="This can be changed later by any admin"
                     class="mb-2 mt-1 select__flat"
-                    :menu-props="{ offsetY: true, light: dark, dark: !dark }"
+                    v-model.trim="user.permission"
                     :items="['Coach', 'Regional Manager', 'Administrator']"
                     :color="primary"
                     :disabled="loading"
                     :rules="[validation.required]"
-                    v-model.trim="user.permission"
+                    :menu-props="{
+                      offsetY: true,
+                      light: dark,
+                      dark: !dark,
+                      transition: 'slide-y-transition',
+                    }"
           >
           </v-select>
+
+          <label class="v-label ml-4">
+            SECONDARY ROLE (Optional)
+          </label>
+          <v-select solo-inverted
+                    flat
+                    persistent-hint
+                    type="text"
+                    hint="Add another role to the user if they have one"
+                    class="mb-2 mt-1 select__flat"
+                    v-model.trim="user.permission"
+                    :items="['Coach', 'Regional Manager', 'Administrator']"
+                    :color="primary"
+                    :disabled="loading"
+                    :menu-props="{
+                      offsetY: true,
+                      light: dark,
+                      dark: !dark,
+                      transition: 'slide-y-transition',
+                    }"
+          >
+          </v-select>
+
+          <label class="v-label ml-4">
+            ASSIGN REGION
+          </label>
+          <v-autocomplete solo-inverted
+                          flat
+                          persistent-hint
+                          cache-items
+                          type="text"
+                          hint="Important for coaches and regional managers"
+                          class="mb-2 mt-1 select__flat"
+                          v-model.trim="user.region"
+                          item-text="name"
+                          item-value="_id"
+                          :items="listRegions"
+                          :search-input.sync="search"
+                          :loading="loadRegions"
+                          :color="primary"
+                          :disabled="loading"
+                          :rules="[validation.required]"
+                          :menu-props="{
+                            offsetY: true,
+                            light: dark,
+                            dark: !dark,
+                            transition: 'slide-y-transition',
+                          }"
+          >
+            <template slot="no-data">
+              <div class="list">
+                Can't find the region you wanted? Create a new
+                  <a  slot="activator"
+                      href="/region"
+                      target="_blank"
+                      :style="{ color: primaryColor }"
+                      style="text-decoration: none;"
+                      @click.stop
+                  >
+                    region
+                  <v-icon size="1rem"
+                          :color="primaryInv"
+                  >
+                    mdi-open-in-new
+                  </v-icon>
+                  </a>
+                  <p class="caption ma-0">
+                    Please refresh the page if you do not see a created region.
+                  </p>
+              </div>
+            </template>
+          </v-autocomplete>
 
           <v-alert  dismissible
                     v-model="alert"
@@ -101,7 +160,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 export default {
   props: ['value', 'dark'],
@@ -110,18 +169,17 @@ export default {
       user: {
         email: '',
         region: '',
-        permissions: {
-          coach: {
-            is: false,
-          },
-          manager: {
-            is: false,
-          },
-          admin: {
-            is: false,
-          },
+        coach: {
+          is: false,
+        },
+        manager: {
+          is: false,
+        },
+        admin: {
+          is: false,
         },
       },
+      search: undefined,
       permError: undefined,
       alert: false,
       error: '',
@@ -135,8 +193,25 @@ export default {
       },
     };
   },
+  watch: {
+    search(val) {
+      val = val || ''; // eslint-disable-line
+      if (!this.listRegions.includes(val)) {
+        this.findRegionsInStore({
+          query: {
+            name: {
+              $gte: val,
+            },
+            $select: ['id', 'name'],
+          },
+        });
+      }
+    },
+  },
   computed: {
-    ...mapState('auth', { loading: 'isCreatePending' }),
+    ...mapState('users', { loading: 'isCreatePending' }),
+    ...mapState('regions', { loadRegions: 'isFindPending' }),
+    ...mapGetters('regions', { listRegions: 'list' }),
     showDialog: {
       get() {
         return this.value;
@@ -148,16 +223,21 @@ export default {
     primary() {
       return this.dark ? 'darkPrimary' : 'lightPrimary';
     },
+    primaryInv() {
+      return !this.dark ? 'darkPrimary' : 'lightPrimary';
+    },
+    primaryColor() {
+      return !this.dark ? 'var(--v-darkPrimary-base)' : 'var(--v-lightPrimary-base)';
+    },
   },
   methods: {
+    ...mapActions('regions', { findRegionsInStore: 'find' }),
     async createUser() {
       if (this.valid) {
         const { User } = this.$FeathersVuex;
         const user = new User(this.user);
         await user.create()
-          .then(() => {
-            this.$emit('input');
-          })
+          .then(() => this.$emit('input'))
           .catch((err) => {
             this.error = err.message.charAt(0).toUpperCase().concat(err.message.slice(1));
             this.alert = true;
@@ -173,12 +253,15 @@ export default {
   border: 0;
   border-radius: 30px;
   font-size: 12pt;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1rem;
   min-width: calc(100% - 20vw);
   z-index: auto;
 }
 .v-card {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+.list {
+  padding: calc( 0.5 * var(--thiccness)) var(--thiccness);
 }
 </style>
