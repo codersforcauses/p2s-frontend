@@ -10,13 +10,20 @@
 </template>
 
 <script>
-import staffCard from './StaffCard.vue';
-import regionCard from './RegionCard.vue';
+import spinner from '@/other/Spinner.vue';
 
 export default {
   components: {
-    'staff-card': staffCard,
-    'region-card': regionCard,
+    'staff-card': () => ({
+      component: import('./StaffCard.vue'),
+      loading: spinner,
+      delay: 0,
+    }),
+    'region-card': () => ({
+      component: import('./RegionCard.vue'),
+      loading: spinner,
+      delay: 0,
+    }),
   },
   props: {
     dark: {

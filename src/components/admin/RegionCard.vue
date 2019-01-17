@@ -5,7 +5,7 @@
       position="bottom"
       :src="require(`@/assets/wa-${dark}.svg`)"
     >
-      <spinner slot="placeholder" :color="primary"/>
+      <spinner slot="placeholder"/>
     </v-img>
     <v-card-title primary-title>
       <div>
