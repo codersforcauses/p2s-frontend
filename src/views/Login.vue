@@ -71,7 +71,7 @@
                     round
                     name="forgotPass"
                     class="btn"
-                    color="grey"
+                    color="#888"
             >
               Forgot Password?
             </v-btn>
