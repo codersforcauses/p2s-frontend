@@ -93,6 +93,12 @@ export default {
 .v-card, .v-dialog {
   border-radius: var(--thiccness);
 }
+.v-card__title {
+  padding: var(--thiccness);
+}
+.v-card__title--primary {
+  padding-top: calc(var(--thiccness) * 1.5);
+}
 
 .v-overlay {
   background-color: #21212199;
@@ -107,6 +113,11 @@ export default {
 .v-btn--round {
   min-height: calc(2 * var(--thiccness));
   height: calc(2 * var(--thiccness));
+  border-radius: var(--thiccness);
+}
+.v-btn--floating {
+  width: calc(3 * var(--thiccness));
+  height: calc(3 * var(--thiccness));
 }
 .v-btn--small.v-btn--round {
   min-height: calc( 1.25 * var(--thiccness)) !important;
