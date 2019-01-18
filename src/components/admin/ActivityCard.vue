@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-card-title primary-title>
       <div>
         <h3 class="headline mb-0"
