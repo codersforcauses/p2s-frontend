@@ -16,7 +16,7 @@
       <v-card-text class="pa-4">
         <v-form v-model="valid"
                 class="px-2 pt-2"
-                @keyup.native.enter="valid && createUser($event)"
+                @keyup.native.enter="valid && createUser($event) && !checkPerm && !!checkPerm"
         >
           <label class="v-label ml-4">
             EMAIL
@@ -36,57 +36,14 @@
           </v-text-field>
 
           <label class="v-label ml-4">
-            PRIMARY ROLE
-          </label>
-          <v-select solo-inverted
-                    flat
-                    persistent-hint
-                    type="text"
-                    hint="This can be changed later by any admin"
-                    class="mb-2 mt-1 select__flat"
-                    v-model.trim="user.permission"
-                    :items="['Coach', 'Regional Manager', 'Administrator']"
-                    :color="primary"
-                    :disabled="loading"
-                    :rules="[validation.required]"
-                    :menu-props="{
-                      offsetY: true,
-                      light: dark,
-                      dark: !dark,
-                      transition: 'slide-y-transition',
-                    }"
-          >
-          </v-select>
-
-          <label class="v-label ml-4">
-            SECONDARY ROLE (Optional)
-          </label>
-          <v-select solo-inverted
-                    flat
-                    persistent-hint
-                    type="text"
-                    hint="Add another role to the user if they have one"
-                    class="mb-2 mt-1 select__flat"
-                    v-model.trim="user.permission"
-                    :items="['Coach', 'Regional Manager', 'Administrator']"
-                    :color="primary"
-                    :disabled="loading"
-                    :menu-props="{
-                      offsetY: true,
-                      light: dark,
-                      dark: !dark,
-                      transition: 'slide-y-transition',
-                    }"
-          >
-          </v-select>
-
-          <label class="v-label ml-4">
             ASSIGN REGION
           </label>
           <v-autocomplete solo-inverted
                           flat
                           persistent-hint
                           cache-items
+                          hide-selected
+                          placeholder="Start typing..."
                           type="text"
                           hint="Important for coaches and regional managers"
                           class="mb-2 mt-1 select__flat"
@@ -130,6 +87,36 @@
             </template>
           </v-autocomplete>
 
+          <label class="v-label ml-4">
+            ROLES
+          </label>
+          <div class="ml-3">
+            <v-checkbox hide-details
+                        label="Administrator"
+                        v-model="permissions.admin.is"
+                        class="ma-0 pa-0"
+                        :error="checkPerm"
+                        :color="primary"
+                        :disabled="permissions.manager.is"
+            ></v-checkbox>
+            <v-checkbox hide-details
+                        label="Regional Manager"
+                        v-model="permissions.manager.is"
+                        class="ma-0 pa-0"
+                        :error="checkPerm"
+                        :color="primary"
+                        :disabled="permissions.admin.is"
+            ></v-checkbox>
+            <v-checkbox persistent-hint
+                        label="Coach"
+                        v-model="permissions.coach.is"
+                        class="ma-0 pa-0"
+                        hint="These can be changed later by any Administrator"
+                        :error-messages="permError"
+                        :color="primary"
+            ></v-checkbox>
+          </div>
+
           <v-alert  dismissible
                     v-model="alert"
                     type="error"
@@ -144,16 +131,19 @@
                   round
                   class="ma-0"
                   style="float: right"
-                  :light="dark"
-                  :dark="!dark"
+                  :light="!dark"
+                  :dark="dark"
                   :color="primary"
-                  :disabled="!valid || loading"
+                  :disabled="!valid || loading || checkPerm || checkPerm === undefined"
                   :loading="loading"
                   @click.stop.prevent="createUser"
           >
-            Send Invite
+            <span :style="{ color: button }"> Send Invite </span>
           </v-btn>
         </v-form>
+        <pre>
+          {{permissions}}
+        </pre>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -169,6 +159,8 @@ export default {
       user: {
         email: '',
         region: '',
+      },
+      permissions: {
         coach: {
           is: false,
         },
@@ -180,6 +172,7 @@ export default {
         },
       },
       search: undefined,
+      checkPerm: undefined,
       permError: undefined,
       alert: false,
       error: '',
@@ -195,7 +188,8 @@ export default {
   },
   watch: {
     search(val) {
-      val = val || ''; // eslint-disable-line
+      // eslint-disable-next-line
+      val = val || '';
       if (!this.listRegions.includes(val)) {
         this.findRegionsInStore({
           query: {
@@ -207,9 +201,27 @@ export default {
         });
       }
     },
+    permissions: {
+      handler(val) {
+        const admin = val.admin.is;
+        const manager = val.manager.is;
+        const coach = val.coach.is;
+
+        if (!(manager || admin || coach)) {
+          this.checkPerm = true;
+          this.permError = 'This field is required';
+        } else {
+          this.checkPerm = false;
+          this.permError = undefined;
+        }
+      },
+      deep: true,
+    },
   },
   computed: {
-    ...mapState('users', { loading: 'isCreatePending' }),
+    ...mapState('admin', { createAdmin: 'isCreatePending' }),
+    ...mapState('manager', { createManager: 'isCreatePending' }),
+    ...mapState('coach', { createCoach: 'isCreatePending' }),
     ...mapState('regions', { loadRegions: 'isFindPending' }),
     ...mapGetters('regions', { listRegions: 'list' }),
     showDialog: {
@@ -220,6 +232,9 @@ export default {
         this.$emit('input', value);
       },
     },
+    loading() {
+      return this.createAdmin || this.createManager || this.createCoach;
+    },
     primary() {
       return this.dark ? 'darkPrimary' : 'lightPrimary';
     },
@@ -229,13 +244,30 @@ export default {
     primaryColor() {
       return !this.dark ? 'var(--v-darkPrimary-base)' : 'var(--v-lightPrimary-base)';
     },
+    button() {
+      return this.dark ? '#272727' : '#ebebeb';
+    },
   },
   methods: {
     ...mapActions('regions', { findRegionsInStore: 'find' }),
     async createUser() {
       if (this.valid) {
-        const { User } = this.$FeathersVuex;
-        const user = new User(this.user);
+        const tempUser = {
+          ...this.user,
+          ...this.permissions,
+        };
+
+        let user;
+        if (tempUser.admin.is) {
+          const { Admin } = this.$FeathersVuex;
+          user = new Admin(tempUser);
+        } else if (tempUser.manager.is) {
+          const { Manager } = this.$FeathersVuex;
+          user = new Manager(tempUser);
+        } else {
+          const { Coach } = this.$FeathersVuex;
+          user = new Coach(tempUser);
+        }
         await user.create()
           .then(() => this.$emit('input'))
           .catch((err) => {
@@ -263,5 +295,8 @@ export default {
 }
 .list {
   padding: calc( 0.5 * var(--thiccness)) var(--thiccness);
+}
+.v-input--v-checkbox >>> .v-input__slot {
+  margin: 0 !important;
 }
 </style>
