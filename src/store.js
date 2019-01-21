@@ -11,13 +11,81 @@ Vue.use(FeathersVuex);
 export default new Vuex.Store({
   strict: true,
   plugins: [
-    service('users', {
+    service('activities', {
       instanceDefaults: {
-
       },
     }),
-    auth({
-      userService: 'users',
+    service('feedback', {
+      instanceDefaults: {
+      },
     }),
+    service('programs', {
+      instanceDefaults: {
+      },
+    }),
+    service('regions', {
+      instanceDefaults: {
+      },
+    }),
+    service('reports', {
+      instanceDefaults: {
+      },
+    }),
+    service('schools', {
+      instanceDefaults: {
+      },
+    }),
+    service('sessions', {
+      instanceDefaults: {
+      },
+    }),
+    service('students', {
+      instanceDefaults: {
+      },
+    }),
+    service('users', {
+      instanceDefaults: {
+      },
+    }),
+    service('admin', {
+      instanceDefaults: {
+        name: {
+          first: 'John',
+          last: 'Doe',
+        },
+        mobile: '0000000000',
+        emergencyNum: '0000000000',
+        gender: 'Other',
+        ethnicity: 'Other',
+        DOB: new Date(),
+      },
+    }),
+    service('manager', {
+      instanceDefaults: {
+        name: {
+          first: 'John',
+          last: 'Doe',
+        },
+        mobile: '0000000000',
+        emergencyNum: '0000000000',
+        gender: 'Other',
+        ethnicity: 'Other',
+        DOB: new Date(),
+      },
+    }),
+    service('coach', {
+      instanceDefaults: {
+        name: {
+          first: 'John',
+          last: 'Doe',
+        },
+        mobile: '0000000000',
+        emergencyNum: '0000000000',
+        gender: 'Other',
+        ethnicity: 'Other',
+        DOB: new Date(),
+      },
+    }),
+    auth({ userService: 'users' }),
   ],
 });
