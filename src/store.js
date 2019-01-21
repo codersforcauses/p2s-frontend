@@ -49,41 +49,14 @@ export default new Vuex.Store({
     }),
     service('admin', {
       instanceDefaults: {
-        name: {
-          first: 'John',
-          last: 'Doe',
-        },
-        mobile: '0000000000',
-        emergencyNum: '0000000000',
-        gender: 'Other',
-        ethnicity: 'Other',
-        DOB: new Date(),
       },
     }),
     service('manager', {
       instanceDefaults: {
-        name: {
-          first: 'John',
-          last: 'Doe',
-        },
-        mobile: '0000000000',
-        emergencyNum: '0000000000',
-        gender: 'Other',
-        ethnicity: 'Other',
-        DOB: new Date(),
       },
     }),
     service('coach', {
       instanceDefaults: {
-        name: {
-          first: 'John',
-          last: 'Doe',
-        },
-        mobile: '0000000000',
-        emergencyNum: '0000000000',
-        gender: 'Other',
-        ethnicity: 'Other',
-        DOB: new Date(),
       },
     }),
     auth({ userService: 'users' }),
