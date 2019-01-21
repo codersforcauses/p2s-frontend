@@ -141,9 +141,6 @@
             <span :style="{ color: button }"> Send Invite </span>
           </v-btn>
         </v-form>
-        <pre>
-          {{permissions}}
-        </pre>
       </v-card-text>
     </v-card>
   </v-dialog>
