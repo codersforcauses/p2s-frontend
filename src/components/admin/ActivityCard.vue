@@ -2,8 +2,12 @@
   <v-card flat>
     <v-card-title primary-title>
       <div>
-        <h3 class="headline mb-0"
-        :class="`${primary}--text`">Manage Activties</h3>
+        <h3
+          class="headline mb-0"
+          :class="`${primary}--text`"
+        >
+          Manage Activties
+        </h3>
         <div>
           View all the activities on file
           <br>

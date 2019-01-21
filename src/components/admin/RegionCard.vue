@@ -9,8 +9,10 @@
     </v-img>
     <v-card-title primary-title>
       <div>
-        <h3 class="headline mb-0"
-        :class="`${primary}--text`">Manage Regions</h3>
+        <h3
+          class="headline mb-0"
+          :class="`${primary}--text`"
+        >Manage Regions</h3>
         <div>
           View all the regions
           <br>

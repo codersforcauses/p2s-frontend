@@ -1,16 +1,9 @@
 <template>
   <v-layout fill-height row wrap>
-    <v-flex xs12 sm6 md4>
-      <staff-card :primary="primary"/>
-    </v-flex>
-    <v-flex xs12 sm6 md4>
-      <region-card :primary="primary"/>
-    </v-flex>
-    <v-flex xs12 sm6 md4>
-      <program-card :primary="primary"/>
-    </v-flex>
-    <v-flex xs12 sm6 md4>
-      <activity-card :primary="primary"/>
+    <v-flex xs12 sm6 md4
+      v-for="(card, index) in cards" :key="index"
+    >
+      <component :is="card" :primary="primary"/>
     </v-flex>
   </v-layout>
 </template>
@@ -42,6 +35,11 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  data() {
+    return {
+      cards: ['staff-card', 'region-card', 'program-card', 'activity-card'],
+    };
   },
   computed: {
     primary() {
