@@ -19,6 +19,7 @@ Vue.use(Vuetify, {
     success: '#82cf6a',
     warning: '#f1d778',
     error: '#ff4848',
+    grey: '#9E9E9E',
   },
   options: {
     minifyTheme,
