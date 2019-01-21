@@ -15,7 +15,7 @@ language: node_js
 nodejs:
   - "lts/*"
 cache:
-  npm: true
+  yarn: true
   directories:
     - ~/.cache
 notifications:
