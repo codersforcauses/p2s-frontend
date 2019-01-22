@@ -1,7 +1,8 @@
 <template>
   <v-layout fill-height row wrap>
     <v-flex xs12 sm6 md4
-      v-for="(card, index) in cards" :key="index"
+            v-for="(card, index) in cards"
+            :key="index"
     >
       <component :is="card" :primary="primary"/>
     </v-flex>
@@ -38,7 +39,12 @@ export default {
   },
   data() {
     return {
-      cards: ['staff-card', 'region-card', 'program-card', 'activity-card'],
+      cards: [
+        'staff-card',
+        'region-card',
+        'program-card',
+        'activity-card',
+      ],
     };
   },
   computed: {

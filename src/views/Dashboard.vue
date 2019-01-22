@@ -7,7 +7,7 @@
                 :color="sheet"
       >
         <v-container fluid grid-list-lg>
-          <router-view :dark="dark"/>
+          <router-view v-bind="{ dark }" />
         </v-container>
       </v-sheet>
     </v-content>
@@ -40,9 +40,6 @@ export default {
     sheet() {
       return this.dark ? '#272727' : '#ebebeb';
     },
-    primary() {
-      return this.dark ? 'darkPrimary' : 'lightPrimary';
-    },
   },
 };
 </script>
@@ -52,10 +49,17 @@ export default {
   border-radius: var(--thiccness);
 }
 
-.container {
-  padding: var(--thiccness);
+@media only screen and (max-width: 960px) {
+  .container {
+    padding: var(--thiccness);
+  }
+}
+@media only screen and (min-width: 960px) {
+  .container {
+    padding: calc(var(--thiccness) * 1.8);
+  }
 }
 .container.grid-list-lg .layout:only-child {
-  margin: calc(-1 * var(--thiccness) - 8px);
+  margin: calc(-1.5 * var(--thiccness));
 }
 </style>
