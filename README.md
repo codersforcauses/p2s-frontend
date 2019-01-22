@@ -36,9 +36,21 @@ Frontend systems will be created with a framework called **VueJS**. This will be
 npm install
 ```
 
+OR
+
+```
+yarn install
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+```
+
+OR
+
+```
+yarn serve
 ```
 
 ### Compiles and minifies for production
@@ -46,9 +58,32 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
+OR
+
+```
+yarn build
+```
+
+### Run your tests without UI
 ```
 npm run test
+```
+
+OR
+
+```
+yarn test
+```
+
+### Run your tests
+```
+npm run test:e2e
+```
+
+OR
+
+```
+yarn test:e2e
 ```
 
 ### Lints and fixes files
@@ -56,14 +91,10 @@ npm run test
 npm run lint
 ```
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
+OR
 
-### Run your unit tests
 ```
-npm run test:unit
+yarn lint
 ```
 
 ### Customize configuration

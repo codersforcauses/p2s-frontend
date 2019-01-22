@@ -1,18 +1,18 @@
 <template>
   <v-card flat>
-    <v-img
-      :aspect-ratio="18/9 "
-      position="bottom"
-      :src="require(`@/assets/wa-${dark}.svg`)"
+    <v-img  position="bottom"
+            :aspect-ratio="18/9 "
+            :src="require(`@/assets/wa-${dark}.svg`)"
     >
       <spinner slot="placeholder"/>
     </v-img>
     <v-card-title primary-title>
       <div>
-        <h3
-          class="headline mb-0"
-          :class="`${primary}--text`"
-        >Manage Regions</h3>
+        <h3 class="headline mb-0"
+            :class="`${primary}--text`"
+        >
+          Manage Regions
+        </h3>
         <div>
           View all the regions
           <br>
@@ -22,14 +22,16 @@
     </v-card-title>
 
     <v-card-actions class="pa-0">
-      <v-btn
-        flat
-        round
-      >View All</v-btn>
-      <v-btn
-        flat
-        round
-      >Create New</v-btn>
+      <v-btn  flat
+              round
+      >
+        View All
+      </v-btn>
+      <v-btn  flat
+              round
+      >
+        Create New
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -38,12 +40,10 @@
 import spinner from '@/other/Spinner.vue';
 
 export default {
+  props: ['primary'],
   components: {
     spinner,
   },
-  props: [
-    'primary',
-  ],
   computed: {
     dark() {
       return this.$store.getters['users/current'].darktheme ? 'dark' : 'light';

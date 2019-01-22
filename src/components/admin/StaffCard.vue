@@ -1,14 +1,13 @@
 <template>
   <v-card flat>
     <v-list two-line subheader>
-      <v-subheader>Active Users</v-subheader>
-      <v-list-tile
-        v-for="user in listUsers"
-        :key="user._id"
+      <v-subheader> Active Users </v-subheader>
+      <v-list-tile  v-for="user in listUsers"
+                    :key="user._id"
       >
         <v-list-tile-content>
           <v-list-tile-title>
-            {{ user.name.first.concat(' ', user.name.last) }}
+            {{ `${user.name.first} ${user.name.last}` }}
           </v-list-tile-title>
           <v-list-tile-sub-title>
             {{ user.email }}
@@ -23,9 +22,9 @@
 
         <v-list-tile-action>
           <div>
-            <v-icon :color="user.coach.is ? primary : 'grey'">mdi-football-australian</v-icon>
-            <v-icon :color="user.manager.is ? primary : 'grey'">mdi-account-tie</v-icon>
-            <v-icon :color="user.admin.is ? primary : 'grey'">mdi-shield-account</v-icon>
+            <v-icon :color="user.coach.is ? primary : 'grey'"> mdi-football-australian </v-icon>
+            <v-icon :color="user.manager.is ? primary : 'grey'"> mdi-account-tie </v-icon>
+            <v-icon :color="user.admin.is ? primary : 'grey'"> mdi-shield-account </v-icon>
           </div>
         </v-list-tile-action>
       </v-list-tile>
@@ -33,10 +32,12 @@
 
     <v-card-title primary-title>
       <div>
-        <h3
-          class="headline mb-0"
-          :class="`${primary}--text`"
-        >Manage Staff</h3>
+        <h3 class="headline mb-0"
+            :class="`${primary}--text`"
+        >
+          Manage Staff
+        </h3>
+
         <div>
           View all the staff currently active
           <br>
@@ -46,14 +47,19 @@
     </v-card-title>
 
     <v-card-actions class="pa-0">
-      <v-btn
-        flat
-        round
-      >View All</v-btn>
-      <v-btn
-        flat
-        round
-      >Add New</v-btn>
+      <v-btn  flat
+              round
+      >
+        View All
+      </v-btn>
+
+      <v-btn  flat
+              round
+              @click="inviteDialog = true"
+      >
+        Add New
+      </v-btn>
+      <invite v-model="inviteDialog" v-bind="{ dark }" />
     </v-card-actions>
   </v-card>
 </template>
@@ -62,14 +68,25 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  props: [
-    'primary',
-  ],
+  props: ['primary'],
+  components: {
+    invite: () => ({
+      component: import('./modals/UserInvite.vue'),
+    }),
+  },
+  data() {
+    return {
+      inviteDialog: false,
+    };
+  },
   mounted() {
     this.findUsers();
   },
   computed: {
     ...mapGetters('users', { listUsers: 'list' }),
+    dark() {
+      return this.$store.getters['users/current'].darktheme;
+    },
   },
   methods: {
     ...mapActions('users', { findUsers: 'find' }),
