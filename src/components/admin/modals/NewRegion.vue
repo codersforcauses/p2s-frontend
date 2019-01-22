@@ -26,10 +26,9 @@
           <v-text-field solo-inverted
                         flat
                         persistent-hint
-                        hint="Enter the user's name"
+                        hint="Enter the new region's name"
                         type="text"
                         class="mb-2 mt-1"
-                        placeholder="First Name"
                         :color="primary"
                         :disabled="loading"
                         :rules="[validation.required]"
@@ -40,19 +39,25 @@
           <label class="v-label ml-4">
             STATE
           </label>
-          <v-text-field solo-inverted
-                        flat
-                        persistent-hint
-                        hint="Enter the user's name"
-                        type="text"
-                        class="mb-2 mt-1"
-                        placeholder="First Name"
-                        :color="primary"
-                        :disabled="loading"
-                        :rules="[validation.required, validation.name]"
-                        v-model.trim="region.state"
-          >
-          </v-text-field>
+          <v-select solo-inverted
+                    flat
+                    persistent-hint
+                    hint="Enter the region's state. Optional but recommended"
+                    type="text"
+                    class="mb-2 mt-1 select__flat"
+                    item-text="name"
+                    item-value="value"
+                    :items="states"
+                    :color="primary"
+                    :disabled="loading"
+                    v-model="region.state"
+                    :menu-props="{
+                      offsetY: true,
+                      light: isDark,
+                      dark: !isDark,
+                      transition: 'slide-y-transition',
+                    }"
+          ></v-select>
 
           <v-alert  dismissible
                     v-model="alert"
@@ -68,8 +73,8 @@
                   round
                   class="ma-0"
                   style="float: right"
-                  :light="!dark"
-                  :dark="dark"
+                  :light="!isDark"
+                  :dark="isDark"
                   :color="primary"
                   :disabled="!valid || loading"
                   :loading="loading"
@@ -92,8 +97,42 @@ export default {
     return {
       region: {
         name: '',
-        state: '',
+        state: 'WA',
       },
+      states: [
+        {
+          name: 'Australian Capital Territory',
+          value: 'ACT',
+        },
+        {
+          name: 'New South Wales',
+          value: 'NSW',
+        },
+        {
+          name: 'Nothern Territory',
+          value: 'NT',
+        },
+        {
+          name: 'Queensland',
+          value: 'QLD',
+        },
+        {
+          name: 'South Australia',
+          value: 'SA',
+        },
+        {
+          name: 'Tasmania',
+          value: 'TAS',
+        },
+        {
+          name: 'Victoria',
+          value: 'VIC',
+        },
+        {
+          name: 'Western Australia',
+          value: 'WA',
+        },
+      ],
       alert: false,
       error: '',
       valid: false,
@@ -116,11 +155,14 @@ export default {
         this.$emit('input', value);
       },
     },
+    isDark() {
+      return this.dark === 'dark';
+    },
     primary() {
-      return this.dark ? 'darkPrimary' : 'lightPrimary';
+      return this.isDark ? 'darkPrimary' : 'lightPrimary';
     },
     button() {
-      return this.dark ? '#272727' : '#ebebeb';
+      return this.isDark ? '#272727' : '#ebebeb';
     },
   },
   methods: {
@@ -156,8 +198,5 @@ export default {
 }
 .list {
   padding: calc( 0.5 * var(--thiccness)) var(--thiccness);
-}
-.v-input--v-checkbox >>> .v-input__slot {
-  margin: 0 !important;
 }
 </style>
