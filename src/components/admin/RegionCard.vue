@@ -29,7 +29,9 @@
       <v-btn
         flat
         round
+        @click="regionDialog = true"
       >Create New</v-btn>
+      <new-region v-model="regionDialog" v-bind="{ dark }" />
     </v-card-actions>
   </v-card>
 </template>
@@ -38,12 +40,18 @@
 import spinner from '@/other/Spinner.vue';
 
 export default {
+  props: ['primary'],
   components: {
     spinner,
+    'new-region': () => ({
+      component: import('./modals/NewRegion.vue'),
+    }),
   },
-  props: [
-    'primary',
-  ],
+  data() {
+    return {
+      regionDialog: false,
+    };
+  },
   computed: {
     dark() {
       return this.$store.getters['users/current'].darktheme ? 'dark' : 'light';
