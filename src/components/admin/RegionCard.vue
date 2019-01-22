@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-img  position="bottom"
-            :aspect-ratio="18/9 "
+            :aspect-ratio="2/1"
             :src="require(`@/assets/wa-${dark}.svg`)"
     >
       <spinner slot="placeholder"/>
