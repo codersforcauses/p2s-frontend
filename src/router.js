@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Store from './store';
+import UserSettings from '@/components/UserSettings.vue';
 
 // Login page
 const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
@@ -76,6 +77,12 @@ const router = new Router({
           name: 'coach',
           component: Coach,
           meta: { permission: 'coach' },
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: UserSettings,
+          meta: { permission: 'admin' || 'manager' || 'coach' },
         },
       ],
     },
