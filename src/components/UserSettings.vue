@@ -1,38 +1,64 @@
 <template>
   <v-container grid-list-xs test-xs-center>
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex>
         <v-card>
           <v-card-text>
-            Email:
-            <v-text-field
-            v-model="email"
-            readonly="true"
+            <v-flex
+            xs12
+            tag="label"
+            class="v-label ml-4"
             >
-            </v-text-field>
-            <v-btn
-            round
-            color="error"
-            @click="changeEmail = !changeEmail"
-            >
-            Change Email</v-btn>
-            <v-card-text
-            v-show="changeEmail"
-            >
-              New Email:
+              EMAIL
+            </v-flex>
+            <v-flex>
               <v-text-field
+              v-model="email"
+              readonly="true"
+              single-line
+              solo-inverted
+              hide-details
+              flat
+              :append-icon="'mdi-pencil'"
+              @click:append="changeEmail = !changeEmail"
               >
               </v-text-field>
-              New Email Confirmation:
+            </v-flex>
+            <div
+            v-show="changeEmail"
+            >
+              <v-flex
+              xs12
+              tag="label"
+              class="v-label ml-1"
+              >
+              CHANGE EMAIL
+              </v-flex>
               <v-text-field
+              v-model='newEmail'
+              :rules="[rules.required, rules.isEmail]"
+              label="New Email"
+              single-line
+              solo-inverted
+              hide-details
+              >
+              </v-text-field>
+              <v-text-field
+              v-model='newEmailCon'
+              :rules="[rules.required, rules.emailMatch]"
+              label="Confirm New Email"
+              single-line
+              solo-inverted
+              hide-details
               >
               </v-text-field>
               <v-btn
               round
               color="error"
+              depressed
               >
               Update</v-btn>
-            </v-card-text>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -52,15 +78,19 @@
             @click="changeUsername = !changeUsername"
             >
             Change Username</v-btn>
-            <v-card-text
+            <div
             v-show="changeUsername"
             >
-              New Username:
               <v-text-field
+              v-model='newEmail'
+              :rules="[rules.required, rules.isEmail]"
+              label="New Email"
               >
               </v-text-field>
-              New Username Confirmation:
               <v-text-field
+              v-model='newEmailCon'
+              :rules="[rules.required, rules.emailMatch]"
+              label="Confirm New Email"
               >
               </v-text-field>
               <v-btn
@@ -68,7 +98,7 @@
               color="error"
               >
               Update</v-btn>
-            </v-card-text>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -89,15 +119,19 @@
             @click="changePassword = !changePassword"
             >
             Change Password</v-btn>
-            <v-card-text
+            <div
             v-show="changePassword"
             >
-              New Password:
               <v-text-field
+              v-model='newEmail'
+              :rules="[rules.required, rules.isEmail]"
+              label="New Email"
               >
               </v-text-field>
-              New Password Confirmation:
               <v-text-field
+              v-model='newEmailCon'
+              :rules="[rules.required, rules.emailMatch]"
+              label="Confirm New Email"
               >
               </v-text-field>
               <v-btn
@@ -105,7 +139,7 @@
               color="error"
               >
               Update</v-btn>
-            </v-card-text>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -123,7 +157,25 @@ export default {
       changeEmail: false,
       changeUsername: false,
       changePassword: false,
+      newEmail: '',
+      newEmailCon: '',
+      emailUpdate: false,
       rules: {
+        required: value => !!value || 'Required',
+        isEmail: value => value.includes('@') || 'Not an email',
+        emailMatch: (newEmail, newEmailCon) => newEmail === newEmailCon || 'Not the same',
+      },
+      computed: {
+        /*  newEmail: function () {
+          if (this.newEmail === this.newEmailCon)
+          {
+            this.emailUpdate = true;
+          }
+          else
+          {
+            this.emailUpdate = false;
+          }
+        },  */
       },
     };
   },
