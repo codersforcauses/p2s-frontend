@@ -45,6 +45,7 @@
                         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                         :type="show ? 'text' : 'password'"
                         :dark="$vuetify.breakpoint.mdAndUp"
+                        :disabled="loading"
                         @click:append="show = !show"
           ></v-text-field>
 
@@ -70,7 +71,7 @@
                     round
                     name="forgotPass"
                     class="btn"
-                    color="grey"
+                    color="#888"
             >
               Forgot Password?
             </v-btn>

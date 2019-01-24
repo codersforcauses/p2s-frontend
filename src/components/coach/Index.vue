@@ -30,14 +30,18 @@
           <v-btn
             flat
             round
+            @click="dialog = true"
           >Explore</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
+    <invite v-model="dialog" v-bind="{ dark }"/>
   </v-layout>
 </template>
 
 <script>
+const invite = import('@/components/admin/modals/UserInvite.vue');
+
 export default {
   props: {
     dark: {
@@ -45,9 +49,18 @@ export default {
       default: false,
     },
   },
+  title: 'Admin Dashboard',
+  components: {
+    invite: () => ({
+      component: invite,
+      delay: 100,
+      setTimeout: 3000,
+    }),
+  },
   data() {
     return {
       values: [0, 5, 2, 7, 8, 2, 7, 5, 3, 7, 9, 1, 7, 2, 4],
+      dialog: false,
     };
   },
   computed: {
