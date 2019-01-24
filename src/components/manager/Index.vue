@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  title: 'Regional Manager Dashboard',
   props: {
     dark: {
       type: Boolean,

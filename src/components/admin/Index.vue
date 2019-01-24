@@ -13,6 +13,7 @@
 import spinner from '@/other/Spinner.vue';
 
 export default {
+  title: 'Admin Dashboard',
   components: {
     'staff-card': () => ({
       component: import('./StaffCard.vue'),
