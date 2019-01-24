@@ -18,7 +18,7 @@
         <v-form v-model="valid"
                 class="pt-2"
                 :class="{ 'px-2': $vuetify.breakpoint.smAndUp }"
-                @keyup.native.enter="valid && createUser($event) && !checkPerm && !!checkPerm"
+                @keyup.native.enter="valid && createRegion($event)"
         >
           <label class="v-label ml-4">
             NAME
