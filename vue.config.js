@@ -6,4 +6,5 @@ module.exports = {
       swDest: 'service-worker.js',
     },
   },
+  lintOnSave: process.env.NODE_ENV !== 'production',
 };
