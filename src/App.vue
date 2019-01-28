@@ -77,17 +77,71 @@ export default {
 }
 /* Provide better right-edge spacing when using an icon button there. */
 .snack >>> .v-snack__content {
-  padding-right: 16px;
+  padding-right: var(--thiccness);
 }
+
 .v-input__slot {
   border-radius: var(--thiccness) !important;
-  padding: 0 1rem !important;
-  height: calc(2 * var(--thiccness));
+  padding: 0 var(--thiccness) !important;
+  min-height: calc(2 * var(--thiccness));
 }
-.v-card {
+.v-messages__message {
+  margin: 0 calc(var(--thiccness) * 0.5);
+  min-height: var(--thiccness);
+}
+
+.v-card, .v-dialog {
   border-radius: var(--thiccness);
 }
+.v-card__title {
+  padding: var(--thiccness);
+}
+.v-card__title--primary {
+  padding-top: calc(var(--thiccness) * 1.5);
+}
+
+.v-overlay {
+  background-color: #21212199;
+}
+
+.v-btn {
+  height: calc(var(--thiccness) * 2);
+}
+.v-btn--icon {
+  width: calc(var(--thiccness) * 2);
+}
 .v-btn--round {
-  height: calc(2 * var(--thiccness))
+  min-height: calc(2 * var(--thiccness));
+  height: calc(2 * var(--thiccness));
+  border-radius: var(--thiccness);
+}
+.v-btn--floating {
+  width: calc(3 * var(--thiccness));
+  height: calc(3 * var(--thiccness));
+}
+.v-btn--small.v-btn--round {
+  min-height: calc( 1.25 * var(--thiccness)) !important;
+  height: calc( 1.25 * var(--thiccness)) !important;
+}
+
+.v-menu__content {
+  box-shadow: none !important;
+}
+.v-autocomplete__content.v-menu__content {
+  border-bottom-left-radius: var(--thiccness) !important;
+  border-bottom-right-radius: var(--thiccness) !important;
+}
+
+.v-list__tile {
+  height: calc(var(--thiccness) * 2);
+}
+
+.select__flat:focus-within .v-input__slot, .select__flat:active .v-input__slot {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.container.grid-list-lg .layout .flex {
+  padding: calc(var(--thiccness) * 0.5);
 }
 </style>

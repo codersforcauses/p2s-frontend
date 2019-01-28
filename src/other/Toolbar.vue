@@ -13,8 +13,8 @@
                   v-show="$vuetify.breakpoint.mdAndDown"
       />
 
-      <v-toolbar-title class="ml-0 headline">
-        Dashboard
+      <v-toolbar-title class="mt-2 ml-0 headline">
+        {{ $route.name.charAt(0).toUpperCase() + $route.name.slice(1) }} Dashboard
       </v-toolbar-title>
 
     <v-spacer/>
