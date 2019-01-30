@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-    <v-list v-if="!isFindPending" three-line subheader>
+    <v-list v-show="!isFindPending" three-line subheader>
       <v-subheader> Active Users </v-subheader>
       <v-list-tile  v-for="user in users"
                     :key="user._id"
