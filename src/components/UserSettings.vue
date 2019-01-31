@@ -30,29 +30,34 @@
               <v-flex
               xs12
               tag="label"
-              class="v-label ml-1"
+              class="v-label ml-4"
               >
-              CHANGE EMAIL
+                CHANGE EMAIL
               </v-flex>
-              <v-text-field
-              v-model='newEmail'
-              :rules="[rules.required, rules.isEmail]"
-              label="New Email"
-              single-line
-              solo-inverted
-              hide-details
-              >
-              </v-text-field>
-              <v-text-field
-              v-model='newEmailCon'
-              :rules="[rules.required, rules.emailMatch]"
-              label="Confirm New Email"
-              single-line
-              solo-inverted
-              hide-details
-              >
-              </v-text-field>
+              <div class="mt-2">
+                <v-text-field
+                v-model='newEmail'
+                class="ml-2 mr-2"
+                label="New Email"
+                single-line
+                solo-inverted
+                hide-details
+                flat
+                >
+                </v-text-field>
+                <v-text-field
+                v-model='newEmailCon'
+                class="ml-2 mr-2"
+                label="Confirm New Email"
+                single-line
+                solo-inverted
+                hide-details
+                flat
+                >
+                </v-text-field>
+              </div>
               <v-btn
+              class="ml-4"
               round
               color="error"
               depressed
@@ -65,37 +70,63 @@
       <v-flex xs12>
         <v-card>
           <v-card-text>
-            Username:
-            <v-text-field
-            v-model="username"
-            :value=username
-            readonly=true
+            <v-flex
+            xs12
+            tag="label"
+            class="v-label ml-4"
             >
-            </v-text-field>
-            <v-btn
-            round
-            color="error"
-            @click="changeUsername = !changeUsername"
-            >
-            Change Username</v-btn>
+              USERNAME
+            </v-flex>
+            <v-flex>
+              <v-text-field
+              v-model="username"
+              readonly="true"
+              single-line
+              solo-inverted
+              hide-details
+              flat
+              :append-icon="'mdi-pencil'"
+              @click:append="changeUsername = !changeUsername"
+              >
+              </v-text-field>
+            </v-flex>
             <div
             v-show="changeUsername"
             >
-              <v-text-field
-              v-model='newEmail'
-              :rules="[rules.required, rules.isEmail]"
-              label="New Email"
+              <v-flex
+              xs12
+              tag="label"
+              class="v-label ml-4"
               >
-              </v-text-field>
-              <v-text-field
-              v-model='newEmailCon'
-              :rules="[rules.required, rules.emailMatch]"
-              label="Confirm New Email"
-              >
-              </v-text-field>
+                CHANGE USERNAME
+              </v-flex>
+              <div class="mt-2">
+                <v-text-field
+                v-model='newUsername'
+                class="ml-2 mr-2"
+                label="New Username"
+                single-line
+                solo-inverted
+                hide-details
+                flat
+                >
+                </v-text-field>
+                <v-text-field
+                v-model='newUsernameCon'
+                class="ml-2 mr-2"
+                label="Confirm New Username"
+                single-line
+                solo-inverted
+                hide-details
+                flat
+                >
+                </v-text-field>
+              </div>
               <v-btn
+              class="ml-4"
               round
               color="error"
+              depressed
               >
               Update</v-btn>
             </div>
@@ -105,38 +136,58 @@
       <v-flex xs12>
         <v-card>
           <v-card-text>
-            Password:
-            <v-text-field
-            v-model="password"
-            :type="show1 ? 'text' : 'password'"
-            :value=password
-            readonly=true
-            >
-            </v-text-field>
-            <v-btn
-            round
-            color="error"
-            @click="changePassword = !changePassword"
-            >
-            Change Password</v-btn>
+            PASSWORD
+            <v-flex>
+              <v-text-field
+              v-model="username"
+              readonly="true"
+              single-line
+              solo-inverted
+              hide-details
+              flat
+              :type="showPass ? 'text' : 'password'"
+              :append-icon="'mdi-pencil'"
+              @click:append="changePassword = !changePassword"
+              >
+              </v-text-field>
+            </v-flex>
             <div
             v-show="changePassword"
             >
-              <v-text-field
-              v-model='newEmail'
-              :rules="[rules.required, rules.isEmail]"
-              label="New Email"
+              <v-flex
+              xs12
+              tag="label"
+              class="v-label ml-4"
               >
-              </v-text-field>
-              <v-text-field
-              v-model='newEmailCon'
-              :rules="[rules.required, rules.emailMatch]"
-              label="Confirm New Email"
-              >
-              </v-text-field>
+                CHANGE PASSWORD
+              </v-flex>
+              <div class="mt-2">
+                <v-text-field
+                v-model='newPassword'
+                class="ml-2 mr-2"
+                label="New Password"
+                single-line
+                solo-inverted
+                hide-details
+                flat
+                >
+                </v-text-field>
+                <v-text-field
+                v-model='newPasswordCon'
+                class="ml-2 mr-2"
+                label="Confirm New Password"
+                single-line
+                solo-inverted
+                hide-details
+                flat
+                >
+                </v-text-field>
+              </div>
               <v-btn
+              class="ml-4"
               round
               color="error"
+              depressed
               >
               Update</v-btn>
             </div>
@@ -152,8 +203,9 @@ export default {
   data() {
     return {
       email: 'test@gmail.com',
-      username: 'papa',
+      username: 'jeff',
       password: '123',
+      showPass: false,
       changeEmail: false,
       changeUsername: false,
       changePassword: false,
