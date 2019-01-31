@@ -8,7 +8,8 @@
     <v-btn  flat
             v-show="coach"
             :color="primary"
-            value="Coach Page"
+            value="coach"
+            :to="{ name: 'coach'}"
     >
       <span> Coach </span>
       <v-icon> mdi-football </v-icon>
@@ -17,7 +18,8 @@
     <v-btn  flat
             v-show="manager"
             :color="primary"
-            value="Regional Manager Page"
+            value="manager"
+            :to="{ name: 'manager'}"
     >
       <span> Regional Manager </span>
       <v-icon> mdi-sitemap </v-icon>
@@ -26,7 +28,8 @@
     <v-btn  flat
             v-show="admin"
             :color="primary"
-            value="Admin Page"
+            value="admin"
+            :to="{ name: 'admin'}"
     >
       <span> Administrator </span>
       <v-icon> mdi-shield-account </v-icon>
@@ -41,8 +44,11 @@ export default {
   props: ['dark'],
   data() {
     return {
-      bottomNav: 'Admin Page',
+      bottomNav: 'coach',
     };
+  },
+  mounted() {
+    this.bottomNav = this.$route.name;
   },
   computed: {
     ...mapState('auth', { user: 'user' }),
