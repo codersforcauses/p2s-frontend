@@ -42,7 +42,7 @@
           <v-select solo-inverted
                     flat
                     persistent-hint
-                    hint="Enter the region's state. Optional but recommended"
+                    hint="Enter the state the region belongs to"
                     type="text"
                     class="mb-2 mt-1 select__flat"
                     item-text="name"
