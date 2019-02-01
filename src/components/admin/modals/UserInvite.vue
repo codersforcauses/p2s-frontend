@@ -245,7 +245,7 @@ export default {
             name: {
               $gte: val,
             },
-            $select: ['id', 'name'],
+            $select: ['name'],
           },
         });
       }
