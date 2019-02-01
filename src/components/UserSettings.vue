@@ -437,6 +437,52 @@
           </v-card-text>
         </v-card>
       </v-flex>
+      <v-flex xs12>
+        <v-card>
+          <v-card-text>
+            <v-flex
+            xs12
+            tag="label"
+            class="v-label ml-4"
+            >
+              QUALIFICATIONS
+            </v-flex>
+            <v-layout row wrap>
+              <v-flex xs4 style="padding-right: 1px;">
+                <v-text-field
+                v-model="user.gender"
+                readonly="true"
+                solo-inverted
+                hide-details
+                flat
+                class="first-name ml-2"
+                >
+                </v-text-field>
+              </v-flex>
+              <v-flex xs4 style="padding-right: 1px; padding-left: 1px;">
+                <v-text-field
+                v-model.trim="user.name.first"
+                solo-inverted
+                flat
+                class="first-name last-name"
+                readonly
+                >
+                </v-text-field>
+              </v-flex>
+              <v-flex xs4 style="padding-left: 1px;">
+                <v-text-field
+                v-model.trim="user.name.last"
+                solo-inverted
+                flat
+                class="last-name mr-2"
+                readonly
+                >
+                </v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -457,6 +503,11 @@ export default {
           mobile: '041928479',
         },
         gender: 'dinosaur',
+        qualifications: {
+          policeClearance: true,
+          wwc: true,
+          medClearance: false,
+        },
       },
       changeFirstName: false,
       changeLastName: false,
