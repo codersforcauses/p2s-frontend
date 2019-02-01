@@ -3,7 +3,7 @@
     <v-list three-line
             subheader
             class="pb-0"
-            v-show="!isFindPending"
+            v-show="!isPending"
     >
       <v-subheader> Active Users </v-subheader>
       <v-list-tile  v-for="user in users"
@@ -78,6 +78,7 @@ export default {
   data() {
     return {
       inviteDialog: false,
+      finished: false,
     };
   },
   mounted() {
@@ -95,38 +96,50 @@ export default {
           'manager',
         ],
       },
+    }).then((response) => {
+      const regionIds = response.data.map(regionId => regionId.region);
+      this.findRegions({
+        query: {
+          _id: {
+            $in: regionIds,
+          },
+        },
+      });
+      this.finished = true;
     });
-    this.findRegions();
   },
   computed: {
     ...mapState('users', { isFindPendingUsers: 'isFindPending' }),
-    ...mapState('regions', { isFindPendingRegions: 'isFindPending' }),
+    ...mapState('regions', { isGetPendingRegions: 'isGetPending' }),
     ...mapGetters('users', { findUsersInStore: 'find' }),
     ...mapGetters('regions', { getRegionInStore: 'get' }),
-    isFindPending() {
-      return this.isFindPendingUsers || this.isFindPendingRegions;
+    isPending() {
+      return this.isFindPendingUsers || this.isGetPendingRegions;
     },
     users() {
-      const users = this.findUsersInStore({
-        query: {
-          $limit: 5,
-          $sort: {
-            updatedAt: -1,
+      if (this.finished) {
+        const users = this.findUsersInStore({
+          query: {
+            $limit: 5,
+            $sort: {
+              updatedAt: -1,
+            },
+            _id: {
+              $ne: this.$store.state.auth.payload.userId,
+            },
           },
-          _id: {
-            $ne: this.$store.state.auth.payload.userId,
-          },
-        },
-      }).data;
+        }).data;
 
-      const usersWithRegion = users.map((user) => {
-        const region = this.getRegionInStore(user.region).name || 'Region Unassigned';
-        return {
-          ...user,
-          region,
-        };
-      });
-      return usersWithRegion;
+        const usersWithRegion = users.map((user) => {
+          const region = this.getRegionInStore(user.region);
+          return {
+            ...user,
+            region: region === undefined ? 'Region Unassigned' : region.name,
+          };
+        });
+        return usersWithRegion;
+      }
+      return false;
     },
     dark() {
       return this.$store.getters['users/current'].darktheme;
