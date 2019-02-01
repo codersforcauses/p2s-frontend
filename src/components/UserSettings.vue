@@ -252,6 +252,70 @@
           </v-card-text>
         </v-card>
       </v-flex>
+      <v-flex xs12>
+        <v-card>
+          <v-card-text>
+            <v-flex
+            xs12
+            tag="label"
+            class="v-label ml-4"
+            >
+              GENDER
+            </v-flex>
+            <v-flex>
+              <v-text-field
+              v-model="user.gender"
+              readonly="true"
+              single-line
+              solo-inverted
+              hide-details
+              flat
+              :append-icon="'mdi-pencil'"
+              @click:append="changeGender = !changeGender"
+              >
+              </v-text-field>
+            </v-flex>
+            <v-expand-transition>
+              <div v-show="changeGender">
+                <v-flex
+                xs12
+                tag="label"
+                class="v-label ml-4"
+                >
+                  CHANGE GENDER
+                </v-flex>
+                <div class="mt-2">
+                  <v-text-field
+                  class="ml-2 mr-2"
+                  hint="Enter new Gender (Male, Female or Other)"
+                  persistent-hint
+                  single-line
+                  solo-inverted
+                  flat
+                  >
+                  </v-text-field>
+                  <v-text-field
+                  class="ml-2 mr-2"
+                  hint="Confirm new Gender"
+                  persistent-hint
+                  single-line
+                  solo-inverted
+                  flat
+                  >
+                  </v-text-field>
+                </div>
+                <v-btn
+                class="ml-4"
+                round
+                color="error"
+                depressed
+                >
+                Update</v-btn>
+              </div>
+            </v-expand-transition>
+          </v-card-text>
+        </v-card>
+      </v-flex>
       <v-flex>
         <v-card>
           <v-card-text>
@@ -392,11 +456,13 @@ export default {
           name: 'Jeffs mum',
           mobile: '041928479',
         },
+        gender: 'dinosaur',
       },
       changeFirstName: false,
       changeLastName: false,
       changeEmail: false,
       changeMobile: false,
+      changeGender: false,
       changeEName: false,
       changeEMobile: false,
       validation: {
