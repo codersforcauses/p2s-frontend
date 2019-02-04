@@ -225,8 +225,8 @@ export default {
       validation: {
         required: value => !!value || 'This field is required',
         email: (value) => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || 'Invalid email address';
+          const pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@p2srugbyworks.com$/igm;
+          return pattern.test(value) || 'Invalid P2S email address';
         },
         name: (value) => {
           const pattern = /^[a-z ,.'-]+$/i;

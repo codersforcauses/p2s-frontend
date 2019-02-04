@@ -102,7 +102,7 @@ export default {
       error: '',
       rules: {
         required: v => !!v || 'This field is required',
-        email: v => /.+@.+/.test(v) || 'Email must be valid',
+        email: v => /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@p2srugbyworks.com$/igm.test(v) || 'Email must be valid',
       },
     };
   },
