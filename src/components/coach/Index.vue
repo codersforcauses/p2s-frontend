@@ -19,6 +19,10 @@ export default {
       component: import('./StudentCard.vue'),
       loading: spinner,
     }),
+    'session-card': () => ({
+      component: import('./SessionCard.vue'),
+      loading: spinner,
+    }),
   },
   props: {
     dark: {
@@ -30,6 +34,7 @@ export default {
     return {
       cards: [
         'student-card',
+        'session-card',
       ],
     };
   },
