@@ -23,7 +23,10 @@
                 class="first-name ml-2"
                 readonly
                 :append-icon="'mdi-pencil'"
-                @click:append="changeFirstName = !changeFirstName; changeLastName = false;"
+                @click:append="
+                editUser.name.first.change = !editUser.name.first.change;
+                editUser.name.last.change = false;
+                counter++;"
                 >
                 </v-text-field>
               </v-flex>
@@ -38,13 +41,15 @@
                 class="last-name"
                 readonly
                 :append-icon="'mdi-pencil'"
-                @click:append="changeLastName = !changeLastName; changeFirstName = false;"
+                @click:append="
+                editUser.name.last.change = !editUser.name.last.change;
+                editUser.name.first.change = false;"
                 >
                 </v-text-field>
               </v-flex>
             </v-layout>
             <v-expand-transition>
-              <div v-show="changeFirstName">
+              <div v-show="editUser.name.first.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -54,6 +59,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.name.first.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new First Name"
                   persistent-hint
@@ -77,12 +83,21 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.name.first.changeValid = true;
+                user.name.first = editUser.name.first.changeTo;"
                 >
                 Update</v-btn>
+                <v-alert
+                :value="editUser.name.first.changeValid"
+                type="success"
+                >
+                Deck me
+                </v-alert>
               </div>
             </v-expand-transition>
             <v-expand-transition>
-              <div v-show="changeLastName">
+              <div v-show="editUser.name.last.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -92,6 +107,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.name.last.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new Last Name"
                   persistent-hint
@@ -115,8 +131,17 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.name.last.changeValid = true;
+                user.name.last = editUser.name.last.changeTo;"
                 >
                 Update</v-btn>
+                <v-alert
+                :value="editUser.name.last.changeValid"
+                type="success"
+                >
+                Deck me
+                </v-alert>
               </div>
             </v-expand-transition>
           </v-card-text>
@@ -135,18 +160,18 @@
             <v-flex>
               <v-text-field
               v-model="user.email"
-              readonly="true"
+              readonly
               single-line
               solo-inverted
               hide-details
               flat
               :append-icon="'mdi-pencil'"
-              @click:append="changeEmail = !changeEmail"
+              @click:append="editUser.email.change = !editUser.email.change"
               >
               </v-text-field>
             </v-flex>
             <v-expand-transition>
-              <div v-show="changeEmail">
+              <div v-show="editUser.email.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -156,6 +181,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.email.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new Email"
                   persistent-hint
@@ -181,8 +207,17 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.email.changeValid = true;
+                user.email = editUser.email.changeTo;"
                 >
                 Update</v-btn>
+                <v-alert
+                :value="editUser.email.changeValid"
+                type="success"
+                >
+                Deck me
+                </v-alert>
               </div>
             </v-expand-transition>
           </v-card-text>
@@ -201,18 +236,18 @@
             <v-flex>
               <v-text-field
               v-model="user.mobile"
-              readonly="true"
+              readonly
               single-line
               solo-inverted
               hide-details
               flat
               :append-icon="'mdi-pencil'"
-              @click:append="changeMobile = !changeMobile"
+              @click:append="editUser.mobile.change = !editUser.mobile.change"
               >
               </v-text-field>
             </v-flex>
             <v-expand-transition>
-              <div v-show="changeMobile">
+              <div v-show="editUser.mobile.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -222,6 +257,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.mobile.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new Mobile"
                   persistent-hint
@@ -245,8 +281,17 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.mobile.changeValid = true;
+                user.mobile = editUser.mobile.changeTo;"
                 >
                 Update</v-btn>
+                <v-alert
+                :value="editUser.mobile.changeValid"
+                type="success"
+                >
+                Deck me
+                </v-alert>
               </div>
             </v-expand-transition>
           </v-card-text>
@@ -265,18 +310,18 @@
             <v-flex>
               <v-text-field
               v-model="user.gender"
-              readonly="true"
+              readonly
               single-line
               solo-inverted
               hide-details
               flat
               :append-icon="'mdi-pencil'"
-              @click:append="changeGender = !changeGender"
+              @click:append="editUser.gender.change = !editUser.gender.change"
               >
               </v-text-field>
             </v-flex>
             <v-expand-transition>
-              <div v-show="changeGender">
+              <div v-show="editUser.gender.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -286,6 +331,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.gender.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new Gender (Male, Female or Other)"
                   persistent-hint
@@ -309,8 +355,17 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.gender.changeValid = true;
+                user.gender = editUser.gender.changeTo;"
                 >
                 Update</v-btn>
+                <v-alert
+                :value="editUser.gender.changeValid"
+                type="success"
+                >
+                Deck me
+                </v-alert>
               </div>
             </v-expand-transition>
           </v-card-text>
@@ -338,7 +393,9 @@
                 class="first-name ml-2"
                 readonly
                 :append-icon="'mdi-pencil'"
-                @click:append="changeEName = !changeEName; changeEMobile = false;"
+                @click:append="
+                editUser.emergencyContact.name.change = !editUser.emergencyContact.name.change;
+                editUser.emergencyContact.mobile.change = false;"
                 >
                 </v-text-field>
               </v-flex>
@@ -353,13 +410,15 @@
                 class="last-name"
                 readonly
                 :append-icon="'mdi-pencil'"
-                @click:append="changeEMobile = !changeEMobile; changeEName = false;"
+                @click:append="
+                editUser.emergencyContact.mobile.change = !editUser.emergencyContact.mobile.change;
+                editUser.emergencyContact.name.change = false;"
                 >
                 </v-text-field>
               </v-flex>
             </v-layout>
             <v-expand-transition>
-              <div v-show="changeEName">
+              <div v-show="editUser.emergencyContact.name.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -369,6 +428,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.emergencyContact.name.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new Name"
                   persistent-hint
@@ -392,12 +452,21 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.emergencyContact.name.changeValid = true;
+                user.emergencyContact.name = editUser.emergencyContact.name.changeTo;"
                 >
                 Update</v-btn>
+                <v-alert
+                :value="editUser.emergencyContact.name.changeValid"
+                type="success"
+                >
+                Deck me
+                </v-alert>
               </div>
             </v-expand-transition>
             <v-expand-transition>
-              <div v-show="changeEMobile">
+              <div v-show="editUser.emergencyContact.mobile.change">
                 <v-flex
                 xs12
                 tag="label"
@@ -407,6 +476,7 @@
                 </v-flex>
                 <div class="mt-2">
                   <v-text-field
+                  v-model="editUser.emergencyContact.mobile.changeTo"
                   class="ml-2 mr-2"
                   hint="Enter new Emergency Contact Mobile"
                   persistent-hint
@@ -430,6 +500,9 @@
                 round
                 color="error"
                 depressed
+                @click="
+                editUser.emergencyContact.mobile.changeValid = true;
+                user.emergencyContact.mobile = editUser.emergencyContact.mobile.changeTo;"
                 >
                 Update</v-btn>
               </div>
@@ -450,18 +523,20 @@
             <v-layout row wrap>
               <v-flex xs4 style="padding-right: 1px;">
                 <v-text-field
-                v-model="user.gender"
-                readonly="true"
+                :value="$vuetify.breakpoint.smAndUp"
+                readonly
                 solo-inverted
                 hide-details
                 flat
                 class="first-name ml-2"
+                prepend-inner-icon="mdi-pig"
+                append-icon="mdi-check"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs4 style="padding-right: 1px; padding-left: 1px;">
                 <v-text-field
-                v-model.trim="user.name.first"
+                value="Working With Children's Card"
                 solo-inverted
                 flat
                 class="first-name last-name"
@@ -471,7 +546,7 @@
               </v-flex>
               <v-flex xs4 style="padding-left: 1px;">
                 <v-text-field
-                v-model.trim="user.name.last"
+                value="Medical Clearance"
                 solo-inverted
                 flat
                 class="last-name mr-2"
@@ -491,6 +566,7 @@
 export default {
   data() {
     return {
+      counter: 0,
       user: {
         name: {
           first: 'jeff',
@@ -509,13 +585,45 @@ export default {
           medClearance: false,
         },
       },
-      changeFirstName: false,
-      changeLastName: false,
-      changeEmail: false,
-      changeMobile: false,
-      changeGender: false,
-      changeEName: false,
-      changeEMobile: false,
+      editUser: {
+        name: {
+          first: {
+            change: false,
+            changeTo: '',
+            changeValid: false,
+          },
+          last: {
+            change: false,
+            changeTo: '',
+            changeValid: false,
+          },
+        },
+        email: {
+          change: false,
+          changeTo: '',
+          changeValid: false,
+        },
+        mobile: {
+          change: false,
+          chnageTo: '',
+          changeValid: false,
+        },
+        gender: {
+          change: false,
+        },
+        emergencyContact: {
+          name: {
+            change: false,
+            changeTo: '',
+            changValid: false,
+          },
+          mobile: {
+            change: false,
+            changeTo: '',
+            changValid: false,
+          },
+        },
+      },
       validation: {
         required: value => !!value || 'Required',
         email: (value) => {
@@ -524,7 +632,9 @@ export default {
         },
       },
       watch: {
-
+        counter(newVal, oldVal) {
+          console.log(`old val ${oldVal} new val ${newVal}`);
+        },
       },
     };
   },
