@@ -7,7 +7,7 @@
     </v-toolbar>
 
     <v-sheet  tile
-              height="calc(100% - 56px)"
+              height="calc(100% - 64px)"
               color="lightPrimary"
     >
       <v-container fill-height fluid grid-list-lg class="py-0">
@@ -33,7 +33,7 @@
   border-top-left-radius: var(--thiccness);
   border-top-right-radius: var(--thiccness);
   background-color: #EBEBEB;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 64px);
   margin-left: -8px;
   margin-right: -8px;
 }
