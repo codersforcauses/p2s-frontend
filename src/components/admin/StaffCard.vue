@@ -1,6 +1,10 @@
 <template>
   <v-card flat>
-    <v-list v-show="!isFindPending" three-line subheader>
+    <v-list three-line
+            subheader
+            class="pb-0"
+            v-show="!isPending"
+    >
       <v-subheader> Active Users </v-subheader>
       <v-list-tile  v-for="user in users"
                     :key="user._id"
@@ -74,48 +78,68 @@ export default {
   data() {
     return {
       inviteDialog: false,
+      finished: false,
     };
   },
-  created() {
+  mounted() {
     this.findUsers({
       query: {
         $sort: {
           updatedAt: -1,
         },
+        $select: [
+          'name',
+          'region',
+          'email',
+          'coach',
+          'admin',
+          'manager',
+        ],
       },
-    });
-    this.findRegions();
-  },
-  computed: {
-    ...mapGetters('users', { findUsersInStore: 'find' }),
-    ...mapGetters('regions', { getRegionInStore: 'get' }),
-    ...mapState('users', { isFindPendingUsers: 'isFindPending' }),
-    ...mapState('regions', { isFindPendingRegions: 'isFindPending' }),
-    isFindPending() {
-      return this.isFindPendingUsers || this.isFindPendingRegions;
-    },
-    users() {
-      const users = this.findUsersInStore({
+    }).then((response) => {
+      const regionIds = response.data.map(regionId => regionId.region);
+      this.findRegions({
         query: {
-          $limit: 5,
-          $sort: {
-            updatedAt: -1,
-          },
           _id: {
-            // eslint-disable-next-line
-            $ne: this.$store.state.auth.user._id,
+            $in: regionIds,
           },
         },
-      }).data;
-
-      const usersWithRegion = users.map((user) => {
-        if (user.region) {
-          const region = this.getRegionInStore(user.region);
-          return { ...user, region: region.name };
-        }
-        return { ...user, region: 'No region' };
       });
-      return usersWithRegion;
+      this.finished = true;
+    });
+  },
+  computed: {
+    ...mapState('users', { isFindPendingUsers: 'isFindPending' }),
+    ...mapState('regions', { isGetPendingRegions: 'isGetPending' }),
+    ...mapGetters('users', { findUsersInStore: 'find' }),
+    ...mapGetters('regions', { getRegionInStore: 'get' }),
+    isPending() {
+      return this.isFindPendingUsers || this.isGetPendingRegions;
+    },
+    users() {
+      if (this.finished) {
+        const users = this.findUsersInStore({
+          query: {
+            $limit: 5,
+            $sort: {
+              updatedAt: -1,
+            },
+            _id: {
+              $ne: this.$store.state.auth.payload.userId,
+            },
+          },
+        }).data;
+
+        const usersWithRegion = users.map((user) => {
+          const region = this.getRegionInStore(user.region);
+          return {
+            ...user,
+            region: region === undefined ? 'Region Unassigned' : region.name,
+          };
+        });
+        return usersWithRegion;
+      }
+      return false;
     },
     dark() {
       return this.$store.getters['users/current'].darktheme;

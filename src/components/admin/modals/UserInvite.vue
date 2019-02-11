@@ -18,7 +18,7 @@
         <v-form v-model="valid"
                 class="pt-2"
                 :class="{ 'px-2': $vuetify.breakpoint.smAndUp }"
-                @keyup.native.enter="valid && createUser($event) && !checkPerm && !!checkPerm"
+                @keyup.native.enter="createUser($event)"
         >
           <v-layout row wrap>
             <v-flex xs12 tag="label" class="v-label ml-4">
@@ -300,7 +300,7 @@ export default {
   methods: {
     ...mapActions('regions', { findRegionsInStore: 'find' }),
     async createUser() {
-      if (this.valid) {
+      if (this.valid && !this.checkPerm && this.checkPerm !== undefined) {
         const tempUser = {
           ...this.user,
           ...this.permissions,
