@@ -25,8 +25,7 @@
                 :append-icon="'mdi-pencil'"
                 @click:append="
                 editUser.name.first.change = !editUser.name.first.change;
-                editUser.name.last.change = false;
-                counter++;"
+                editUser.name.last.change = false;"
                 >
                 </v-text-field>
               </v-flex>
@@ -68,32 +67,39 @@
                   flat
                   >
                   </v-text-field>
-                  <v-text-field
-                  class="ml-2 mr-2"
-                  hint="Confirm new First Name"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
-                  >
-                  </v-text-field>
                 </div>
-                <v-btn
-                class="ml-4"
-                round
-                color="error"
-                depressed
-                @click="
-                editUser.name.first.changeValid = true;
-                user.name.first = editUser.name.first.changeTo;"
+                <v-dialog
+                v-model="dialog"
+                width="500"
                 >
-                Update</v-btn>
-                <v-alert
-                :value="editUser.name.first.changeValid"
-                type="success"
-                >
-                Deck me
-                </v-alert>
+                  <v-btn
+                  slot="activator"
+                  class="ml-4"
+                  round
+                  color="error"
+                  depressed
+                  >
+                  Update</v-btn>
+                  <v-card>
+                    <v-card-title>
+                      Password Required
+                    </v-card-title>
+                    <v-card-text>
+                      Boi you done fucked up
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer/>
+                      <v-btn
+                      color="error"
+                      round
+                      depressed
+                      @click="dialog = false"
+                      >
+                      Confirm
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </div>
             </v-expand-transition>
             <v-expand-transition>
@@ -192,13 +198,14 @@
                   >
                   </v-text-field>
                   <v-text-field
+                  v-model="editUser.email.changeToCon"
                   class="ml-2 mr-2"
                   hint="Confirm new Email"
                   persistent-hint
                   single-line
                   solo-inverted
                   flat
-                  :rules="[validation.required, validation.email]"
+                  :rules="[validation.required, validation.email, validation.testEmail]"
                   >
                   </v-text-field>
                 </div>
@@ -564,9 +571,9 @@
 
 <script>
 export default {
-  data() {
+  data(vm) {
     return {
-      counter: 0,
+      dialog: false,
       user: {
         name: {
           first: 'jeff',
@@ -590,7 +597,7 @@ export default {
           first: {
             change: false,
             changeTo: '',
-            changeValid: false,
+            changeToCon: '',
           },
           last: {
             change: false,
@@ -601,6 +608,7 @@ export default {
         email: {
           change: false,
           changeTo: '',
+          changeToCon: '',
           changeValid: false,
         },
         mobile: {
@@ -630,11 +638,7 @@ export default {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || 'Invalid email address';
         },
-      },
-      watch: {
-        counter(newVal, oldVal) {
-          console.log(`old val ${oldVal} new val ${newVal}`);
-        },
+        testEmail: value => value === vm.editUser.email.changeTo || 'Emails are not the same',
       },
     };
   },
