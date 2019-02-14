@@ -18,7 +18,8 @@
     "vue": "^2.5.22",
     "vue-router": "^3.0.1",
     "vuetify": "^1.4.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yarn": "^1.13.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.2",
