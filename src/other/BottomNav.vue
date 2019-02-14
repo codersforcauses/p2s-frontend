@@ -9,6 +9,7 @@
             v-show="coach"
             :color="primary"
             value="Coach Page"
+            :to="{ name: 'coach' }"
     >
       <span> Coach </span>
       <v-icon> mdi-football </v-icon>
@@ -18,6 +19,7 @@
             v-show="manager"
             :color="primary"
             value="Regional Manager Page"
+            :to="{ name: 'manager' }"
     >
       <span> Regional Manager </span>
       <v-icon> mdi-sitemap </v-icon>
@@ -27,6 +29,7 @@
             v-show="admin"
             :color="primary"
             value="Admin Page"
+            :to="{ name: 'admin' }"
     >
       <span> Administrator </span>
       <v-icon> mdi-shield-account </v-icon>
