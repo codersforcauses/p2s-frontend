@@ -5,12 +5,10 @@
         <h3 class="headline mb-0"
             :class="`${primary}--text`"
         >
-          Manage Activties
+          View Schools
         </h3>
         <div>
-          View all the activities on file
-          <br>
-          Create a new activity to be used in lessons or programs
+          View all schools in your region
         </div>
       </div>
     </v-card-title>
@@ -20,11 +18,6 @@
               round
       >
         View All
-      </v-btn>
-      <v-btn  flat
-              round
-      >
-        Create New
       </v-btn>
     </v-card-actions>
   </v-card>
