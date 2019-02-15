@@ -23,6 +23,18 @@ export default {
       component: import('./SchoolCard.vue'),
       loading: spinner,
     }),
+    'session-card': () => ({
+      component: import('./SessionCard.vue'),
+      loading: spinner,
+    }),
+    'program-card': () => ({
+      component: import('./ProgramCard.vue'),
+      loading: spinner,
+    }),
+    'report-card': () => ({
+      component: import('./ReportCard.vue'),
+      loading: spinner,
+    }),
   },
   props: {
     dark: {
@@ -35,6 +47,9 @@ export default {
       cards: [
         'coach-card',
         'school-card',
+        'session-card',
+        'program-card',
+        'report-card',
       ],
     };
   },
