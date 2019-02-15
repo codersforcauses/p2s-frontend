@@ -24,6 +24,7 @@
     <v-card-actions class="pa-0">
       <v-btn  flat
               round
+              to='/region'
       >
         View All
       </v-btn>

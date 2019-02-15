@@ -13,6 +13,8 @@ const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/I
 const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
 const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');
 
+const ViewRegion = () => import(/* webpackChunkName: "view-region" */ './components/admin/ViewRegion.vue');
+
 Vue.use(Router);
 
 const router = new Router({
@@ -76,6 +78,12 @@ const router = new Router({
           name: 'coach',
           component: Coach,
           meta: { permission: 'coach' },
+        },
+        {
+          path: 'region',
+          name: 'region',
+          component: ViewRegion,
+          meta: { permission: 'admin' },
         },
       ],
     },
