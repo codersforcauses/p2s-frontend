@@ -47,68 +47,45 @@
                 </v-text-field>
               </v-flex>
             </v-layout>
-            <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-            >
-              <v-expand-transition>
-                <div v-show="editUser.name.first.change">
-                  <v-flex
-                  xs12
-                  tag="label"
-                  class="v-label ml-4"
+            <v-expand-transition>
+              <div v-show="editUser.name.first.change">
+                <v-flex
+                xs12
+                tag="label"
+                class="v-label ml-4"
+                >
+                  CHANGE FIRST NAME
+                </v-flex>
+                <div class="mt-2">
+                  <v-text-field
+                  v-model="editUser.name.first.changeTo"
+                  class="ml-2 mr-2"
+                  hint="Enter new First Name"
+                  persistent-hint
+                  single-line
+                  solo-inverted
+                  flat
                   >
-                    CHANGE FIRST NAME
-                  </v-flex>
-                  <div class="mt-2">
-                    <v-text-field
-                    v-model="editUser.name.first.changeTo"
-                    class="ml-2 mr-2"
-                    hint="Enter new First Name"
-                    persistent-hint
-                    single-line
-                    solo-inverted
-                    flat
-                    :rules="[validation.required, validation.name]"
-                    >
-                    </v-text-field>
-                    <v-btn
-                    class="ml-4"
-                    round
-                    color="error"
-                    depressed
-                    @click="dialog = true"
-                    :disabled="!valid"
-                    >
-                    Update</v-btn>
-                  </div>
+                  </v-text-field>
                 </div>
-              </v-expand-transition>
-            </v-form>
-              <v-dialog
-              v-model="dialog"
-              width="500"
-              >
-                <v-card>
-                  <form>
-                    <v-card-title
-                    class="ml-2"
-                    >
+                <v-dialog
+                v-model="dialog"
+                width="500"
+                >
+                  <v-btn
+                  slot="activator"
+                  class="ml-4"
+                  round
+                  color="error"
+                  depressed
+                  >
+                  Update</v-btn>
+                  <v-card>
+                    <v-card-title>
                       Password Required
                     </v-card-title>
                     <v-card-text>
-                      <v-text-field
-                      hide-details
-                      solo-inverted
-                      flat
-                      type="text"
-                      class="ml-2"
-                      readonly
-                      hint="Password"
-                      persistent-hint
-                      >
-                      </v-text-field>
+                      Boi you done fucked up
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer/>
@@ -116,15 +93,15 @@
                       color="error"
                       round
                       depressed
-                      class="mb-2 mr-2"
                       @click="dialog = false"
                       >
                       Confirm
                       </v-btn>
                     </v-card-actions>
-                  </form>
-                </v-card>
-              </v-dialog>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </v-expand-transition>
             <v-expand-transition>
               <div v-show="editUser.name.last.change">
                 <v-flex
@@ -655,7 +632,6 @@ export default {
           },
         },
       },
-      valid: false,
       validation: {
         required: value => !!value || 'Required',
         email: (value) => {
@@ -663,11 +639,6 @@ export default {
           return pattern.test(value) || 'Invalid email address';
         },
         testEmail: value => value === vm.editUser.email.changeTo || 'Emails are not the same',
-      },
-      methods: {
-        async newFirstName() {
-          this.user.name.first = this.editUser.name.first.changeTo;
-        },
       },
     };
   },
