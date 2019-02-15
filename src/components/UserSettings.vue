@@ -1,6 +1,14 @@
 <template>
   <v-container grid-list-xs test-xs-center>
     <v-layout row wrap>
+      <v-alert
+      dismissible
+      v-model="alert"
+      type="error"
+      name="alert"
+      >
+        Error: {{ error }}
+      </v-alert>
       <v-flex xs12>
         <v-card>
           <v-card-text>
@@ -47,45 +55,72 @@
                 </v-text-field>
               </v-flex>
             </v-layout>
-            <v-expand-transition>
-              <div v-show="editUser.name.first.change">
-                <v-flex
-                xs12
-                tag="label"
-                class="v-label ml-4"
-                >
-                  CHANGE FIRST NAME
-                </v-flex>
-                <div class="mt-2">
-                  <v-text-field
-                  v-model="editUser.name.first.changeTo"
-                  class="ml-2 mr-2"
-                  hint="Enter new First Name"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
+            <v-form
+            v-model="editUser.name.first.validName"
+            lazy-validation
+            >
+              <v-expand-transition>
+                <div v-show="editUser.name.first.change">
+                  <v-flex
+                  xs12
+                  tag="label"
+                  class="v-label ml-4"
                   >
-                  </v-text-field>
+                    CHANGE FIRST NAME
+                  </v-flex>
+                  <div class="mt-2">
+                    <v-text-field
+                    v-model="editUser.name.first.changeTo"
+                    class="ml-2 mr-2"
+                    hint="Enter new First Name"
+                    persistent-hint
+                    single-line
+                    solo-inverted
+                    flat
+                    :rules="[validation.required, validation.name]"
+                    >
+                    </v-text-field>
+                    <v-btn
+                    class="ml-4"
+                    round
+                    color="error"
+                    depressed
+                    @click="dialog = true"
+                    :disabled="!editUser.name.first.validName ||
+                    editUser.name.first.changeTo === ''"
+                    >
+                    Update</v-btn>
+                  </div>
                 </div>
-                <v-dialog
-                v-model="dialog"
-                width="500"
-                >
-                  <v-btn
-                  slot="activator"
-                  class="ml-4"
-                  round
-                  color="error"
-                  depressed
+              </v-expand-transition>
+            </v-form>
+              <v-dialog
+              v-model="dialog"
+              width="500"
+              >
+                <v-card>
+                  <v-form
+                  v-model="editUser.name.first.validPassword"
+                  lazy-validation
                   >
-                  Update</v-btn>
-                  <v-card>
-                    <v-card-title>
+                    <v-card-title
+                    class="ml-2"
+                    >
                       Password Required
                     </v-card-title>
                     <v-card-text>
-                      Boi you done fucked up
+                      <v-text-field
+                      v-model="editUser.name.first.testPassword"
+                      hide-details
+                      solo-inverted
+                      flat
+                      type="text"
+                      class="ml-2"
+                      hint="Password"
+                      persistent-hint
+                      :rules="[validation.required, validation.password]"
+                      >
+                      </v-text-field>
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer/>
@@ -93,15 +128,18 @@
                       color="error"
                       round
                       depressed
-                      @click="dialog = false"
+                      class="mb-2 mr-2"
+                      @click="dialog = false;"
+                      :disabled ="
+                      !editUser.name.first.validPassword ||
+                      editUser.name.first.testPassword === ''"
                       >
                       Confirm
                       </v-btn>
                     </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </div>
-            </v-expand-transition>
+                  </v-form>
+                </v-card>
+              </v-dialog>
             <v-expand-transition>
               <div v-show="editUser.name.last.change">
                 <v-flex
@@ -570,15 +608,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data(vm) {
     return {
+      alert: undefined,
+      error: '',
       dialog: false,
       user: {
         name: {
           first: 'jeff',
           last: 'demo',
         },
+        password: 'test',
         email: 'test@gmail.com ',
         mobile: '0429278787',
         emergencyContact: {
@@ -597,7 +640,9 @@ export default {
           first: {
             change: false,
             changeTo: '',
-            changeToCon: '',
+            validName: false,
+            testPassword: '',
+            validPassword: false,
           },
           last: {
             change: false,
@@ -634,11 +679,37 @@ export default {
       },
       validation: {
         required: value => !!value || 'Required',
+        name: (value) => {
+          const pattern = /^([a-zA-Z ]){2,30}$/;
+          return pattern.test(value) || 'Invalid name';
+        },
+        password: (value) => {
+          const pattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8}$/;
+          return pattern.test(value) || 'Invalid password';
+        },
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || 'Invalid email address';
         },
         testEmail: value => value === vm.editUser.email.changeTo || 'Emails are not the same',
+      },
+      methods: {
+        ...mapActions('auth', ['authenticate']),
+        async verifyPassword() {
+          if (this.valid) {
+            await this.authenticate({
+              strategy: 'local',
+              ...this.user,
+            }).then(async () => {
+              // logged in
+              this.$router.push({ name: 'dashboard' });
+            }).catch(async (e) => {
+              // Error on page
+              this.alert = true;
+              this.error = e.message;
+            });
+          }
+        },
       },
     };
   },
