@@ -14,7 +14,7 @@
       />
 
       <v-toolbar-title class="mt-2 ml-0 headline">
-        {{ $route.name.charAt(0).toUpperCase() + $route.name.slice(1) }} Dashboard
+        {{ heading }}
       </v-toolbar-title>
 
     <v-spacer/>
@@ -65,6 +65,10 @@ export default {
     },
     theme() {
       return this.dark ? 'Light' : 'Dark';
+    },
+    heading() {
+      const head = this.$route.name.split(' ');
+      return head.reduce((acc, cur) => acc.concat(cur.charAt(0).toUpperCase(), cur.slice(1), ' '), '');
     },
   },
   methods: {
