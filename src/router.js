@@ -12,6 +12,8 @@ const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/Index.vue');
 const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
 const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');
+const CoachDash = () => import(/* webpackChunkName: "coach-dash" */ './components/coach/Dashboard.vue');
+const CurrentSession = () => import(/* webpackChunkName: "coach-session" */ './components/coach/CurrentSession.vue');
 
 Vue.use(Router);
 
@@ -76,6 +78,18 @@ const router = new Router({
           name: 'coach',
           component: Coach,
           meta: { permission: 'coach' },
+          children: [
+            {
+              path: 'dashboard',
+              name: 'coach dashboard',
+              component: CoachDash,
+            },
+            {
+              path: 'session',
+              name: 'current session',
+              component: CurrentSession,
+            },
+          ],
         },
       ],
     },

@@ -9,7 +9,7 @@
             v-show="coach"
             :color="primary"
             value="coach"
-            :to="{ name: 'coach'}"
+            :to="{ name: 'coach dashboard'}"
     >
       <span> Coach </span>
       <v-icon> mdi-football </v-icon>
@@ -61,13 +61,11 @@ export default {
     admin() {
       return this.user.admin.is === true;
     },
-    checkPerm() {
-      return [this.coach, this.manager, this.admin].filter(value => value === true).length !== 1;
-    },
     primary() {
       return this.dark ? 'darkPrimary' : 'lightPrimary';
     },
   },
+
 };
 </script>
 
