@@ -48,14 +48,14 @@
       >
         View All
       </v-btn>
-<!--
+
       <v-btn  flat
               round
               @click="inviteDialog = true"
       >
         Add New
-      </v-btn> -->
-      <!-- <invite v-model="inviteDialog" v-bind="{ dark }" /> -->
+      </v-btn>
+      <!-- <current-session v-model="currentSessionDialog" v-bind="{ dark }" /> -->
     </v-card-actions>
   </v-card>
 </template>
@@ -65,14 +65,14 @@ import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
   props: ['primary'],
-  components: {
-    // invite: () => ({
-    //   component: import('./modals/sessionInvite.vue'),
-    // }),
-  },
+  // components: {
+  //   'current-session': () => ({
+  //     component: import('./modals/CurrentSession.vue'),
+  //   }),
+  // },
   data() {
     return {
-      inviteDialog: false,
+      // currentSessionDialog: true,
       finished: false,
       sessionTest: [{
         _id: 'qwerty',
