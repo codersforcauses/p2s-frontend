@@ -96,7 +96,7 @@
             </v-form>
               <v-dialog
               v-model="dialog"
-              width="500"
+              width="400"
               >
                 <v-card>
                   <v-form
@@ -105,20 +105,20 @@
                   >
                     <v-card-title
                     class="ml-2"
+                    hide-details
                     >
-                      Password Required
+                      Password Confirmation
                     </v-card-title>
                     <v-card-text>
                       <v-text-field
                       v-model="editUser.name.first.testPassword"
-                      hide-details
                       solo-inverted
                       flat
-                      type="text"
+                      type="password"
                       class="ml-2"
                       hint="Password"
                       persistent-hint
-                      :rules="[validation.required, validation.password]"
+                      :rules="[validation.required]"
                       >
                       </v-text-field>
                     </v-card-text>
@@ -129,7 +129,6 @@
                       round
                       depressed
                       class="mb-2 mr-2"
-                      @click="dialog = false;"
                       :disabled ="
                       !editUser.name.first.validPassword ||
                       editUser.name.first.testPassword === ''"
@@ -568,7 +567,7 @@
             <v-layout row wrap>
               <v-flex xs4 style="padding-right: 1px;">
                 <v-text-field
-                :value="$vuetify.breakpoint.smAndUp"
+                v-model="user.qualifications.policeClearance"
                 readonly
                 solo-inverted
                 hide-details
@@ -581,7 +580,7 @@
               </v-flex>
               <v-flex xs4 style="padding-right: 1px; padding-left: 1px;">
                 <v-text-field
-                value="Working With Children's Card"
+                v-model="user.qualifications.wwc"
                 solo-inverted
                 flat
                 class="first-name last-name"
@@ -591,7 +590,7 @@
               </v-flex>
               <v-flex xs4 style="padding-left: 1px;">
                 <v-text-field
-                value="Medical Clearance"
+                v-model="user.qualifications.medClearance"
                 solo-inverted
                 flat
                 class="last-name mr-2"
@@ -616,23 +615,23 @@ export default {
       alert: undefined,
       error: '',
       dialog: false,
+      valid: false,
       user: {
         name: {
-          first: 'jeff',
-          last: 'demo',
+          first: this.$store.state.auth.user.name.first,
+          last: this.$store.state.auth.user.name.last,
         },
-        password: 'test',
-        email: 'test@gmail.com ',
-        mobile: '0429278787',
+        email: this.$store.state.auth.user.email,
+        mobile: this.$store.state.auth.user.mobile,
         emergencyContact: {
-          name: 'Jeffs mum',
-          mobile: '041928479',
+          name: this.$store.state.auth.user.emergencyContact,
+          mobile: this.$store.state.auth.user.emergencyContact,
         },
-        gender: 'dinosaur',
+        gender: this.$store.state.auth.user.gender,
         qualifications: {
-          policeClearance: true,
-          wwc: true,
-          medClearance: false,
+          policeClearance: this.$store.state.auth.user.coach.qualifications,
+          wwc: this.$store.state.auth.user.coach.qualifications,
+          medClearance: this.$store.state.auth.user.coach.qualifications,
         },
       },
       editUser: {
@@ -682,10 +681,6 @@ export default {
         name: (value) => {
           const pattern = /^([a-zA-Z ]){2,30}$/;
           return pattern.test(value) || 'Invalid name';
-        },
-        password: (value) => {
-          const pattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8}$/;
-          return pattern.test(value) || 'Invalid password';
         },
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
