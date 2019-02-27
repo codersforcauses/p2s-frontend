@@ -12,7 +12,7 @@
       <v-flex xs12 tag="label" class="v-label ml-4">
         ACTIVITIES PLANNED
       </v-flex>
-      <v-flex xs12 style="padding-right: 1px;">
+      <v-flex xs12>
         <v-textarea solo-inverted
                     flat
                     persistent-hint
@@ -32,47 +32,70 @@
       </v-flex>
       <v-flex xs12 class="mt-1">
         <v-list two-line class="pa-0">
-          <v-list-tile
-            v-for="student in incompletedStudents"
-            :key="student._id"
-            @click="temp = true"
+          <v-list-tile  avatar
+                        v-for="student in incompletedStudents"
+                        :key="student._id"
           >
+            <v-list-tile-avatar>
+              <v-checkbox :color="primary"
+                          v-model="student.attended"
+              ></v-checkbox>
+            </v-list-tile-avatar>
+
             <v-list-tile-content>
               <v-list-tile-title>
                 {{ `${student.name.first} ${student.name.last}` }}
               </v-list-tile-title>
             </v-list-tile-content>
 
-            <v-list-tile-avatar>
-              <v-checkbox v-model="student.attended" :color="primary"></v-checkbox>
-            </v-list-tile-avatar>
+            <v-list-tile-action>
+              <v-btn  icon
+                      flat
+                      :color="primary"
+                      @click="setCurrentStudent(student)"
+              >
+                <v-icon> mdi-file-document </v-icon>
+              </v-btn>
+            </v-list-tile-action>
           </v-list-tile>
         </v-list>
-        <v-expansion-panel focusable class="mb-4">
+        <v-expansion-panel class="mb-4">
           <v-expansion-panel-content>
             <div slot="header">
               Completed
             </div>
             <v-list class="mt-1">
-              <v-list-tile
-                v-for="student in completedStudents"
-                :key="student._id"
-                @click="temp = true"
+              <v-list-tile  avatar
+                            v-for="student in completedStudents"
+                            :key="student._id"
               >
+                <v-list-tile-avatar>
+                  <v-checkbox :color="primary"
+                              v-model="student.attended"
+                  ></v-checkbox>
+                </v-list-tile-avatar>
+
                 <v-list-tile-content>
                   <v-list-tile-title>
                     {{ `${student.name.first} ${student.name.last}` }}
                   </v-list-tile-title>
                 </v-list-tile-content>
 
-                <v-list-tile-avatar>
-                  <v-checkbox v-model="student.attended" :color="primary"></v-checkbox>
-                </v-list-tile-avatar>
+                <v-list-tile-action>
+                  <v-btn  icon
+                          flat
+                          :color="primary"
+                          @click="setCurrentStudent(student)"
+                  >
+                    <v-icon> mdi-file-document </v-icon>
+                  </v-btn>
+                </v-list-tile-action>
               </v-list-tile>
             </v-list>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
+      <student-report v-model="currentStudent.reportDialog" :dark="dark" :student="currentStudent"/>
 
       <v-flex xs12 tag="label" class="v-label ml-4">
         SESSION FEEDBACK
@@ -115,7 +138,7 @@
                 :disabled="!valid"
                 @click.stop.prevent="createSession"
         >
-          <span :style="{ color: button }"> Send Invite </span>
+          <span :style="{ color: button }"> Submit Session Report </span>
         </v-btn>
       </v-flex>
     </v-layout>
@@ -127,12 +150,17 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 
 export default {
   props: ['value', 'dark', 'sessionId'],
+  components: {
+    'student-report': () => ({
+      component: import('./modals/StudentReport.vue'),
+    }),
+  },
   data() {
     return {
-      temp: false,
       session: {
         name: 'New session',
       },
+      currentStudent: {},
       alert: false,
       error: '',
       valid: false,
@@ -198,6 +226,7 @@ export default {
 
         const studentsInSession = students.map(student => ({
           ...student,
+          reportDialog: false,
           completion: false,
           attended: false,
         }));
@@ -214,6 +243,10 @@ export default {
   },
   methods: {
     ...mapActions('students', { findStudents: 'find' }),
+    setCurrentStudent(student) {
+      this.currentStudent = student;
+      this.currentStudent.reportDialog = true;
+    },
     createSession() {},
   },
 };
