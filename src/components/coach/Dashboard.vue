@@ -6,6 +6,7 @@
     >
       <component :is="card" :primary="primary"/>
     </v-flex>
+    <v-btn color="info" :to="{ name: 'current session' }">session</v-btn>
   </v-layout>
 </template>
 
