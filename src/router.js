@@ -10,7 +10,11 @@ const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dash
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
 const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/Index.vue');
+const AdminDash = () => import(/* webpackChunkName: "admin-dash" */ './components/admin/Dashboard.vue');
+const AdminEditMatrix = () => import(/* webpackChunkName: "admin-edit-matrix" */ './components/admin/EditMatrix.vue');
+
 const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
+
 const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');
 
 Vue.use(Router);
@@ -46,11 +50,11 @@ const router = new Router({
         if (to.fullPath === '/') {
           const user = Store.getters['users/current'];
           if (user.admin.is) {
-            next({ name: 'admin' });
+            next({ name: 'admin dashboard' });
           } else if (user.manager.is) {
-            next({ name: 'manager' });
+            next({ name: 'manager dashboard' });
           } else if (user.coach.is) {
-            next({ name: 'coach' });
+            next({ name: 'coach dashboard' });
           } else {
             next({ name: 'error' });
           }
@@ -64,6 +68,18 @@ const router = new Router({
           name: 'admin',
           component: Admin,
           meta: { permission: 'admin' },
+          children: [
+            {
+              path: 'dashboard',
+              name: 'admin dashboard',
+              component: AdminDash,
+            },
+            {
+              path: 'matrix/:nameId',
+              name: 'matrix',
+              component: AdminEditMatrix,
+            },
+          ],
         },
         {
           path: 'manager',
