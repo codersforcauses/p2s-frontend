@@ -1,35 +1,55 @@
 <template>
   <v-card>
-    <v-layout>
-      <v-flex xs4>
+    <v-layout :class="{
+                'column': $vuetify.breakpoint.smAndDown,
+                'row': $vuetify.breakpoint.mdAndUp
+              }"
+    >
+      <v-flex :class="{
+                'xs12': $vuetify.breakpoint.smAndDown,
+                'xs4': $vuetify.breakpoint.mdAndUp
+              }"
+      >
         <v-card flat>
           <v-card-title class="headline">Regions</v-card-title>
-          <v-list two-line subheader>
-            <v-list-tile  v-for="region in regions[regionPagination.currentPage - 1]"
-                          :key="region._id"
-                          @click="getRegion(region._id)"
-            >
-              {{ `${region.name}` }}
-            </v-list-tile>
-          </v-list>
-            <v-pagination
-              v-if="pages(regionPagination) > 1"
-              v-model="regionPagination.currentPage"
-              :length="pages(regionPagination)"
-              :total-visible="4"
-              @input="onRegionPageChange"
-              :dark="dark"
-              :light="!dark"
-              :color="primary"
-            ></v-pagination>
+          <v-expansion-panel popout
+                             :value="open"
+          >
+            <v-expansion-panel-content class="elevation-0">
+              <div slot="header">View Regions</div>
+              <v-list two-line subheader>
+                <v-list-tile  v-for="region in regions[regionPagination.currentPage - 1]"
+                              :key="region._id"
+                              @click="getRegion(region._id)"
+                >
+                  {{ `${region.name}` }}
+                </v-list-tile>
+              </v-list>
+                <v-pagination
+                  v-if="pages(regionPagination) > 1"
+                  v-model="regionPagination.currentPage"
+                  :length="pages(regionPagination)"
+                  :total-visible="5"
+                  @input="onRegionPageChange"
+                  :dark="dark"
+                  :light="!dark"
+                  :color="primary"
+                ></v-pagination>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
         </v-card>
       </v-flex>
-      <v-flex xs8>
+
+      <v-flex :class="{
+                'xs12': $vuetify.breakpoint.smAndDown,
+                'xs8': $vuetify.breakpoint.mdAndUp
+              }"
+      >
         <v-card flat>
           <v-container justify-center
-                       align-center
                        fill-height
                        v-if="!regionSelected"
+                       class="title"
           >
             Select a Region
           </v-container>
@@ -41,7 +61,7 @@
               {{ `${this.active[0].name},  ${this.active[0].state}` }}
             </v-card-title>
             <v-list>
-              <div class="title">Staff</div>
+              <div class="title">&ensp;Staff</div>
               <v-list-tile v-for="user in users[userPagination.currentPage - 1]"
                           :key="user._id"
               >
@@ -64,14 +84,15 @@
               v-if="pages(userPagination) > 1"
               v-model="userPagination.currentPage"
               :length="pages(userPagination)"
-              :total-visible="4"
+              :total-visible="5"
               @input="onUserPageChange"
               :dark="dark"
               :light="!dark"
               :color="primary"
             ></v-pagination>
             <v-list>
-              <div class="title">Schools</div>
+              <br/>
+              <div class="title">&ensp;Schools</div>
               <v-list-tile v-for="school in schools[schoolPagination.currentPage - 1]"
                           :key="school._id"
               >
@@ -82,7 +103,7 @@
               v-if="pages(schoolPagination) > 1"
               v-model="schoolPagination.currentPage"
               :length="pages(schoolPagination)"
-              :total-visible="4"
+              :total-visible="5"
               @input="onSchoolPageChange"
               :dark="dark"
               :light="!dark"
@@ -108,6 +129,7 @@ export default {
     regions: [],
     users: [],
     schools: [],
+    open: 0,
     regionPagination: {
       currentPage: 1,
       itemsPerPage: 10,
@@ -124,6 +146,14 @@ export default {
       totalItems: 0,
     },
   }),
+
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
+  },
 
   mounted() {
     this.showRegions();
@@ -272,6 +302,20 @@ export default {
     onSchoolPageChange(newPage) {
       this.schoolPagination.currentPage = newPage;
       this.showSchools();
+    },
+
+    handleResize() {
+      this.width = window.innerWidth;
+      if (this.width >= 960 && this.regionPagination.itemsPerPage !== 8) {
+        this.regionPagination.itemsPerPage = 8;
+        this.regionPagination.currentPage = 1;
+        this.showRegions();
+      }
+      if (this.width < 960 && this.regionPagination.itemsPerPage !== 5) {
+        this.regionPagination.itemsPerPage = 5;
+        this.regionPagination.currentPage = 1;
+        this.showRegions();
+      }
     },
   },
 };
