@@ -85,7 +85,7 @@
                     round
                     color="error"
                     depressed
-                    @click="dialog = true"
+                    @click="editUser.name.first.dialog = true"
                     :disabled="!editUser.name.first.validName ||
                     editUser.name.first.changeTo === ''"
                     >
@@ -95,7 +95,7 @@
               </v-expand-transition>
             </v-form>
               <v-dialog
-              v-model="dialog"
+              v-model="editUser.name.first.dialog"
               width="400"
               >
                 <v-card>
@@ -614,7 +614,6 @@ export default {
     return {
       alert: undefined,
       error: '',
-      dialog: false,
       valid: false,
       user: {
         name: {
@@ -640,6 +639,7 @@ export default {
             change: false,
             changeTo: '',
             validName: false,
+            dialog: false,
             testPassword: '',
             validPassword: false,
           },
