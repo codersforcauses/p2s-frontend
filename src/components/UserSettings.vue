@@ -94,99 +94,136 @@
                 </div>
               </v-expand-transition>
             </v-form>
-              <v-dialog
-              v-model="editUser.name.first.dialog"
-              width="400"
-              >
-                <v-card>
-                  <v-form
-                  v-model="editUser.name.first.validPassword"
-                  lazy-validation
+            <v-dialog
+            v-model="editUser.name.first.dialog"
+            width="400"
+            >
+              <v-card>
+                <v-form
+                v-model="editUser.name.first.validPassword"
+                lazy-validation
+                >
+                  <v-card-title
+                  class="ml-2"
+                  hide-details
                   >
-                    <v-card-title
+                    Password Confirmation
+                  </v-card-title>
+                  <v-card-text>
+                    <v-text-field
+                    v-model="editUser.name.first.testPassword"
+                    solo-inverted
+                    flat
+                    type="password"
                     class="ml-2"
-                    hide-details
+                    hint="Password"
+                    persistent-hint
+                    :rules="[validation.required]"
                     >
-                      Password Confirmation
-                    </v-card-title>
-                    <v-card-text>
-                      <v-text-field
-                      v-model="editUser.name.first.testPassword"
-                      solo-inverted
-                      flat
-                      type="password"
-                      class="ml-2"
-                      hint="Password"
-                      persistent-hint
-                      :rules="[validation.required]"
-                      >
-                      </v-text-field>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer/>
-                      <v-btn
-                      color="error"
-                      round
-                      depressed
-                      class="mb-2 mr-2"
-                      :disabled ="
-                      !editUser.name.first.validPassword ||
-                      editUser.name.first.testPassword === ''"
-                      >
-                      Confirm
-                      </v-btn>
-                    </v-card-actions>
-                  </v-form>
-                </v-card>
-              </v-dialog>
-            <v-expand-transition>
-              <div v-show="editUser.name.last.change">
-                <v-flex
-                xs12
-                tag="label"
-                class="v-label ml-4"
-                >
-                  CHANGE LAST NAME
-                </v-flex>
-                <div class="mt-2">
-                  <v-text-field
-                  v-model="editUser.name.last.changeTo"
-                  class="ml-2 mr-2"
-                  hint="Enter new Last Name"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
+                    </v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer/>
+                    <v-btn
+                    color="error"
+                    round
+                    depressed
+                    class="mb-2 mr-2"
+                    :disabled ="
+                    !editUser.name.first.validPassword ||
+                    editUser.name.first.testPassword === ''"
+                    @click="verifyPassword"
+                    >
+                    Confirm
+                    </v-btn>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+            </v-dialog>
+            <v-form
+            v-model="editUser.name.last.validName"
+            lazy-validation
+            >
+              <v-expand-transition>
+                <div v-show="editUser.name.last.change">
+                  <v-flex
+                  xs12
+                  tag="label"
+                  class="v-label ml-4"
                   >
-                  </v-text-field>
-                  <v-text-field
-                  class="ml-2 mr-2"
-                  hint="Confirm new Last Name"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
-                  >
-                  </v-text-field>
+                    CHANGE LAST NAME
+                  </v-flex>
+                  <div class="mt-2">
+                    <v-text-field
+                    v-model="editUser.name.last.changeTo"
+                    class="ml-2 mr-2"
+                    hint="Enter new Last Name"
+                    persistent-hint
+                    single-line
+                    solo-inverted
+                    flat
+                    :rules="[validation.required, validation.name]"
+                    >
+                    </v-text-field>
+                    <v-btn
+                    class="ml-4"
+                    round
+                    color="error"
+                    depressed
+                    @click="editUser.name.last.dialog = true"
+                    :disabled="!editUser.name.last.validName ||
+                    editUser.name.last.changeTo === ''"
+                    >
+                    Update</v-btn>
+                  </div>
                 </div>
-                <v-btn
-                class="ml-4"
-                round
-                color="error"
-                depressed
-                @click="
-                editUser.name.last.changeValid = true;
-                user.name.last = editUser.name.last.changeTo;"
+              </v-expand-transition>
+            </v-form>
+            <v-dialog
+            v-model="editUser.name.last.dialog"
+            width="400"
+            >
+              <v-card>
+                <v-form
+                v-model="editUser.name.last.validPassword"
+                lazy-validation
                 >
-                Update</v-btn>
-                <v-alert
-                :value="editUser.name.last.changeValid"
-                type="success"
-                >
-                Deck me
-                </v-alert>
-              </div>
-            </v-expand-transition>
+                  <v-card-title
+                  class="ml-2"
+                  hide-details
+                  >
+                    Password Confirmation
+                  </v-card-title>
+                  <v-card-text>
+                    <v-text-field
+                    v-model="editUser.name.last.testPassword"
+                    solo-inverted
+                    flat
+                    type="password"
+                    class="ml-2"
+                    hint="Password"
+                    persistent-hint
+                    :rules="[validation.required]"
+                    >
+                    </v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer/>
+                    <v-btn
+                    color="error"
+                    round
+                    depressed
+                    class="mb-2 mr-2"
+                    :disabled ="
+                    !editUser.name.last.validPassword ||
+                    editUser.name.last.testPassword === ''"
+                    >
+                    Confirm
+                    </v-btn>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+            </v-dialog>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -213,57 +250,102 @@
               >
               </v-text-field>
             </v-flex>
-            <v-expand-transition>
-              <div v-show="editUser.email.change">
-                <v-flex
-                xs12
-                tag="label"
-                class="v-label ml-4"
-                >
-                  CHANGE EMAIL
-                </v-flex>
-                <div class="mt-2">
-                  <v-text-field
-                  v-model="editUser.email.changeTo"
-                  class="ml-2 mr-2"
-                  hint="Enter new Email"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
-                  :rules="[validation.required, validation.email]"
+            <v-form
+            v-model="editUser.email.validEmail"
+            lazy-validation
+            >
+              <v-expand-transition>
+                <div v-show="editUser.email.change">
+                  <v-flex
+                  xs12
+                  tag="label"
+                  class="v-label ml-4"
                   >
-                  </v-text-field>
-                  <v-text-field
-                  v-model="editUser.email.changeToCon"
-                  class="ml-2 mr-2"
-                  hint="Confirm new Email"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
-                  :rules="[validation.required, validation.email, validation.testEmail]"
+                    CHANGE EMAIL
+                  </v-flex>
+                  <div class="mt-2">
+                    <v-text-field
+                    v-model="editUser.email.changeTo"
+                    class="ml-2 mr-2"
+                    hint="Enter new Email"
+                    persistent-hint
+                    single-line
+                    solo-inverted
+                    flat
+                    :rules="[validation.required, validation.email]"
+                    >
+                    </v-text-field>
+                    <v-text-field
+                    v-model="editUser.email.changeToCon"
+                    class="ml-2 mr-2"
+                    hint="Confirm new Email"
+                    persistent-hint
+                    single-line
+                    solo-inverted
+                    flat
+                    :rules="[validation.required, validation.email, validation.testEmail]"
+                    >
+                    </v-text-field>
+                  </div>
+                  <v-btn
+                  class="ml-4"
+                  round
+                  color="error"
+                  depressed
+                  @click="editUser.email.dialog = true"
+                  :disabled="
+                  !editUser.email.validEmail ||
+                  editUser.email.changeTo === ''"
                   >
-                  </v-text-field>
+                  Update</v-btn>
                 </div>
-                <v-btn
-                class="ml-4"
-                round
-                color="error"
-                depressed
-                @click="
-                editUser.email.changeValid = true;
-                user.email = editUser.email.changeTo;"
+              </v-expand-transition>
+            </v-form>
+            <v-dialog
+            v-model="editUser.email.dialog"
+            width="400"
+            >
+              <v-card>
+                <v-form
+                v-model="editUser.email.validPassword"
+                lazy-validation
                 >
-                Update</v-btn>
-                <v-alert
-                :value="editUser.email.changeValid"
-                type="success"
-                >
-                Deck me
-                </v-alert>
-              </div>
-            </v-expand-transition>
+                  <v-card-title
+                  class="ml-2"
+                  hide-details
+                  >
+                    Password Confirmation
+                  </v-card-title>
+                  <v-card-text>
+                    <v-text-field
+                    v-model="editUser.email.testPassword"
+                    solo-inverted
+                    flat
+                    type="password"
+                    class="ml-2"
+                    hint="Password"
+                    persistent-hint
+                    :rules="[validation.required]"
+                    >
+                    </v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer/>
+                    <v-btn
+                    color="error"
+                    round
+                    depressed
+                    class="mb-2 mr-2"
+                    :disabled ="
+                    !editUser.email.validPassword ||
+                    editUser.email.testPassword === ''"
+                    >
+                    Confirm
+                    </v-btn>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+            </v-dialog>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -290,54 +372,90 @@
               >
               </v-text-field>
             </v-flex>
-            <v-expand-transition>
-              <div v-show="editUser.mobile.change">
-                <v-flex
-                xs12
-                tag="label"
-                class="v-label ml-4"
-                >
-                  CHANGE MOBILE
-                </v-flex>
-                <div class="mt-2">
-                  <v-text-field
-                  v-model="editUser.mobile.changeTo"
-                  class="ml-2 mr-2"
-                  hint="Enter new Mobile"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
+            <v-form
+            v-model="editUser.mobile.validMobile"
+            lazy-validation
+            >
+              <v-expand-transition>
+                <div v-show="editUser.mobile.change">
+                  <v-flex
+                  xs12
+                  tag="label"
+                  class="v-label ml-4"
                   >
-                  </v-text-field>
-                  <v-text-field
-                  class="ml-2 mr-2"
-                  hint="Confirm new Mobile"
-                  persistent-hint
-                  single-line
-                  solo-inverted
-                  flat
-                  >
-                  </v-text-field>
+                    CHANGE LAST NAME
+                  </v-flex>
+                  <div class="mt-2">
+                    <v-text-field
+                    v-model="editUser.mobile.changeTo"
+                    class="ml-2 mr-2"
+                    hint="Enter new Mobile"
+                    persistent-hint
+                    single-line
+                    solo-inverted
+                    flat
+                    :rules="[validation.required]"
+                    >
+                    </v-text-field>
+                    <v-btn
+                    class="ml-4"
+                    round
+                    color="error"
+                    depressed
+                    @click="editUser.mobile.dialog = true"
+                    :disabled="!editUser.mobile.validMobile ||
+                    editUser.mobile.changeTo === ''"
+                    >
+                    Update</v-btn>
+                  </div>
                 </div>
-                <v-btn
-                class="ml-4"
-                round
-                color="error"
-                depressed
-                @click="
-                editUser.mobile.changeValid = true;
-                user.mobile = editUser.mobile.changeTo;"
+              </v-expand-transition>
+            </v-form>
+            <v-dialog
+            v-model="editUser.mobile.dialog"
+            width="400"
+            >
+              <v-card>
+                <v-form
+                v-model="editUser.mobile.validPassword"
+                lazy-validation
                 >
-                Update</v-btn>
-                <v-alert
-                :value="editUser.mobile.changeValid"
-                type="success"
-                >
-                Deck me
-                </v-alert>
-              </div>
-            </v-expand-transition>
+                  <v-card-title
+                  class="ml-2"
+                  hide-details
+                  >
+                    Password Confirmation
+                  </v-card-title>
+                  <v-card-text>
+                    <v-text-field
+                    v-model="editUser.mobile.testPassword"
+                    solo-inverted
+                    flat
+                    type="password"
+                    class="ml-2"
+                    hint="Password"
+                    persistent-hint
+                    :rules="[validation.required]"
+                    >
+                    </v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer/>
+                    <v-btn
+                    color="error"
+                    round
+                    depressed
+                    class="mb-2 mr-2"
+                    :disabled ="
+                    !editUser.mobile.validPassword ||
+                    editUser.mobile.testPassword === ''"
+                    >
+                    Confirm
+                    </v-btn>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+            </v-dialog>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -621,10 +739,10 @@ export default {
           last: this.$store.state.auth.user.name.last,
         },
         email: this.$store.state.auth.user.email,
-        mobile: this.$store.state.auth.user.mobile,
+        mobile: '09202920391', //  this.$store.state.auth.user.mobile,
         emergencyContact: {
-          name: this.$store.state.auth.user.emergencyContact,
-          mobile: this.$store.state.auth.user.emergencyContact,
+          name: 'john', //  this.$store.state.auth.user.emergencyContact,
+          mobile: '01901', // this.$store.state.auth.user.emergencyContact,
         },
         gender: this.$store.state.auth.user.gender,
         qualifications: {
@@ -646,19 +764,28 @@ export default {
           last: {
             change: false,
             changeTo: '',
-            changeValid: false,
+            validName: false,
+            dialog: false,
+            testPassword: '',
+            validPassword: false,
           },
         },
         email: {
           change: false,
           changeTo: '',
           changeToCon: '',
-          changeValid: false,
+          validEmail: false,
+          dialog: false,
+          testPassword: '',
+          validPassword: false,
         },
         mobile: {
           change: false,
-          chnageTo: '',
-          changeValid: false,
+          changeTo: '',
+          validMobile: false,
+          dialog: false,
+          testPassword: '',
+          validPassword: false,
         },
         gender: {
           change: false,
