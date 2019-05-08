@@ -1,7 +1,9 @@
 import feathers from '@feathersjs/client';
 import io from 'socket.io-client';
 
-const port = process.env.NODE_ENV === 'production' ? 'http://localhost' : 'http://localhost:3030';
+const port = process.env.NODE_ENV === 'production'
+  ? `http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}`
+  : 'http://localhost:3030';
 const socket = io(port, { transports: ['websocket'] });
 
 const feathersClient = feathers()

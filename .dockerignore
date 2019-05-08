@@ -1,0 +1,19 @@
+.DS_Store
+.github/
+.git/
+test/
+.editorconfig
+.gitignore
+.eslintrc.js
+.travis.yml
+LICENSE
+README.md
+cypress.json
+
+npm-debug.log
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+**/dist
