@@ -5,6 +5,7 @@
     >
       <v-layout row wrap class="pa-0">
         <v-flex xs12
+                :class="{'pa-2': i === 1}"
                 v-for="(card, index) in cards" :key="index"
                 v-show="index%columns === (i-1)"
         >
