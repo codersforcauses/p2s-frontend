@@ -120,8 +120,8 @@ export default {
   height: calc(3 * var(--thiccness));
 }
 .v-btn--small.v-btn--round {
-  min-height: calc( 1.25 * var(--thiccness)) !important;
-  height: calc( 1.25 * var(--thiccness)) !important;
+  min-height: calc(1.25 * var(--thiccness)) !important;
+  height: calc(1.25 * var(--thiccness)) !important;
 }
 
 .v-menu__content {
