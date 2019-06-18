@@ -5,6 +5,9 @@ import Store from './store';
 // Login page
 const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
 
+// Registration page
+const Register = () => import(/* webpackChunkName: "register" */ './views/Registration.vue');
+
 // Dashboard
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
@@ -36,6 +39,11 @@ const router = new Router({
           .then(() => next({ name: 'dashboard' }))
           .catch(() => next());
       },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
     },
     {
       path: '/',
