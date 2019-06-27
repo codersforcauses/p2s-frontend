@@ -20,16 +20,16 @@
         </span>
       </v-btn>
 
-      <v-btn  disabled
-              :flat="$vuetify.breakpoint.mdAndUp"
+      <v-btn  :flat="$vuetify.breakpoint.mdAndUp"
               :icon="$vuetify.breakpoint.smAndDown"
+              @click="$router.push({ name: 'login' })"
       >
         <span v-show="$vuetify.breakpoint.mdAndUp">
-          Logout
+          Login
         </span>
 
         <v-icon :right="$vuetify.breakpoint.mdAndUp">
-          mdi-logout
+          mdi-login
         </v-icon>
       </v-btn>
     </v-toolbar-items>

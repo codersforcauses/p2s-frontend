@@ -41,7 +41,7 @@ const router = new Router({
       },
     },
     {
-      path: '/register',
+      path: '/register/:slug',
       name: 'register',
       component: Register,
     },
