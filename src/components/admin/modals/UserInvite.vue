@@ -344,7 +344,7 @@ export default {
   border-top-right-radius: 0 !important;
 }
 .list {
-  padding: calc( 0.5 * var(--thiccness)) var(--thiccness);
+  padding: calc(0.5 * var(--thiccness)) var(--thiccness);
 }
 .v-input--v-checkbox >>> .v-input__slot {
   margin: 0 !important;
