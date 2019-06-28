@@ -263,6 +263,8 @@
 </template>
 
 <script>
+// import { mapState } from 'vuex';
+
 export default {
   props: ['dark'],
   data(vm) {
@@ -286,6 +288,7 @@ export default {
       valid2: false,
       valid3: false,
       show: false,
+      finished: false,
       validation: {
         required: value => !!value || 'This field is required',
         min: value => value.length >= 8 || 'Must be at least 8 characters',
@@ -299,6 +302,22 @@ export default {
       genders: ['Male', 'Female', 'Other'],
     };
   },
+  mounted() {
+    const data = {
+      action: 'verifySignupLong',
+      value: this.$route.params.slug,
+    };
+    fetch('http://localhost:3030/authmanagement', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      console.log(response);
+      this.finished = true;
+    });
+  },
   watch: {
     menu(val) {
       // eslint-disable-next-line
@@ -306,6 +325,10 @@ export default {
     },
   },
   computed: {
+    // ...mapState('admin', { patchAdmin: 'isPatchPending' }),
+    // ...mapState('manager', { patchManager: 'isPatchPending' }),
+    // ...mapState('coach', { patchCoach: 'isPatchPending' }),
+    // ...mapState('authmanagement', { isCreatePending: 'isCreatePending' }),
     height() {
       // eslint-disable-next-line
       return this.$vuetify.breakpoint.xsOnly && screen.height >= 650;
@@ -322,8 +345,12 @@ export default {
         default: return '';
       }
     },
+    // initialLoad() {
+    //   return this.isCreatePending;
+    // },
     loading() {
       return false;
+      // return this.patchCoach || this.patchManager || this.patchAdmin;
     },
     alertClass() {
       return this.$vuetify.breakpoint.smAndDown ? 'alert_small' : 'alert_large';
