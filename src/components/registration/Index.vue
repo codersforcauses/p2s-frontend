@@ -204,7 +204,8 @@
                             flat
                             single-line
                             maxLength=9
-                            v-model.trim="user.emergencyContact.phoneNumber"
+                            type="tel"
+                            v-model.number.trim="user.emergencyContact.phoneNumber"
                             hint="Enter your emergency contact's phone number"
                             :color="primary"
                             :disabled="loading"
