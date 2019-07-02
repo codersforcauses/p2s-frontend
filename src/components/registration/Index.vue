@@ -7,8 +7,9 @@
               :class="alertClass"
               transition="slide-y-transition"
     >
-      Please fill out all fields to continue
+      {{error}}
     </v-alert>
+    <!-- <v-file v-bind="{ primary }" /> -->
     <v-card flat full-width>
       <v-card-title class="title font-weight-regular justify-space-between">
         <span> {{currentTitle}} </span>
@@ -181,6 +182,24 @@
         <v-window-item :value="3">
           <v-card-text>
             <v-form v-model="valid3"
+                    enctype="multipart/form-data"
+                    class="pt-2"
+                    @keyup.native.enter="nextStep"
+            >
+              <v-text-field solo-inverted flat
+                name="name"
+                label="label"
+                type="file"
+                accept="image/*"
+                style="opacity: 0"
+              ></v-text-field>
+            </v-form>
+          </v-card-text>
+        </v-window-item>
+
+        <v-window-item :value="4">
+          <v-card-text>
+            <v-form v-model="valid4"
                     class="pt-2"
                     @keyup.native.enter="nextStep"
             >
@@ -219,7 +238,7 @@
           </v-card-text>
         </v-window-item>
 
-        <v-window-item :value="4">
+        <v-window-item :value="5">
           <v-card-text>
             <v-img contain :src="require('@/assets/p2s-logo.svg')" class="ma-4 mb-5"></v-img>
             Thank you for joining P2S Rugbyworks. Please login to continue.
@@ -232,7 +251,7 @@
       <v-card-actions :class="{ action: height }">
         <v-btn  flat
                 round
-                :disabled="step === 1 || step === 4"
+                :disabled="step === 1 || step === 5"
                 @click="step--"
         >
           Back
@@ -245,13 +264,14 @@
                 :light="dark"
                 :dark="!dark"
                 :color="primary"
-                :disabled="step === 5"
+                :loading="loading"
+                :disabled="step > 5"
                 @click.stop.prevent="nextStep"
         >
-          <span v-if="step < 3">
+          <span v-if="step < 4">
             Next
           </span>
-          <span v-else-if="step === 3">
+          <span v-else-if="step === 4">
             Submit
           </span>
           <span v-else>
@@ -264,14 +284,20 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
+// import FileUpload from './FileUpload.vue';
 
 export default {
   props: ['dark'],
+  // components: {
+  //   'v-file': FileUpload,
+  // },
   data(vm) {
     return {
       step: 1,
+      userId: '',
       user: {
+        _id: '',
         password: '',
         mobile: '',
         gender: 'Male',
@@ -285,9 +311,11 @@ export default {
       confirmPass: '',
       menu: false,
       alert: false,
+      error: '',
       valid1: false,
       valid2: false,
       valid3: false,
+      valid4: false,
       show: false,
       finished: false,
       validation: {
@@ -304,20 +332,21 @@ export default {
     };
   },
   mounted() {
-    const data = {
-      action: 'verifySignupLong',
-      value: this.$route.params.slug,
-    };
-    fetch('http://localhost:3030/authmanagement', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
+    this.findUser({
+      query: {
+        verifyToken: this.$route.params.slug,
+        $select: ['email'],
       },
-    }).then((response) => {
-      console.log(response);
-      this.finished = true;
-    });
+    })
+      .then(({ data }) => {
+        // eslint-disable-next-line
+        this.user._id = data[0]._id;
+        this.finished = true;
+      })
+      .catch(() => {
+        this.alert = true;
+        this.error = 'Unable to register account';
+      });
   },
   watch: {
     menu(val) {
@@ -326,10 +355,9 @@ export default {
     },
   },
   computed: {
-    // ...mapState('admin', { patchAdmin: 'isPatchPending' }),
-    // ...mapState('manager', { patchManager: 'isPatchPending' }),
-    // ...mapState('coach', { patchCoach: 'isPatchPending' }),
-    // ...mapState('authmanagement', { isCreatePending: 'isCreatePending' }),
+    ...mapState('users', { patchUsers: 'isPatchPending' }),
+    ...mapState('users', { findingUsers: 'isFindPending' }),
+    ...mapGetters('users', { findUsersInStore: 'find' }),
     height() {
       // eslint-disable-next-line
       return this.$vuetify.breakpoint.xsOnly && screen.height >= 650;
@@ -341,52 +369,77 @@ export default {
       switch (this.step) {
         case 1: return 'Personal Details';
         case 2: return 'Password Creation';
-        case 3: return 'Emergency Contact';
-        case 4: return 'Registration Complete';
+        case 3: return 'Upload Documents';
+        case 4: return 'Emergency Contact';
+        case 5: return 'Registration Complete';
         default: return '';
       }
     },
-    // initialLoad() {
-    //   return this.isCreatePending;
-    // },
     loading() {
-      return false;
-      // return this.patchCoach || this.patchManager || this.patchAdmin;
+      return this.patchUser;
     },
     alertClass() {
       return this.$vuetify.breakpoint.smAndDown ? 'alert_small' : 'alert_large';
     },
   },
   methods: {
+    ...mapActions('users', { findUser: 'find' }),
     save(date) {
       this.$refs.menu.save(date);
     },
     nextStep() {
       if ((this.step === 1 && this.valid1)
-        || (this.step === 2 && this.valid2)) {
+        || (this.step === 2 && this.valid2)
+        || (this.step === 3 && this.valid3)) {
         this.step += 1;
-      } else if (this.step === 3 && this.valid3) {
+      } else if (this.step === 4 && this.valid4) {
         this.registerUser();
-        this.step += 1;
-      } else if (this.step === 4) {
+      } else if (this.step === 5) {
         this.$router.push({ name: 'login' });
       } else {
         this.alert = true;
+        this.error = 'Please fill out all fields to continue.';
       }
       return this.step;
     },
     async registerUser() {
-      const user = {
-        ...this.user,
-        DOB: new Date(this.user.DOB),
-        mobile: `+61${this.user.mobile}`,
-        emergencyContact: {
-          ...this.user.emergencyContact,
-          phoneNumber: `+61${this.user.emergencyContact.phoneNumber}`,
-        },
-        darktheme: this.dark,
-      };
-      console.log(user);
+      if (this.valid1 && this.valid2 && this.valid3 && this.valid4) {
+        const tempUser = {
+          ...this.user,
+          DOB: new Date(this.user.DOB),
+          mobile: `+61${this.user.mobile}`,
+          emergencyContact: {
+            ...this.user.emergencyContact,
+            phoneNumber: `+61${this.user.emergencyContact.phoneNumber}`,
+          },
+          darktheme: this.dark,
+        };
+
+        const { User } = this.$FeathersVuex;
+        const user = new User(tempUser);
+
+        await user.patch()
+          .then(() => {
+            const data = {
+              action: 'verifySignupLong',
+              value: this.$route.params.slug,
+            };
+            fetch('http://localhost:3030/authmanagement', {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }).then(() => {
+              this.step += 1;
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            this.alert = true;
+            this.error = err;
+          });
+      }
     },
   },
 };
