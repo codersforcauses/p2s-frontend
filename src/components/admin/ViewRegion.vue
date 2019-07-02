@@ -1,15 +1,7 @@
 <template>
   <v-card>
-    <v-layout :class="{
-                'column': $vuetify.breakpoint.smAndDown,
-                'row': $vuetify.breakpoint.mdAndUp
-              }"
-    >
-      <v-flex :class="{
-                'xs12': $vuetify.breakpoint.smAndDown,
-                'xs4': $vuetify.breakpoint.mdAndUp
-              }"
-      >
+    <v-layout row wrap>
+      <v-flex xs12 md4>
         <v-card flat>
           <v-card-title class="headline">Regions</v-card-title>
           <v-expansion-panel popout
@@ -40,11 +32,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex :class="{
-                'xs12': $vuetify.breakpoint.smAndDown,
-                'xs8': $vuetify.breakpoint.mdAndUp
-              }"
-      >
+      <v-flex xs12 md8>
         <v-card flat>
           <v-container justify-center
                        fill-height
@@ -62,6 +50,33 @@
             </v-card-title>
             <v-list>
               <div class="title">&ensp;Staff</div>
+              <v-expansion-panel class="elevation-0">
+                <v-expansion-panel-content class="elevation-0">
+                  <div slot="header">Filter</div>
+                  <v-list>
+                    <v-layout xs6>
+                      <v-checkbox
+                        v-model="showManagers"
+                        label="Managers"
+                        class="mt-0"
+                        :color="primary"
+                        @change="filterUser"
+                      >
+                      </v-checkbox>
+                      <v-checkbox
+                        v-model="showCoaches"
+                        label="Coaches"
+                        class="mt-0"
+                        :color="primary"
+                        @change="filterUser"
+                      >
+                      </v-checkbox>
+                    </v-layout>
+                  </v-list>
+                  <v-divider />
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+
               <v-list-tile v-for="user in users[userPagination.currentPage - 1]"
                           :key="user._id"
               >
@@ -74,8 +89,6 @@
                       'grey'"> mdi-football-australian </v-icon>
                     <v-icon :color="user.manager.is ? primary :
                       'grey'"> mdi-account-tie </v-icon>
-                    <v-icon :color="user.admin.is ? primary :
-                      'grey'"> mdi-shield-account </v-icon>
                   </div>
                 </v-list-tile-action>
               </v-list-tile>
@@ -145,20 +158,12 @@ export default {
       itemsPerPage: 5,
       totalItems: 0,
     },
+    showCoaches: false,
+    showManagers: false,
   }),
-
-  created() {
-    window.addEventListener('resize', this.handleResize);
+  mounted() {
     this.handleResize();
   },
-  destroyed() {
-    window.removeEventListener('resize', this.handleResize);
-  },
-
-  mounted() {
-    this.showRegions();
-  },
-
   computed: {
     ...mapGetters('regions', { listRegions: 'list' }),
     ...mapGetters('users', { getUser: 'get' }),
@@ -199,6 +204,16 @@ export default {
             this.schools[i] = ''; // initialising the region array for pagination.
           }
         }
+      },
+    },
+    showCoaches: {
+      handler() {
+        this.showUsers();
+      },
+    },
+    showManagers: {
+      handler() {
+        this.showUsers();
       },
     },
   },
@@ -250,11 +265,18 @@ export default {
     showUsers() {
       this.findUsers({
         query: {
+          $sort: {
+            'name.last': 1,
+          },
           $limit: this.userPagination.itemsPerPage,
           $skip: this.skip(this.userPagination),
           _id: {
             $in: this.active[0].users,
           },
+          $or: [
+            { 'coach.is': this.showCoaches },
+            { 'manager.is': this.showManagers },
+          ],
           $select: [
             'name',
             'region',
@@ -274,6 +296,9 @@ export default {
     showSchools() {
       this.findSchools({
         query: {
+          $sort: {
+            name: 1,
+          },
           $limit: this.schoolPagination.itemsPerPage,
           $skip: this.skip(this.schoolPagination),
           _id: {
@@ -305,16 +330,26 @@ export default {
     },
 
     handleResize() {
-      this.width = window.innerWidth;
-      if (this.width >= 960 && this.regionPagination.itemsPerPage !== 8) {
-        this.regionPagination.itemsPerPage = 8;
+      // eslint-disable-next-line
+      const { width } = screen;
+      if (width >= 960 && this.regionPagination.itemsPerPage !== 8) {
+        this.regionPagination.itemsPerPage = 10;
         this.regionPagination.currentPage = 1;
         this.showRegions();
       }
-      if (this.width < 960 && this.regionPagination.itemsPerPage !== 5) {
+      if (width < 960 && this.regionPagination.itemsPerPage !== 5) {
         this.regionPagination.itemsPerPage = 5;
         this.regionPagination.currentPage = 1;
         this.showRegions();
+      }
+    },
+
+    filterUser(item) {
+      if (item === 'manager') {
+        this.showManagers = !this.showManagers;
+      }
+      if (item === 'coach') {
+        this.showCoaches = !this.showCoaches;
       }
     },
   },
