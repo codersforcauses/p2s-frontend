@@ -233,12 +233,16 @@
 
        <v-window-item :value="4">
           <v-card-text>
+            <p class="body-2 font-weight-light font-italic mb-0">
+              **If you are unable to provide any of the required documents at this time,
+              you will be able to upload them later in your user settings.**
+            </p>
             <v-form v-model="valid4"
                     enctype="multipart/form-data"
                     class="pt-2"
                     @keyup.native.enter="nextStep"
             >
-              <v-container grid-list-lg class="px-0">
+              <v-container grid-list-lg class="px-0 pb-0">
                 <v-layout row wrap>
                   <v-flex xs6>
                     <v-file label="POLICE CLEARANCE"
@@ -261,7 +265,7 @@
                     />
                   </v-flex>
 
-                  <v-flex xs12>
+                  <v-flex xs12 class="py-0">
                     <label class="v-label ml-4">
                       WWC CARD NUMBER
                     </label>
