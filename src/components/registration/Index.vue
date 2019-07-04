@@ -9,16 +9,20 @@
     >
       {{error}}
     </v-alert>
-    <!-- <v-file v-bind="{ primary }" /> -->
     <v-card flat full-width>
       <v-card-title class="title font-weight-regular justify-space-between">
         <span> {{currentTitle}} </span>
-        <v-avatar color="info"
-                  class="subheading black--text"
-                  size=24
-        >
-          {{step}}
-        </v-avatar>
+        <div v-show="step < 5">
+          <span class="caption"> step </span>
+          <v-avatar :color="primary"
+                    class="subheading"
+                    size=24
+          >
+            <span :class="text">
+              {{step}}
+            </span>
+          </v-avatar>
+        </div>
       </v-card-title>
 
       <v-window touchless v-model="step">
@@ -49,6 +53,7 @@
                                 flat
                                 single-line
                                 readonly
+                                persistent-hint
                                 v-model.trim="user.DOB"
                                 hint="Enter your date of birth"
                                 class="mb-2 mt-1 select__flat"
@@ -76,6 +81,7 @@
               <v-select solo-inverted
                         flat
                         single-line
+                        persistent-hint
                         class="mb-2 mt-1 select__flat"
                         v-model.trim="user.ethnicity"
                         hint="Enter your mobile number"
@@ -97,6 +103,7 @@
               <v-text-field solo-inverted
                             flat
                             single-line
+                            persistent-hint
                             v-model.number.trim="user.mobile"
                             maxLength="9"
                             type="tel"
@@ -144,6 +151,7 @@
               <v-text-field solo-inverted
                             flat
                             single-line
+                            persistent-hint
                             v-model.trim="user.password"
                             hint="Enter your password"
                             :color="primary"
@@ -166,6 +174,7 @@
               <v-text-field solo-inverted
                             flat
                             single-line
+                            persistent-hint
                             v-model.trim="confirmPass"
                             hint="Confirm your password"
                             :color="primary"
@@ -182,24 +191,6 @@
         <v-window-item :value="3">
           <v-card-text>
             <v-form v-model="valid3"
-                    enctype="multipart/form-data"
-                    class="pt-2"
-                    @keyup.native.enter="nextStep"
-            >
-              <v-text-field solo-inverted flat
-                name="name"
-                label="label"
-                type="file"
-                accept="image/*"
-                style="opacity: 0"
-              ></v-text-field>
-            </v-form>
-          </v-card-text>
-        </v-window-item>
-
-        <v-window-item :value="4">
-          <v-card-text>
-            <v-form v-model="valid4"
                     class="pt-2"
                     @keyup.native.enter="nextStep"
             >
@@ -209,6 +200,7 @@
               <v-text-field solo-inverted
                             flat
                             single-line
+                            persistent-hint
                             v-model.number.trim="user.emergencyContact.name"
                             hint="Enter your emergency contact's name"
                             :color="primary"
@@ -222,6 +214,7 @@
               <v-text-field solo-inverted
                             flat
                             single-line
+                            persistent-hint
                             maxLength=9
                             type="tel"
                             v-model.number.trim="user.emergencyContact.phoneNumber"
@@ -234,6 +227,56 @@
                   +61
                 </template>
               </v-text-field>
+            </v-form>
+          </v-card-text>
+        </v-window-item>
+
+       <v-window-item :value="4">
+          <v-card-text>
+            <v-form v-model="valid4"
+                    enctype="multipart/form-data"
+                    class="pt-2"
+                    @keyup.native.enter="nextStep"
+            >
+              <v-container grid-list-lg class="px-0">
+                <v-layout row wrap>
+                  <v-flex xs6>
+                    <v-file label="POLICE CLEARANCE"
+                      v-model="coach.policeClearance.file"
+                      :primary="primary"
+                    />
+                  </v-flex>
+
+                  <v-flex xs6>
+                    <v-file label="MEDICAL CLEARANCE"
+                      v-model="coach.medClearance.file"
+                      :primary="primary"
+                    />
+                  </v-flex>
+
+                  <v-flex xs6>
+                    <v-file label="WWC CHECK"
+                            v-model="coach.WWC.file"
+                            :primary="primary"
+                    />
+                  </v-flex>
+
+                  <v-flex xs12>
+                    <label class="v-label ml-4">
+                      WWC CARD NUMBER
+                    </label>
+                    <v-text-field solo-inverted
+                                  flat
+                                  single-line
+                                  persistent-hint
+                                  v-model.number.trim="coach.WWC.number"
+                                  hint="Enter your Working With Children card number"
+                                  :color="primary"
+                                  :disabled="loading"
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
+              </v-container>
             </v-form>
           </v-card-text>
         </v-window-item>
@@ -268,11 +311,11 @@
                 :disabled="step > 5"
                 @click.stop.prevent="nextStep"
         >
-          <span v-if="step < 4">
-            Next
-          </span>
-          <span v-else-if="step === 4">
+          <span v-if="step === 4 || (step === 3 && !coach.is)">
             Submit
+          </span>
+          <span v-else-if="step <= 3">
+            Next
           </span>
           <span v-else>
             Login
@@ -285,17 +328,18 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-// import FileUpload from './FileUpload.vue';
+
 
 export default {
   props: ['dark'],
-  // components: {
-  //   'v-file': FileUpload,
-  // },
+  components: {
+    'v-file': () => ({
+      component: import('./FileUpload.vue'),
+    }),
+  },
   data(vm) {
     return {
       step: 1,
-      userId: '',
       user: {
         _id: '',
         password: '',
@@ -303,9 +347,26 @@ export default {
         gender: 'Male',
         ethnicity: '',
         DOB: null,
+        tempAuth: '',
         emergencyContact: {
           name: '',
           phoneNumber: '',
+        },
+      },
+      coach: {
+        is: false,
+        policeClearance: {
+          is: false,
+          file: null,
+        },
+        WWC: {
+          is: false,
+          number: '',
+          file: null,
+        },
+        medClearance: {
+          is: false,
+          file: null,
         },
       },
       confirmPass: '',
@@ -335,17 +396,21 @@ export default {
     this.findUser({
       query: {
         verifyToken: this.$route.params.slug,
-        $select: ['email'],
+        $select: ['email', 'coach'],
       },
     })
       .then(({ data }) => {
         // eslint-disable-next-line
         this.user._id = data[0]._id;
-        this.finished = true;
+        this.coach.is = data[0].coach.is;
+        this.user.tempAuth = this.$route.params.slug;
       })
       .catch(() => {
         this.alert = true;
         this.error = 'Unable to register account';
+      })
+      .finally(() => {
+        this.finished = true;
       });
   },
   watch: {
@@ -358,6 +423,9 @@ export default {
     ...mapState('users', { patchUsers: 'isPatchPending' }),
     ...mapState('users', { findingUsers: 'isFindPending' }),
     ...mapGetters('users', { findUsersInStore: 'find' }),
+    text() {
+      return this.primary === 'darkPrimary' ? 'black--text' : 'white--text';
+    },
     height() {
       // eslint-disable-next-line
       return this.$vuetify.breakpoint.xsOnly && screen.height >= 650;
@@ -369,8 +437,8 @@ export default {
       switch (this.step) {
         case 1: return 'Personal Details';
         case 2: return 'Password Creation';
-        case 3: return 'Upload Documents';
-        case 4: return 'Emergency Contact';
+        case 3: return 'Emergency Contact';
+        case 4: return 'Upload Documents';
         case 5: return 'Registration Complete';
         default: return '';
       }
@@ -391,7 +459,12 @@ export default {
       if ((this.step === 1 && this.valid1)
         || (this.step === 2 && this.valid2)
         || (this.step === 3 && this.valid3)) {
-        this.step += 1;
+        // eslint-disable-next-line
+        if (this.step === 3 && !this.coach.is) {
+          this.registerUser();
+        } else {
+          this.step += 1;
+        }
       } else if (this.step === 4 && this.valid4) {
         this.registerUser();
       } else if (this.step === 5) {
@@ -403,7 +476,7 @@ export default {
       return this.step;
     },
     async registerUser() {
-      if (this.valid1 && this.valid2 && this.valid3 && this.valid4) {
+      if (this.valid1 && this.valid2 && this.valid3) {
         const tempUser = {
           ...this.user,
           DOB: new Date(this.user.DOB),
@@ -431,7 +504,8 @@ export default {
                 'Content-Type': 'application/json',
               },
             }).then(() => {
-              this.step += 1;
+              // eslint-disable-next-line
+              this.coach.is ? this.step += 1 : this.step += 2;
             });
           })
           .catch((err) => {
@@ -446,6 +520,19 @@ export default {
 </script>
 
 <style scoped>
+.file {
+  display: inline-block;
+  width: 100%;
+  padding: 120px 0 0 0;
+  height: 100px;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png') center center no-repeat #e4e4e4;
+  border-radius: 20px;
+  background-size: 60px 60px;
+}
 .alert_large {
   border: 0;
   border-radius: 30px;
@@ -455,7 +542,7 @@ export default {
   margin: 3rem 0 0;
   min-width: calc(100% - 20vw);
   position: absolute;
-  z-index: auto;
+  z-index: 100;
 }
 .alert_small {
   border: 0;
@@ -477,12 +564,16 @@ export default {
   left: 0;
   right: 0;
   position: fixed;
+  max-width: 100vw;
+  overflow-y: hidden;
 }
 .divider {
   left: 0;
   right: 0;
   bottom: 56px;
   position: fixed;
+  max-width: 100vw;
+  overflow-y: hidden;
 }
 
 .v-input--selection-controls {
