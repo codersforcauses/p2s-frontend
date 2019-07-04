@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="v-label text-xs-center">
+    <p class="v-label text-xs-center mb-1">
       {{label}}
     </p>
     <v-card v-ripple
@@ -17,6 +17,13 @@
                 v-if="imageData.length > 0"
                 :src="imageData"
         />
+        <v-icon v-else-if="isPDF"
+                size="50"
+                class="mx-auto"
+                :color="primary"
+        >
+          mdi-file-pdf
+        </v-icon>
         <v-icon v-else
                 size="50"
                 class="mx-auto"
@@ -25,14 +32,17 @@
           mdi-plus
         </v-icon>
         <input  type="file"
-                accept="image/*"
+                accept="image/jpeg, image/jpg, image/png, application/pdf"
                 @change="handleFileChange"
         />
       </v-container>
     </v-card>
 
-    <p v-if="value" class="body-2 text-truncate text-xs-center">
+    <p v-if="value" class="body-2 text-truncate text-xs-center mb-1">
       {{value.name}}
+    </p>
+    <p v-else class="body-2 text-truncate text-xs-center mb-1">
+      <br>
     </p>
   </div>
 </template>
@@ -48,12 +58,11 @@ export default {
   data() {
     return {
       imageData: '',
+      isPDF: false,
     };
   },
   methods: {
-    previewImage(event) {
-      // Reference to the DOM input element
-      const input = event.target;
+    previewImage(input) {
       // Ensure that you have a file before attempting to read it
       if (input.files && input.files[0]) {
         // create a new FileReader to read this image and convert to base64 format
@@ -68,8 +77,16 @@ export default {
       }
     },
     handleFileChange(e) {
-      this.previewImage(e);
-      this.$emit('input', e.target.files[0]);
+      const file = e.target;
+
+      if (file.files[0].type === 'image/png'
+        || file.files[0].type === 'image/jpg'
+        || file.files[0].type === 'image/jpeg') {
+        this.previewImage(file);
+      } else {
+        this.isPDF = true;
+      }
+      this.$emit('input', file.files[0]);
     },
   },
 };
