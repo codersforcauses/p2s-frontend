@@ -32,17 +32,22 @@
           mdi-plus
         </v-icon>
         <input  type="file"
-                accept="image/jpeg, image/jpg, image/png, application/pdf"
+                accept="application/pdf, image/jpeg, image/png"
                 @change="handleFileChange"
         />
       </v-container>
     </v-card>
 
-    <p v-if="value" class="body-2 text-truncate text-xs-center mb-1">
-      {{value.name}}
-    </p>
-    <p v-else class="body-2 text-truncate text-xs-center mb-1">
-      <br>
+    <p class="body-2 text-truncate text-xs-center mb-1">
+      <span v-if="error" class="error--text">
+        File must be a PDF, JPG or PNG
+      </span>
+      <span v-else-if="value" >
+        {{value.name}}
+      </span>
+      <span v-else>
+        <br>
+      </span>
     </p>
   </div>
 </template>
@@ -59,12 +64,13 @@ export default {
     return {
       imageData: '',
       isPDF: false,
+      error: false,
     };
   },
   methods: {
     previewImage(input) {
       // Ensure that you have a file before attempting to read it
-      if (input.files && input.files[0]) {
+      if (input && input[0]) {
         // create a new FileReader to read this image and convert to base64 format
         const reader = new FileReader();
         // Define a callback function to run, when FileReader finishes its job
@@ -73,20 +79,24 @@ export default {
           this.imageData = e.target.result;
         };
         // Start the reader job - read file as a data url (base64 format)
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(input[0]);
       }
     },
     handleFileChange(e) {
-      const file = e.target;
+      const file = e.target.files;
+      const allowedTypes = ['image/png', 'image/jpeg', 'application/pdf'];
 
-      if (file.files[0].type === 'image/png'
-        || file.files[0].type === 'image/jpg'
-        || file.files[0].type === 'image/jpeg') {
-        this.previewImage(file);
+      if (allowedTypes.indexOf(file[0].type) > -1) {
+        this.error = false;
+        if (file[0].type === 'application/pdf') {
+          this.isPDF = true;
+        } else {
+          this.previewImage(file);
+        }
+        this.$emit('input', file[0]);
       } else {
-        this.isPDF = true;
+        this.error = true;
       }
-      this.$emit('input', file.files[0]);
     },
   },
 };
