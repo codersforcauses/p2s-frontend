@@ -237,8 +237,7 @@
               **If you are unable to provide any of the required documents at this time,
               you will be able to upload them later in your user settings.**
             </p>
-            <v-form v-model="valid4"
-                    enctype="multipart/form-data"
+            <v-form enctype="multipart/form-data"
                     class="pt-2"
                     @keyup.native.enter="nextStep"
             >
@@ -380,7 +379,6 @@ export default {
       valid1: false,
       valid2: false,
       valid3: false,
-      valid4: false,
       show: false,
       finished: false,
       validation: {
