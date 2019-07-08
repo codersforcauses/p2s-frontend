@@ -5,7 +5,7 @@
         <v-card flat>
           <v-card-title class="headline">Regions</v-card-title>
           <v-expansion-panel popout
-                             :value="open"
+                             :value="0"
           >
             <v-expansion-panel-content class="elevation-0">
               <div slot="header">View Regions</div>
@@ -31,7 +31,6 @@
           </v-expansion-panel>
         </v-card>
       </v-flex>
-
       <v-flex xs12 md8>
         <v-card flat>
           <v-container justify-center
@@ -142,7 +141,6 @@ export default {
     regions: [],
     users: [],
     schools: [],
-    open: 0,
     regionPagination: {
       currentPage: 1,
       itemsPerPage: 10,
@@ -355,3 +353,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .v-pagination >>> .v-pagination__item {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .v-pagination >>> .v-pagination__navigation {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+</style>
