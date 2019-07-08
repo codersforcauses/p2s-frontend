@@ -12,20 +12,22 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@feathersjs/client": "^3.7.7",
+    "all": "0.0.0",
     "feathers-vuex": "^1.6.2",
     "register-service-worker": "^1.5.2",
     "socket.io-client": "^2.2.0",
-    "vue": "^2.5.22",
+    "vue": "^2.6.10",
     "vue-router": "^3.0.1",
     "vuetify": "^1.4.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yarn": "^1.15.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.2",
     "@vue/cli-plugin-e2e-cypress": "^3.2.2",
     "@vue/cli-plugin-eslint": "^3.2.2",
     "@vue/cli-plugin-pwa": "^3.2.2",
-    "@vue/cli-service": "^3.2.2",
+    "@vue/cli-service": "^3.8.4",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/test-utils": "^1.0.0-beta.28",
     "babel-core": "7.0.0-bridge.0",
@@ -38,7 +40,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-vuetify": "^0.4.6",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
