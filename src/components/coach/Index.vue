@@ -43,13 +43,13 @@
 const invite = import('@/components/admin/modals/UserInvite.vue');
 
 export default {
+  title: 'Coach Dashboard',
   props: {
     dark: {
       type: Boolean,
       default: false,
     },
   },
-  title: 'Admin Dashboard',
   components: {
     invite: () => ({
       component: invite,

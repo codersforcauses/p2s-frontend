@@ -49,12 +49,12 @@ export default {
   border-radius: var(--thiccness);
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 600px) {
   .container {
     padding: var(--thiccness);
   }
 }
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 600px) {
   .container {
     padding: calc(var(--thiccness) * 1.8);
   }

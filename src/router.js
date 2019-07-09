@@ -9,7 +9,7 @@ const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue');
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
-const UserSettings = () => import(/* webpackChunkName: "settings" */ './components/UserSettings.vue');
+const UserSettings = () => import(/* webpackChunkName: "settings" */ './components/UserSetting.vue');
 const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/Index.vue');
 const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
 const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');

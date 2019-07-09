@@ -31,6 +31,9 @@
       </v-dialog>
       <v-flex xs12>
         <v-card>
+                <pre>
+        {{currentUser}}
+      </pre>
           <v-card-text>
             <v-flex
             xs12
@@ -51,7 +54,9 @@
                 class="first-name ml-2"
                 readonly
                 :append-icon="'mdi-pencil'"
-                @click:append="this.$store.state.auth.user.name.first = 'fudge'"
+                @click:append="
+                editUser.name.first.change = !editUser.name.first.change;
+                editUser.name.last.change = false;"
                 >
                 </v-text-field>
               </v-flex>
@@ -156,16 +161,32 @@
 import { mapActions } from 'vuex';
 
 export default {
-  data(vm) {
+  data() {
     return {
       alert: undefined,
       error: '',
       valid: false,
       dialog: false,
       user: {
+        _id: '',
+        password: '',
         name: {
-          first: this.$store.state.auth.user.name.first,
-          last: this.$store.state.auth.user.name.last,
+          first: '',
+          last: '',
+        },
+        mobile: '',
+        emergencyContact: {
+          name: '',
+          phoneNumber: '',
+        },
+        gender: '',
+        ethnicity: '',
+        coach: {
+          qualifications: {
+            policeClearance: '',
+            WWC: '',
+            medClearance: '',
+          },
         },
       },
       editUser: {
@@ -188,15 +209,15 @@ export default {
       },
       validation: {
         required: value => !!value || 'Required',
-        name: (value) => {
-          const pattern = /^([a-zA-Z ]){2,30}$/;
-          return pattern.test(value) || 'Invalid name';
+        name: value => /^([a-zA-Z ]){2,30}$/.test(value) || 'Invalid name',
+      },
+      // mounted() {
+      //   this.showCurrent();
+      // },
+      computed: {
+        currentUser() {
+          return this.$store.getters['users/current'];
         },
-        email: (value) => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || 'Invalid email address';
-        },
-        testEmail: value => value === vm.editUser.email.changeTo || 'Emails are not the same',
       },
       methods: {
         ...mapActions('auth', ['authenticate']),

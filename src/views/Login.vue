@@ -1,83 +1,83 @@
 <template>
   <component :is="loginScreen">
-    <template slot="form">
-      <div>
-        <v-alert  dismissible
-                  v-model="alert"
-                  type="error"
-                  name="alert"
-                  :class="alertClass"
-                  :transition="transitionClass"
+    <template v-slot:form>
+      <v-alert  dismissible
+                v-model="alert"
+                type="error"
+                name="alert"
+                :class="alertClass"
+                :transition="transitionClass"
+      >
+        Error: {{ error }}
+      </v-alert>
+
+      <v-form v-model="valid" @keyup.native.enter="valid && login($event)">
+        <label  class="v-label ml-4"
+                :class="labelColour"
         >
-          Error: {{ error }}
-        </v-alert>
+          EMAIL
+        </label>
+        <v-text-field solo-inverted
+                      flat
+                      single-line
+                      name="email"
+                      color="#c22032"
+                      type="email"
+                      class="mb-2 mt-1"
+                      v-model="user.email"
+                      :disabled="loading"
+                      :rules="[rules.required, rules.email]"
+                      :dark="$vuetify.breakpoint.mdAndUp"
+        ></v-text-field>
 
-        <v-form v-model="valid" @keyup.native.enter="valid && login($event)">
-          <label  class="v-label ml-4"
-                  :class="labelColour"
+        <label  class="v-label ml-4"
+                :class="labelColour"
+        >
+          PASSWORD
+        </label>
+        <v-text-field solo-inverted
+                      flat
+                      single-line
+                      name="password"
+                      class="mb-2 mt-1"
+                      color="#c22032"
+                      v-model="user.password"
+                      :rules="[rules.required]"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show ? 'text' : 'password'"
+                      :dark="$vuetify.breakpoint.mdAndUp"
+                      :disabled="loading"
+                      @click:append="show = !show"
+        ></v-text-field>
+
+        <v-flex class="text-xs-center">
+          <v-btn  large
+                  round
+                  name="login"
+                  class="mt-3 mb-0 px-5 btn"
+                  :outline="$vuetify.breakpoint.smAndDown"
+                  :depressed="$vuetify.breakpoint.mdAndUp"
+                  :color="btnColour"
+                  :disabled="!valid || loading"
+                  :loading="loading"
+                  @click.stop.prevent="login"
           >
-            EMAIL
-          </label>
-          <v-text-field solo-inverted
-                        flat
-                        single-line
-                        name="email"
-                        color="#c22032"
-                        type="email"
-                        v-model="user.email"
-                        :disabled="loading"
-                        :rules="[rules.required, rules.email]"
-                        :dark="$vuetify.breakpoint.mdAndUp"
-          ></v-text-field>
+            Login
+          </v-btn>
 
-          <label  class="v-label ml-4"
-                  :class="labelColour"
+          <v-spacer/>
+
+          <v-btn  flat
+                  small
+                  round
+                  name="forgotPass"
+                  class="btn"
+                  color="#888"
           >
-            PASSWORD
-          </label>
-          <v-text-field solo-inverted
-                        flat
-                        single-line
-                        name="password"
-                        color="#c22032"
-                        v-model="user.password"
-                        :rules="[rules.required]"
-                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                        :type="show ? 'text' : 'password'"
-                        :dark="$vuetify.breakpoint.mdAndUp"
-                        :disabled="loading"
-                        @click:append="show = !show"
-          ></v-text-field>
-
-          <v-flex class="text-xs-center">
-            <v-btn  large
-                    round
-                    name="login"
-                    class="mt-4 px-5 btn"
-                    :outline="$vuetify.breakpoint.smAndDown"
-                    :depressed="$vuetify.breakpoint.mdAndUp"
-                    :color="btnColour"
-                    :disabled="!valid || loading"
-                    :loading="loading"
-                    @click.stop.prevent="login"
-            >
-              Login
-            </v-btn>
-
-            <v-spacer/>
-
-            <v-btn  flat
-                    small
-                    round
-                    name="forgotPass"
-                    class="btn"
-                    color="#888"
-            >
-              Forgot Password?
-            </v-btn>
-          </v-flex>
-        </v-form>
-      </div>
+            Forgot Password?
+          </v-btn>
+        </v-flex>
+      </v-form>
     </template>
   </component>
 </template>
