@@ -8,6 +8,15 @@
     >
       Error: {{ error }}
     </v-alert>
+    <v-dialog v-model="dialog" max-width="400">
+      <v-card>
+        <v-card-title>
+          {{ currentTitle }}
+        </v-card-title>
+        <v-window v-model="step">
+        </v-window>
+      </v-card>
+    </v-dialog>
     <v-card class="pa-2">
       <v-flex
       xs12
@@ -28,6 +37,7 @@
           class="first-name ml-2"
           readonly
           :append-icon="'mdi-pencil'"
+          @click:append="dialog = true"
           >
           </v-text-field>
         </v-flex>
@@ -42,6 +52,7 @@
           class="last-name mr-2"
           readonly
           :append-icon="'mdi-pencil'"
+          @click:append="dialog = true"
           >
           </v-text-field>
         </v-flex>
@@ -72,10 +83,20 @@ export default {
           },
         },
       },
-      changeFirst: false,
-      changeLast: false,
+      dialog: false,
+      windowTitle: '',
+      step: 1,
       alert: undefined,
       error: '',
+      computed: {
+        currentTitle () {
+          switch (this.step) {
+            case 1: return this.windowTitle
+            case 2: return 'Password Confirmation'
+            default: return 'Successfully Changed'
+          }
+        },
+      },
       methods: {
         current() {
           this.user = this.$store.auth.user;
