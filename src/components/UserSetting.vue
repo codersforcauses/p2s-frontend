@@ -1,36 +1,22 @@
 <template>
-  <v-card width="100%" class="pa-2">
-    <v-alert
-    dismissible
-    v-model="alert"
-    type="error"
-    name="alert"
-    >
-      Error: {{ error }}
-    </v-alert>
-  <v-layout row wrap>
-    <v-flex xs12 class="pb-0">
-      <v-btn 
-        style="float: right;"
-        class="mb-0"
-        round
-        flat 
-        small
-        :light="!dark" 
-        :dark="dark" 
-        :color="primary"
-        @click="disable = !disable"
-        >
-          edit
-      </v-btn>
-    </v-flex>
-    <v-flex 
-      xs12 
-      tag="label"
-      class="v-label ml-4 pt-0"
+  <div>
+    <v-card width="100%" class="pa-2">
+      <v-alert
+      dismissible
+      v-model="alert"
+      type="error"
+      name="alert"
       >
-        NAME
-      </v-flex>
+        Error: {{ error }}
+      </v-alert>
+      <v-layout row wrap>
+        <v-flex 
+        xs12 
+        tag="label"
+        class="v-label ml-4"
+        >
+          NAME {{ password }}
+        </v-flex>
         <v-flex xs6 style="padding-right: 1px;">
           <v-text-field
           v-model="user.name.first"
@@ -57,11 +43,41 @@
           >
           </v-text-field>
         </v-flex>
-  </v-layout>
+      </v-layout>
     </v-card>
+    <v-btn 
+    class="mt-3"
+    round
+    outline
+    flat 
+    :light="!dark" 
+    :dark="dark" 
+    :color="primary"
+    @click="disable = !disable; dialog = true;"
+    >
+      edit
+    </v-btn>
+    <v-btn 
+    class="mt-3"
+    style='float: right;'
+    round
+    outline
+    flat 
+    :light="!dark" 
+    :dark="dark" 
+    :color="primary"
+    @click="login"
+    >
+      save changes
+    </v-btn>
+    <PasswordAuth></PasswordAuth>
+  </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import PasswordAuth from '@/components/PasswordAuth.vue';
+
 export default {
   data() {
     return {
@@ -84,17 +100,26 @@ export default {
           },
         },
       },
+      dialog: false,
       disable: true,
       alert: undefined,
       error: '',
+      valid: true,
     };
+  },
+  props: {
+    password: {
+      type: String,
+    },
+  },
+  components: {
+    PasswordAuth,
   },
   computed: {
     dark() {
       return this.$store.getters['users/current'].darktheme;
     },
     primary() {
-      console.log(this.dark);
       return this.dark ? 'darkPrimary' : 'lightPrimary';
     },
   },
@@ -102,6 +127,22 @@ export default {
     current() {
       this.user = this.$store.auth.user;
       return this.$store.getters['users/current'];
+    },
+    ...mapActions('auth', ['authenticate']),
+    async login() {
+      if (this.valid) {
+        await this.authenticate({
+          strategy: 'local',
+          ...this.user,
+        }).then(async () => {
+          // logged in
+          console.log('Successfully authenticated!');
+        }).catch(async (e) => {
+          // Error on page
+          this.alert = true;
+          this.error = e.message;
+        });
+      }
     },
   },
   mounted() {
