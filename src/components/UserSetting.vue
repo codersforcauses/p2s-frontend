@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-card width="100%" class="pa-2">
     <v-alert
     dismissible
     v-model="alert"
@@ -8,24 +8,29 @@
     >
       Error: {{ error }}
     </v-alert>
-    <v-dialog v-model="dialog" max-width="400">
-      <v-card>
-        <v-card-title>
-          {{ currentTitle }}
-        </v-card-title>
-        <v-window v-model="step">
-        </v-window>
-      </v-card>
-    </v-dialog>
-    <v-card class="pa-2">
-      <v-flex
-      xs12
+  <v-layout row wrap>
+    <v-flex xs12 class="pb-0">
+      <v-btn 
+        style="float: right;"
+        class="mb-0"
+        round
+        flat 
+        small
+        :light="!dark" 
+        :dark="dark" 
+        :color="primary"
+        @click="disable = !disable"
+        >
+          edit
+      </v-btn>
+    </v-flex>
+    <v-flex 
+      xs12 
       tag="label"
-      class="v-label ml-4"
+      class="v-label ml-4 pt-0"
       >
         NAME
       </v-flex>
-      <v-layout row-wrap>
         <v-flex xs6 style="padding-right: 1px;">
           <v-text-field
           v-model="user.name.first"
@@ -35,9 +40,7 @@
           hint="First Name"
           type="text"
           class="first-name ml-2"
-          readonly
-          :append-icon="'mdi-pencil'"
-          @click:append="dialog = true"
+          :disabled= disable
           >
           </v-text-field>
         </v-flex>
@@ -50,15 +53,12 @@
           hint="Last Name"
           type="text"
           class="last-name mr-2"
-          readonly
-          :append-icon="'mdi-pencil'"
-          @click:append="dialog = true"
+          :disabled= disable
           >
           </v-text-field>
         </v-flex>
-      </v-layout>
+  </v-layout>
     </v-card>
-  </div>
 </template>
 
 <script>
@@ -69,11 +69,12 @@ export default {
         _id: '',
         email: '',
         name: {
-          first: 'test',
-          last: 'monkey',
+          first: '',
+          last: '',
         },
-        gender: 'telecommunications network satelite',
+        gender: '',
         ethnicity: '',
+        dark: false,
         region: '',
         coach: {
           qualifications: {
@@ -83,30 +84,29 @@ export default {
           },
         },
       },
-      dialog: false,
-      windowTitle: '',
-      step: 1,
+      disable: true,
       alert: undefined,
       error: '',
-      computed: {
-        currentTitle () {
-          switch (this.step) {
-            case 1: return this.windowTitle
-            case 2: return 'Password Confirmation'
-            default: return 'Successfully Changed'
-          }
-        },
-      },
-      methods: {
-        current() {
-          this.user = this.$store.auth.user;
-          return this.$store.getters['users/current'];
-        },
-      },
-      mounted() {
-        console.log(this.$store.getters['users/current']);
-      },
     };
+  },
+  computed: {
+    dark() {
+      return this.$store.getters['users/current'].darktheme;
+    },
+    primary() {
+      console.log(this.dark);
+      return this.dark ? 'darkPrimary' : 'lightPrimary';
+    },
+  },
+  methods: {
+    current() {
+      this.user = this.$store.auth.user;
+      return this.$store.getters['users/current'];
+    },
+  },
+  mounted() {
+    console.log(this.$store.getters['users/current']);
+    this.user = this.$store.getters['users/current'];
   },
 };
 </script>
