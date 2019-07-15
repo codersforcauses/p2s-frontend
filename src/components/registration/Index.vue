@@ -83,7 +83,7 @@
                         single-line
                         persistent-hint
                         class="mb-2 mt-1 select__flat"
-                        v-model.trim="user.ethnicity"
+                        v-model.trim="user.culture"
                         hint="Enter your mobile number"
                         :color="primary"
                         :disabled="loading"
@@ -245,21 +245,21 @@
                 <v-layout row wrap>
                   <v-flex xs6>
                     <v-file label="POLICE CLEARANCE"
-                      v-model="coach.policeClearance.file"
+                      v-model="coach.qual.pc_file"
                       :primary="primary"
                     />
                   </v-flex>
 
                   <v-flex xs6>
                     <v-file label="MEDICAL CLEARANCE"
-                      v-model="coach.medClearance.file"
+                      v-model="coach.qual.md_file"
                       :primary="primary"
                     />
                   </v-flex>
 
                   <v-flex xs6>
                     <v-file label="WWC CHECK"
-                            v-model="coach.WWC.file"
+                            v-model="coach.qual.wwc.file"
                             :primary="primary"
                     />
                   </v-flex>
@@ -272,7 +272,7 @@
                                   flat
                                   single-line
                                   persistent-hint
-                                  v-model.number.trim="coach.WWC.number"
+                                  v-model.number.trim="coach.qual.wwc.number"
                                   hint="Enter your Working With Children card number"
                                   :color="primary"
                                   :disabled="loading"
@@ -348,7 +348,7 @@ export default {
         password: '',
         mobile: '',
         gender: 'Male',
-        ethnicity: '',
+        culture: '',
         DOB: null,
         tempAuth: '',
         emergencyContact: {
@@ -358,18 +358,13 @@ export default {
       },
       coach: {
         is: false,
-        policeClearance: {
-          is: false,
-          file: null,
-        },
-        WWC: {
-          is: false,
-          number: '',
-          file: null,
-        },
-        medClearance: {
-          is: false,
-          file: null,
+        qual: {
+          pc_file: null,
+          wwc: {
+            number: '',
+            file: null,
+          },
+          mc_file: null,
         },
       },
       confirmPass: '',
@@ -467,7 +462,7 @@ export default {
         } else {
           this.step += 1;
         }
-      } else if (this.step === 4 && this.valid4) {
+      } else if (this.step === 4) {
         this.registerUser();
       } else if (this.step === 5) {
         this.$router.push({ name: 'login' });
@@ -488,6 +483,7 @@ export default {
             phoneNumber: `+61${this.user.emergencyContact.phoneNumber}`,
           },
           darktheme: this.dark,
+          coach: this.coach,
         };
 
         const { User } = this.$FeathersVuex;
