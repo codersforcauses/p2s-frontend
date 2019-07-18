@@ -104,8 +104,8 @@ export default {
           'schoolYear',
         ],
       },
-    }).then((response) => {
-      const schoolsId = response.data.map(schoolId => schoolId.school);
+    }).then(({ data }) => {
+      const schoolsId = data.map(schoolId => schoolId.school);
       this.findSchools({
         query: {
           _id: {
@@ -113,8 +113,11 @@ export default {
           },
         },
       });
-      this.finished = true;
-    });
+    })
+      .catch(e => console.log(e))
+      .finally(() => {
+        this.finished = true;
+      });
   },
   computed: {
     ...mapState('sessions', { isFindPendingSessions: 'isFindPending' }),
