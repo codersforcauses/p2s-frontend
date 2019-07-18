@@ -22,7 +22,7 @@
                     class="mb-2 mt-1"
                     placeholder="Enter details in your own words on how the session went"
                     :color="primary"
-                    :rules="[validation.required, validation.name]"
+                    :rules="[validation.required]"
         >
         </v-textarea>
       </v-flex>
@@ -95,7 +95,11 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
-      <student-report v-model="currentStudent.reportDialog" :dark="dark" :student="currentStudent"/>
+      <student-report v-model="currentStudent.reportDialog"
+                      :dark="dark"
+                      :student="currentStudent"
+                      @present="studentPresent(currentStudent)"
+        />
 
       <v-flex xs12 tag="label" class="v-label ml-4">
         SESSION FEEDBACK
@@ -110,7 +114,7 @@
                     class="mb-2 mt-1"
                     placeholder="Enter details in your own words on how the session went"
                     :color="primary"
-                    :rules="[validation.required, validation.name]"
+                    :rules="[validation.required]"
         >
         </v-textarea>
       </v-flex>
@@ -151,30 +155,28 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   props: ['value', 'dark', 'sessionId'],
   components: {
-    'student-report': () => ({
-      component: import('./modals/StudentReport.vue'),
-    }),
+    'student-report': () => import('./modals/StudentReport.vue'),
   },
   data() {
     return {
       session: {
         name: 'New session',
       },
-      currentStudent: {},
+      currentStudent: {
+        name: {
+          first: '',
+          last: '',
+        },
+        attendance: '',
+        attended: false,
+        reportDialog: false,
+      },
       alert: false,
       error: '',
       valid: false,
       finished: false,
       validation: {
         required: value => !!value || 'This field is required',
-        email: (value) => {
-          const pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@p2srugbyworks.com$/igm;
-          return pattern.test(value) || 'Invalid P2S email address';
-        },
-        name: (value) => {
-          const pattern = /^[a-z ,.'-]+$/i;
-          return pattern.test(value) || 'Name must only contain letters';
-        },
       },
     };
   },
@@ -212,6 +214,12 @@ export default {
     button() {
       return this.dark ? '#272727' : '#ebebeb';
     },
+    incompletedStudents() {
+      return this.students.filter(student => !student.completion);
+    },
+    completedStudents() {
+      return this.students.filter(student => student.completion);
+    },
     students() {
       if (this.finished) {
         const students = this.findStudentsInStore({
@@ -228,24 +236,25 @@ export default {
           ...student,
           reportDialog: false,
           completion: false,
-          attended: false,
         }));
         return studentsInSession;
       }
       return [];
     },
-    incompletedStudents() {
-      return this.students.filter(student => !student.completion);
-    },
-    completedStudents() {
-      return this.students.filter(student => student.completion);
-    },
   },
   methods: {
     ...mapActions('students', { findStudents: 'find' }),
     setCurrentStudent(student) {
-      this.currentStudent = student;
-      this.currentStudent.reportDialog = true;
+      this.currentStudent = {
+        ...student,
+        attendance: student.attended ? 'Present' : '',
+        reportDialog: true,
+      };
+
+      console.log(this.currentStudent);
+    },
+    studentPresent(value) {
+      this.currentStudent.attended = value;
     },
     createSession() {},
   },
