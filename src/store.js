@@ -35,6 +35,10 @@ export default new Vuex.Store({
       instanceDefaults: {
       },
     }),
+    service('matrix', {
+      instanceDefaults: {
+      },
+    }),
     service('sessions', {
       instanceDefaults: {
       },
