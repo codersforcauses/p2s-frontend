@@ -23,9 +23,11 @@
       </v-btn>
       <v-btn  flat
               round
+              @click="programDialog = true"
       >
         Create New
       </v-btn>
+      <new-program v-model="programDialog" v-bind="{ dark }" />
     </v-card-actions>
   </v-card>
 </template>
@@ -33,6 +35,21 @@
 <script>
 export default {
   props: ['primary'],
+  components: {
+    'new-program': () => ({
+      component: import('./modals/NewProgram.vue'),
+    }),
+  },
+  data() {
+    return {
+      programDialog: false,
+    };
+  },
+  computed: {
+    dark() {
+      return this.$store.getters['users/current'].darktheme ? 'dark' : 'light';
+    },
+  },
 };
 </script>
 
