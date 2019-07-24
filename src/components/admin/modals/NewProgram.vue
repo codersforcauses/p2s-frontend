@@ -1,6 +1,6 @@
 <template>
   <v-dialog scrollable
-            max-width=520
+            max-width=600
             v-model="showDialog"
             transition="dialog-transition"
             :fullscreen="$vuetify.breakpoint.xsOnly"
@@ -16,7 +16,7 @@
 
       <v-card-text class="pa-4">
         <v-form v-model="valid"
-                class="pt-2"
+                class="pt-2 pb-4"
                 :class="{ 'px-2': $vuetify.breakpoint.smAndUp }"
                 @keyup.native.enter="valid && createprogram($event)"
         >
@@ -93,211 +93,288 @@
               </v-autocomplete>
             </v-flex>
 
-          <v-flex xs12 tag="label" class="v-label ml-4">
-            DATES
-          </v-flex>
-          <v-flex xs6 style="padding-right: 1px;">
-            <v-menu lazy
-                    offset-y
-                    full-width
-                    :light="isDark"
-                    :dark="!isDark"
-                    :close-on-content-click="false"
-                    v-model="menu1"
-                    transition="scale-transition"
-                    min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field readonly
-                              solo-inverted
+            <v-flex xs12 tag="label" class="v-label ml-4">
+              DATES
+            </v-flex>
+            <v-flex xs6 style="padding-right: 1px;">
+              <v-menu lazy
+                      offset-y
+                      left
+                      :nudge-bottom="4"
+                      :nudge-right="89"
+                      :light="isDark"
+                      :dark="!isDark"
+                      :close-on-content-click="false"
+                      v-model="menu1"
+                      transition="scale-transition"
+                      width=221
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field readonly
+                                solo-inverted
+                                flat
+                                persistent-hint
+                                width="250"
+                                hint="Enter the date for the first session"
+                                class="mb-2 mt-1 left select__flat"
+                                v-model="program.dates.start"
+                                v-on="on"
+                                :color="primary"
+                  ></v-text-field>
+                </template>
+                <v-date-picker  v-model="program.dates.start"
+                                :color="primary"
+                                @input="menu1 = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-flex>
+            <v-flex xs6 style="padding-left: 1px;">
+              <v-menu lazy
+                      offset-y
+                      full-width
+                      :light="isDark"
+                      :dark="!isDark"
+                      :close-on-content-click="false"
+                      v-model="menu2"
+                      transition="scale-transition"
+                      min-width=221
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field readonly
+                                solo-inverted
+                                flat
+                                persistent-hint
+                                width="250"
+                                hint="Enter the date for the last session"
+                                class="mb-2 mt-1 right select__flat"
+                                v-model="program.dates.end"
+                                v-on="on"
+                                :color="primary"
+                  ></v-text-field>
+                </template>
+                <v-date-picker  v-model="program.dates.end"
+                                :color="primary"
+                                @input="menu2 = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-flex>
+
+            <v-flex xs12 tag="label" class="v-label ml-4">
+              DAYS OF THE WEEK
+            </v-flex>
+            <v-flex xs12>
+              <v-combobox solo-inverted
+                          flat
+                          multiple
+                          chips
+                          class="mb-2 mt-1 select__flat"
+                          v-model="program.days"
+                          :color="primary"
+                          :items="days"
+                          :menu-props="{
+                            offsetY: true,
+                            light: isDark,
+                            dark: !isDark,
+                            transition: 'slide-y-transition',
+                          }"
+              >
+                <template v-slot:selection="data">
+                  <v-chip :light="isDark"
+                          :dark="!isDark"
+                          :key="JSON.stringify(data.item)"
+                          :selected="data.selected"
+                          :disabled="data.disabled"
+                          class="v-chip--select-multi"
+                          @input="data.parent.selectItem(data.item)"
+                  >
+                    <v-avatar :color="primary">
+                      <span :class="text">
+                        {{ data.item.slice(0, 1).toUpperCase() }}
+                      </span>
+                    </v-avatar>
+                    {{ data.item }}
+                  </v-chip>
+                </template>
+              </v-combobox>
+            </v-flex>
+            <v-flex xs7>
+             <v-text-field readonly
+                                solo-inverted
+                                flat
+                                persistent-hint
+                                hint="Enter the date for the first session"
+                                class="mb-2 mt-1 left select__flat"
+                                v-model="program.time.start"
+                                v-on="on"
+                                :color="primary"
+                  ></v-text-field>
+            </v-flex>
+            <v-flex xs12 tag="label" class="v-label ml-4">
+              TIMES
+            </v-flex>
+            <v-flex xs6 style="padding-right: 1px;">
+              <v-menu lazy
+                      offset-y
+                      full-width
+                      :light="isDark"
+                      :dark="!isDark"
+                      :close-on-content-click="false"
+                      :return-value.sync="program.time.start"
+                      ref="menu3"
+                      v-model="menu3"
+                      transition="scale-transition"
+                      min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field readonly
+                                solo-inverted
+                                flat
+                                persistent-hint
+                                hint="Enter the date for the first session"
+                                class="mb-2 mt-1 left select__flat"
+                                v-model="program.time.start"
+                                v-on="on"
+                                :color="primary"
+                  ></v-text-field>
+                </template>
+                <v-time-picker  v-model="program.time.start"
+                                :color="primary"
+                                @click:minute="$refs.menu3.save(program.time.start)"
+                ></v-time-picker>
+              </v-menu>
+            </v-flex>
+
+            <v-flex xs6 style="padding-left: 1px;">
+              <v-menu lazy
+                      offset-y
+                      full-width
+                      :light="isDark"
+                      :dark="!isDark"
+                      :close-on-content-click="false"
+                      :return-value.sync="program.time.end"
+                      ref="menu4"
+                      v-model="menu4"
+                      transition="scale-transition"
+                      min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field readonly
+                                solo-inverted
+                                flat
+                                persistent-hint
+                                hint="Enter the date for the last session"
+                                class="mb-2 mt-1 right select__flat"
+                                v-model="program.time.end"
+                                v-on="on"
+                                :color="primary"
+                  ></v-text-field>
+                </template>
+                <v-time-picker  v-model="program.time.end"
+                                :color="primary"
+                                @click:minute="$refs.menu4.save(program.time.end)"
+                ></v-time-picker>
+              </v-menu>
+            </v-flex>
+
+            <v-flex xs12 tag="label" class="v-label ml-4">
+              COACHES
+            </v-flex>
+            <v-flex xs12>
+              <v-autocomplete solo-inverted
                               flat
                               persistent-hint
-                              hint="Enter the date for the first session"
-                              class="mb-2 mt-1 left select__flat"
-                              v-model="program.dates.start"
-                              v-on="on"
+                              cache-items
+                              hide-selected
+                              placeholder="Start typing..."
+                              type="text"
+                              hint="Select the coaches that will be "
+                              class="mb-2 mt-1 select__flat"
+                              v-model.trim="program.school"
+                              item-text="name"
+                              item-value="_id"
+                              :items="listSchools"
+                              :search-input.sync="searchSchool"
+                              :loading="loadSchools"
                               :color="primary"
-                ></v-text-field>
-              </template>
-              <v-date-picker  v-model="program.dates.start"
-                              :color="primary"
-                              @input="menu1 = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-flex>
-          <v-flex xs6 style="padding-left: 1px;">
-            <v-menu lazy
-                    offset-y
-                    full-width
-                    :light="isDark"
-                    :dark="!isDark"
-                    :close-on-content-click="false"
-                    v-model="menu2"
-                    transition="scale-transition"
-                    min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field readonly
-                              solo-inverted
-                              flat
-                              persistent-hint
-                              hint="Enter the date for the last session"
-                              class="mb-2 mt-1 right select__flat"
-                              v-model="program.dates.end"
-                              v-on="on"
-                              :color="primary"
-                ></v-text-field>
-              </template>
-              <v-date-picker  v-model="program.dates.end"
-                              :color="primary"
-                              @input="menu2 = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-flex>
+                              :disabled="loading"
+                              :rules="[validation.required]"
+                              :menu-props="{
+                                offsetY: true,
+                                light: isDark,
+                                dark: !isDark,
+                                transition: 'slide-y-transition',
+                              }"
+              >
+                <template slot="no-data">
+                  <div class="list">
+                    Can't find the coach you wanted? Create a new
+                      <a  slot="activator"
+                          href="/school"
+                          target="_blank"
+                          :style="{ color: primaryColor }"
+                          style="text-decoration: none;"
+                          @click.stop
+                      >
+                        school
+                      <v-icon size="1rem"
+                              :color="primaryInv"
+                      >
+                        mdi-open-in-new
+                      </v-icon>
+                      </a>
+                      <p class="caption ma-0">
+                        Please refresh the page if you do not see a created school.
+                      </p>
+                  </div>
+                </template>
+              </v-autocomplete>
+            </v-flex>
+            <!-- <v-select solo-inverted
+                      flat
+                      persistent-hint
+                      hint="Enter the state the program belongs to"
+                      type="text"
+                      class="mb-2 mt-1 select__flat"
+                      item-text="name"
+                      item-value="value"
+                      :items="states"
+                      :color="primary"
+                      :disabled="loading"
+                      v-model="program.state"
+                      :menu-props="{
+                        offsetY: true,
+                        light: isDark,
+                        dark: !isDark,
+                        transition: 'slide-y-transition',
+                      }"
+            ></v-select> -->
+            <v-flex xs12>
+              <v-alert  dismissible
+                        v-model="alert"
+                        type="error"
+                        name="alert"
+                        class="alert"
+                        transition="slide-y-transition"
+              >
+                {{ error }}
+              </v-alert>
+            </v-flex>
 
-          <v-flex xs12 tag="label" class="v-label ml-4">
-            DAYS OF THE WEEK
-          </v-flex>
-          <v-flex xs12>
-            <v-combobox solo-inverted
-                        flat
-                        multiple
-                        chips
-                        class="mb-2 mt-1 select__flat"
-                        v-model="program.days"
-                        :color="primary"
-                        :items="days"
-                        :menu-props="{
-                          offsetY: true,
-                          light: isDark,
-                          dark: !isDark,
-                          transition: 'slide-y-transition',
-                        }"
-            >
-              <template v-slot:selection="data">
-                <v-chip :light="isDark"
-                        :dark="!isDark"
-                        :key="JSON.stringify(data.item)"
-                        :selected="data.selected"
-                        :disabled="data.disabled"
-                        class="v-chip--select-multi"
-                        @input="data.parent.selectItem(data.item)"
-                >
-                  <v-avatar class="accent white--text">
-                    {{ data.item.slice(0, 1).toUpperCase() }}
-                  </v-avatar>
-                  {{ data.item }}
-                </v-chip>
-              </template>
-            </v-combobox>
-          </v-flex>
-
-          <v-flex xs12 tag="label" class="v-label ml-4">
-            TIMES
-          </v-flex>
-          <v-flex xs6 style="padding-right: 1px;">
-            <v-menu lazy
-                    offset-y
-                    full-width
-                    :light="isDark"
-                    :dark="!isDark"
-                    :close-on-content-click="false"
-                    :return-value.sync="program.time.start"
-                    v-model="menu3"
-                    transition="scale-transition"
-                    min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field readonly
-                              solo-inverted
-                              flat
-                              persistent-hint
-                              hint="Enter the date for the first session"
-                              class="mb-2 mt-1 left select__flat"
-                              v-model="program.time.start"
-                              v-on="on"
-                              :color="primary"
-                ></v-text-field>
-              </template>
-              <v-time-picker  v-model="program.time.start"
-                              :color="primary"
-                              @input="menu3 = false"
-              ></v-time-picker>
-            </v-menu>
-          </v-flex>
-          <v-flex xs6 style="padding-left: 1px;">
-            <v-menu lazy
-                    offset-y
-                    full-width
-                    :light="isDark"
-                    :dark="!isDark"
-                    :close-on-content-click="false"
-                    :return-value.sync="program.time.end"
-                    v-model="menu4"
-                    transition="scale-transition"
-                    min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field readonly
-                              solo-inverted
-                              flat
-                              persistent-hint
-                              hint="Enter the date for the last session"
-                              class="mb-2 mt-1 right select__flat"
-                              v-model="program.time.end"
-                              v-on="on"
-                              :color="primary"
-                ></v-text-field>
-              </template>
-              <v-date-picker  v-model="program.time.end"
-                              :color="primary"
-                              @input="menu4 = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-flex>
-          <!-- <v-select solo-inverted
-                    flat
-                    persistent-hint
-                    hint="Enter the state the program belongs to"
-                    type="text"
-                    class="mb-2 mt-1 select__flat"
-                    item-text="name"
-                    item-value="value"
-                    :items="states"
-                    :color="primary"
-                    :disabled="loading"
-                    v-model="program.state"
-                    :menu-props="{
-                      offsetY: true,
-                      light: isDark,
-                      dark: !isDark,
-                      transition: 'slide-y-transition',
-                    }"
-          ></v-select> -->
-
-            <v-alert  dismissible
-                      v-model="alert"
-                      type="error"
-                      name="alert"
-                      class="alert"
-                      transition="slide-y-transition"
-            >
-              {{ error }}
-            </v-alert>
-
-            <v-btn  depressed
-                    round
-                    class="ma-0"
-                    style="float: right"
-                    :light="!isDark"
-                    :dark="isDark"
-                    :color="primary"
-                    :disabled="!valid || loading"
-                    :loading="loading"
-                    @click.stop.prevent="createprogram"
-            >
-              <span :style="{ color: button }"> Create program </span>
-            </v-btn>
+            <v-flex xs12>
+              <v-btn  depressed
+                      round
+                      class="ma-0"
+                      style="float: right"
+                      :light="!isDark"
+                      :dark="isDark"
+                      :color="primary"
+                      :disabled="!valid || loading"
+                      :loading="loading"
+                      @click.stop.prevent="createprogram"
+              >
+                <span :style="{ color: button }"> Create program </span>
+              </v-btn>
+            </v-flex>
           </v-layout>
         </v-form>
       </v-card-text>
@@ -380,6 +457,9 @@ export default {
     },
     primaryColor() {
       return !this.dark ? 'var(--v-darkPrimary-base)' : 'var(--v-lightPrimary-base)';
+    },
+    text() {
+      return this.primary === 'darkPrimary' ? 'black--text' : 'white--text';
     },
     button() {
       return this.isDark ? '#272727' : '#ebebeb';
