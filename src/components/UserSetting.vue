@@ -15,7 +15,7 @@
         tag="label"
         class="v-label ml-4"
         >
-          NAME {{ password }}
+          NAME
         </v-flex>
         <v-flex xs6 style="padding-right: 1px;">
           <v-text-field
@@ -44,33 +44,34 @@
           </v-text-field>
         </v-flex>
       </v-layout>
+      <v-card-actions>
+        <v-btn
+        class="mt-3"
+        round
+        flat 
+        :light="!dark" 
+        :dark="dark" 
+        :color="primary"
+        @click="disable = !disable"
+        >
+         {{ btnName }}
+        </v-btn>
+        <v-spacer/>
+        <v-btn 
+        v-show="!disable"
+        class="mt-3"
+        round
+        flat 
+        :light="!dark" 
+        :dark="dark" 
+        :color="primary"
+        @click="disable = false; passwordDialog = true;"
+        >
+          save changes
+        </v-btn>
+      </v-card-actions>
     </v-card>
-    <v-btn 
-    class="mt-3"
-    round
-    outline
-    flat 
-    :light="!dark" 
-    :dark="dark" 
-    :color="primary"
-    @click="disable = !disable; dialog = true;"
-    >
-      edit
-    </v-btn>
-    <v-btn 
-    class="mt-3"
-    style='float: right;'
-    round
-    outline
-    flat 
-    :light="!dark" 
-    :dark="dark" 
-    :color="primary"
-    @click="login"
-    >
-      save changes
-    </v-btn>
-    <PasswordAuth></PasswordAuth>
+    <pass-auth v-model="passwordDialog" v-bind="{ dark }"/>
   </div>
 </template>
 
@@ -100,22 +101,26 @@ export default {
           },
         },
       },
-      dialog: false,
+      passwordDialog: false,
       disable: true,
       alert: undefined,
       error: '',
       valid: true,
     };
   },
-  props: {
-    password: {
-      type: String,
-    },
-  },
   components: {
-    PasswordAuth,
+    'pass-auth': () => ({
+      component: import('./PasswordAuth.vue'),
+    }),
   },
   computed: {
+    btnName() {
+      if(this.disable) {
+        return 'EDIT';
+      } else {
+        return 'CANCEL';
+      }
+    },
     dark() {
       return this.$store.getters['users/current'].darktheme;
     },
@@ -126,7 +131,6 @@ export default {
   methods: {
     current() {
       this.user = this.$store.auth.user;
-      return this.$store.getters['users/current'];
     },
     ...mapActions('auth', ['authenticate']),
     async login() {
