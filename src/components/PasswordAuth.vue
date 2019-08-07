@@ -44,9 +44,10 @@
               depressed
               round
               class="ma-0"
-              :light="!isDark"
-              :dark="isDark"
+              :light="!dark"
+              :dark="dark"
               :color="primary"
+              :disabled="!valid"
               @click.stop.prevent="passCheck"
             > 
               Confirm
@@ -86,14 +87,8 @@ export default {
         this.$emit('input', value);
       },
     },
-    isDark() {
-      return this.dark === 'dark';
-    },
     primary() {
-      return this.isDark ? 'darkPrimary' : 'lightPrimary';
-    },
-    button() {
-      return this.isDark ? '#272727' : '#ebebeb';
+      return this.dark ? 'darkPrimary' : 'lightPrimary';
     },
   },
   methods: {
@@ -105,9 +100,10 @@ export default {
           ...this.user,
         }).then(async () => {
           // logged in
-          console.log('Successfully authenticated!');
+          console.log('Emitting result!');
+          this.$emit('pass-auth', true)
         }).catch(async (e) => {
-          // Error on page
+          console.log('You just got nae naed!')
           this.alert = true;
           this.error = e.message;
         });

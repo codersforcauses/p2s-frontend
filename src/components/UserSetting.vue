@@ -15,7 +15,7 @@
         tag="label"
         class="v-label ml-4"
         >
-          NAME
+          NAME {{ emitTest }}
         </v-flex>
         <v-flex xs6 style="padding-right: 1px;">
           <v-text-field
@@ -48,7 +48,7 @@
         <v-btn
         class="mt-3"
         round
-        flat 
+        depressed
         :light="!dark" 
         :dark="dark" 
         :color="primary"
@@ -61,7 +61,7 @@
         v-show="!disable"
         class="mt-3"
         round
-        flat 
+        depressed
         :light="!dark" 
         :dark="dark" 
         :color="primary"
@@ -71,7 +71,7 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <pass-auth v-model="passwordDialog" v-bind="{ dark }"/>
+    <pass-auth v-model="passwordDialog" v-bind="{ dark }" @pass-auth="emitTest=true"/>
   </div>
 </template>
 
@@ -91,7 +91,6 @@ export default {
         },
         gender: '',
         ethnicity: '',
-        dark: false,
         region: '',
         coach: {
           qualifications: {
@@ -106,6 +105,7 @@ export default {
       alert: undefined,
       error: '',
       valid: true,
+      emitTest: false,
     };
   },
   components: {
