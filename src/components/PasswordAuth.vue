@@ -104,8 +104,8 @@ export default {
           this.$emit('pass-auth', true)
         }).catch(async (e) => {
           console.log('You just got nae naed!')
-          this.alert = true;
           this.error = e.message;
+          this.alert = true;
         });
       }
     },
