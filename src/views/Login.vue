@@ -134,10 +134,10 @@ export default {
         }).then(async () => {
           // logged in
           this.$router.push({ name: 'dashboard' });
-        }).catch(async (e) => {
+        }).catch(async ({ message }) => {
           // Error on page
           this.alert = true;
-          this.error = e.message;
+          this.error = message;
         });
       }
     },
