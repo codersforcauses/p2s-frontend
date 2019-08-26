@@ -1,6 +1,6 @@
 <template>
   <v-layout fill-height row>
-    <v-flex xs6 offset-xs3>
+    <v-flex :class="$vuetify.breakpoint.mdAndUp ? 'xs6 offset-xs3' : 'xs12'">
       <v-card class="pa-2">
         <v-alert  dismissible
                   v-model="alert"
@@ -62,7 +62,30 @@
                   tag="label"
                   class="v-label ml-4"
           >
+            PASSWORD
+          </v-flex>
+          <v-flex xs12 style="padding: 10px;">
+            <v-text-field
+                          solo-inverted
+                          flat
+                          persistent-hint
+                          hint="Password"
+                          type="password"
+                          class="ml-2 mr-2"
+                          :disabled= disable
+            >
+            </v-text-field>
+          </v-flex>
+          <v-flex xs12 
+                  tag="label"
+                  class="v-label ml-4"
+          >
             QUALIFICATIONS
+          </v-flex>
+          <v-flex xs12 class="pa-0">
+            <v-alert :value="!disable" type="warning" :color="primary" transistion="y-slide-transition">
+              Please contact an admin to verify your qualifications.
+            </v-alert>
           </v-flex>
           <v-flex xs12 style="padding: 10px;">
             <v-text-field solo-inverted
@@ -191,6 +214,9 @@ export default {
     },
     primary() {
       return this.dark ? 'darkPrimary' : 'lightPrimary';
+    },
+    pageSize() {
+      return xs12
     },
   },
   watch: {

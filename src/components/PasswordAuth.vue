@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapState, mapActions }from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   props: ['value', 'dark'],
@@ -95,18 +95,19 @@ export default {
     ...mapActions('auth', ['authenticate']),
     async passCheck() {
       if (this.valid) {
-        await this.authenticate({
-          strategy: 'local',
-          ...this.user,
-        }).then(async () => {
-          // logged in
-          console.log('Emitting result!');
-          this.$emit('pass-auth', true)
-        }).catch(async (e) => {
-          console.log('You just got nae naed!')
+        try{
+          
+          const result= await this.authenticate({
+            strategy: 'local',
+            ... this.user,
+          })
+          console.log('emittting');
+          this.$emit('pass-auth', true);
+        } catch (error) { 
+          console.log('fuck')
           this.error = e.message;
           this.alert = true;
-        });
+        }
       }
     },
   },
