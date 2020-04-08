@@ -13,7 +13,7 @@ const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/I
 const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
 const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');
 const CoachDash = () => import(/* webpackChunkName: "coach-dash" */ './components/coach/Dashboard.vue');
-const CurrentSession = () => import(/* webpackChunkName: "coach-session" */ './components/coach/CurrentSession.vue');
+const CurrentSession = () => import(/* webpackChunkName: "coach-session" */ './components/coach/SessionCard.vue');
 
 Vue.use(Router);
 
