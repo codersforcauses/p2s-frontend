@@ -22,11 +22,8 @@
     </v-card-title>
 
     <v-card-actions class="pa-0">
-      <v-btn  flat
-              round
-      >
-        View All
-      </v-btn>
+      <v-btn  flat round @click="allRegionDialog = true">View All</v-btn>
+      <all-regions v-model="allRegionDialog" v-bind="{ dark }"/>
       <v-btn  flat
               round
               @click="regionDialog = true"
@@ -48,10 +45,14 @@ export default {
     'new-region': () => ({
       component: import('./modals/NewRegion.vue'),
     }),
+    'all-regions': () => ({
+      component: import('./modals/ViewAllRegions.vue'),
+    }),
   },
   data() {
     return {
       regionDialog: false,
+      allRegionDialog: false,
     };
   },
   computed: {
