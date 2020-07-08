@@ -24,8 +24,12 @@
             <v-list-item-content>
               <v-list-item-title>{{region.name}}</v-list-item-title>
               <ul>
-                  <li>State: {{region.state}}</li>
-                  <li>Number of students: Object.keys({{region.users}}).length</li>
+                  <li><b>State:</b> {{region.state}}</li>
+                  <span v-for="(x,index) in region.users" :key="index">
+                      <span v-if="index === Object.keys(region.users).length - 1">
+                          <b>Number of students:</b> {{index}}
+                      </span>
+                  </span>
               </ul>
             </v-list-item-content>
           </v-list-item>
@@ -42,6 +46,11 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'ViewAllRegions',
   props: ['value', 'dark'],
+  data() {
+    return {
+      numOfStudents: [],
+    };
+  },
   computed: {
     showDialog: {
       get() {
@@ -49,7 +58,6 @@ export default {
       },
     },
     ...mapGetters('regions', { listRegions: 'list' }),
-    ...mapGetters('regions', { allTheRegions: 'list' }),
   },
 };
 </script>
