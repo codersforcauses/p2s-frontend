@@ -44,6 +44,7 @@
                     hint='Enter the region the school belongs'
                     type='text'
                     class='mb-2 mt-1 select_flat'
+                    :items='listRegions'
                     item-text='name'
                     item-value='value'
                     :color='primary'
@@ -55,6 +56,66 @@
                     }"
           >
           </v-select>
+          <label class='v-label ml-4'>
+            Street Address
+          </label>
+          <v-text-field solo-inverted
+                        flat
+                        persistent-hint
+                        hint="Enter the street address of the school"
+                        type="text"
+                        class="mb-2 mt-1"
+                        :color="primary"
+                        :disabled="loading"
+                        :rules="[validation.required]"
+                        v-model.trim="school.street"
+          >
+          </v-text-field>
+          <label class='v-label ml-4'>
+            Suburb
+          </label>
+          <v-text-field solo-inverted
+                        flat
+                        persistent-hint
+                        hint="Enter the school's suburb"
+                        type="text"
+                        class="mb-2 mt-1"
+                        :color="primary"
+                        :disabled="loading"
+                        :rules="[validation.required]"
+                        v-model.trim="school.suburb"
+          >
+          </v-text-field>
+          <label class='v-label ml-4'>
+            Post Code
+          </label>
+          <v-text-field solo-inverted
+                        flat
+                        persistent-hint
+                        hint="Enter the school's post code"
+                        type="text"
+                        class="mb-2 mt-1"
+                        :color="primary"
+                        :disabled="loading"
+                        :rules="[validation.required]"
+                        v-model.trim="school.postCode"
+          >
+          </v-text-field>
+          <label class='v-label ml-4'>
+            Phone Number
+          </label>
+          <v-text-field solo-inverted
+                        flat
+                        persistent-hint
+                        hint="e.g. 08 6488 3051"
+                        type="text"
+                        class="mb-2 mt-1"
+                        :color="primary"
+                        :disabled="loading"
+                        :rules="[validation.required]"
+                        v-model.trim="school.phoneNumber"
+          >
+          </v-text-field>
           <v-alert  dismissible
                     v-model="alert"
                     type="error"
@@ -85,7 +146,7 @@
 </template>
 
 <script>
-// import {  } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   props: ['value', 'dark'],
@@ -93,6 +154,9 @@ export default {
     return {
       school: {
         name: '',
+        street: '',
+        postCode: '',
+        phoneNumber: '',
         region: '',
       },
       alert: false,
@@ -108,6 +172,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('regions', { listRegions: 'list' }),
     showDialog: {
       get() {
         return this.value;

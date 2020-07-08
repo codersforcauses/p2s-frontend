@@ -18,9 +18,11 @@
     <v-card-actions class="pa-0">
       <v-btn  flat
               round
+              @click='viewDialog = true'
       >
         View All
       </v-btn>
+      <view-schools v-model='viewDialog' v-bind="{ dark }" />
       <v-btn  flat
               round
               @click='createDialog = true'
@@ -37,10 +39,14 @@ export default {
   props: ['primary'],
   data: () => ({
     createDialog: false,
+    viewDialog: false,
   }),
   components: {
     'new-school': () => ({
       component: import('./modals/NewSchool.vue'),
+    }),
+    'view-schools': () => ({
+      component: import('./modals/ViewSchools.vue'),
     }),
   },
 };
