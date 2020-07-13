@@ -15,25 +15,14 @@
         </v-btn>
       </v-toolbar>
       <v-card-text>
-        <v-list rounded v-for="region in listRegions" :key="region">
-          <v-list-item-group>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>mdi-map-marker-multiple</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{ region.name }}</v-list-item-title>
-                <ul>
-                  <li><b>State:</b> {{ region.state }}</li>
-                  <span v-for="(x, index) in region.users" :key="index">
-                    <span v-if="index === Object.keys(region.users).length - 1">
-                      <b>Number of users:</b> {{ index+1 }}
-                    </span>
-                  </span>
-                </ul>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
+        <v-list two-line>
+          <template v-for="region in listRegions">
+            <v-list-tile :key="region">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ `${region.name}, ${region.state }` }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </template>
         </v-list>
       </v-card-text>
     </v-card>
@@ -55,6 +44,9 @@ export default {
     showDialog: {
       get() {
         return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
       },
     },
     ...mapGetters('regions', { listRegions: 'list' }),
