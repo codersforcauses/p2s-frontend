@@ -3,8 +3,7 @@
     <v-flex xs12 md4>
       <v-card>
         <v-card-title class="pb-0">
-          <h3 class="headline mb-0"
-            :class="`${primary}--text`">
+          <h3 class="headline mb-0" :class="`${primary}--text`">
             Select a Region
           </h3>
         </v-card-title>
@@ -32,19 +31,19 @@
             </v-list-tile-content>
             <v-tooltip bottom transition="none">
               <template v-slot:activator="{ on }">
-               <v-icon v-if="user.coach.is" v-on="on">mdi-football-australian </v-icon>
+                <v-icon v-if="user.coach.is" v-on="on">mdi-football-australian </v-icon>
               </template>
               <span>Coach</span>
             </v-tooltip>
             <v-tooltip bottom transition="none">
               <template v-slot:activator="{ on }">
-               <v-icon v-if="user.manager.is" v-on="on">mdi-account-tie </v-icon>
+                <v-icon v-if="user.manager.is" v-on="on">mdi-account-tie </v-icon>
               </template>
               <span>Manager</span>
             </v-tooltip>
             <v-tooltip bottom transition="none">
               <template v-slot:activator="{ on }">
-               <v-icon v-if="user.admin.is" v-on="on">mdi-shield-account </v-icon>
+                <v-icon v-if="user.admin.is" v-on="on">mdi-shield-account </v-icon>
               </template>
               <span>Admin</span>
             </v-tooltip>
