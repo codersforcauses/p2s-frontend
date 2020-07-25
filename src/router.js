@@ -10,8 +10,11 @@ const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './views/Dash
 const Error = () => import(/* webpackChunkName: "404page" */ './views/404.vue');
 
 const Admin = () => import(/* webpackChunkName: "admin" */ './components/admin/Index.vue');
+const AdminDash = () => import(/* webpackChunkName: "admin" */ './components/admin/dashboard.vue');
 const Manager = () => import(/* webpackChunkName: "manager" */ './components/manager/Index.vue');
 const Coach = () => import(/* webpackChunkName: "coach" */ './components/coach/Index.vue');
+
+const Region = () => import(/* webpackChunkName: "region" */ './components/Region.vue');
 
 Vue.use(Router);
 
@@ -64,6 +67,18 @@ const router = new Router({
           name: 'admin',
           component: Admin,
           meta: { permission: 'admin' },
+          children: [
+            {
+              path: '/',
+              name: 'admin-dash',
+              component: AdminDash,
+            },
+            {
+              path: 'region',
+              name: 'region',
+              component: Region,
+            },
+          ],
         },
         {
           path: 'manager',
