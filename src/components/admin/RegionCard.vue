@@ -22,7 +22,7 @@
     </v-card-title>
 
     <v-card-actions class="pa-0">
-      <v-btn  flat round v-on:click="$router.push('/admin/Region')">View All</v-btn>
+      <v-btn  flat round @click="$router.push('/admin/Region')">View All</v-btn>
       <v-btn  flat round @click="regionDialog = true">
         Create New
       </v-btn>
