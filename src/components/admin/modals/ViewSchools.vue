@@ -13,22 +13,29 @@
           <v-icon> mdi-close </v-icon>
         </v-btn>
       </v-toolbar>
-      {{ listSchools }}
+      <ul>
+        <li
+        v-for='school in schools'
+        :key=school._id
+        >
+          {{ school.name }}
+        </li>
+      </ul>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   props: ['value', 'dark'],
   data() {
     return {
+      schools: [],
     };
   },
   computed: {
-    ...mapGetters('schools', { listSchools: 'list' }),
     showDialog: {
       get() {
         return this.value;
@@ -48,7 +55,11 @@ export default {
     },
   },
   methods: {
-
+    ...mapActions('schools', { findSchools: 'find' }),
+  },
+  async mounted() {
+    const schoolData = await this.findSchools();
+    this.schools = schoolData.data;
   },
 };
 </script>
