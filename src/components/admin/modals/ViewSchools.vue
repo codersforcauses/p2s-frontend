@@ -31,6 +31,7 @@
                 <p>
                   Phone number: {{ school.phoneNumber }}
                 </p>
+                {{ regions }}
               </v-card-content>
             </v-card>
           </v-expansion-panel-content>
@@ -47,6 +48,7 @@ export default {
   data() {
     return {
       schools: [],
+      regions: {},
     };
   },
   computed: {
@@ -75,13 +77,17 @@ export default {
   },
   methods: {
     ...mapActions('schools', { findSchools: 'find' }),
+    ...mapActions('regions', { findRegions: 'find' }),
     formatAddress(address) {
       return `${address.street}, ${address.suburb}, ${address.postcode}, ${address.state}`;
     },
   },
   async mounted() {
     const schoolData = await this.findSchools();
+    const regionData = await this.findRegions();
+
     this.schools = schoolData.data;
+    this.regions = regionData.data;
   },
 };
 </script>
