@@ -13,14 +13,28 @@
           <v-icon> mdi-close </v-icon>
         </v-btn>
       </v-toolbar>
-      <ul>
-        <li
-        v-for='school in schools'
-        :key=school._id
-        >
-          {{ school.name }}
-        </li>
-      </ul>
+        <v-expansion-panel>
+          <v-expansion-panel-content
+          v-for='school in sortedSchools'
+          :key=school._id
+          >
+            <template v-slot:header>
+              {{ school.name }}
+            </template>
+            <v-card
+              class='pa-2 ma-3'
+            >
+              <v-card-content>
+                <p>
+                  Address: {{ formatAddress(school.address) }}
+                </p>
+                <p>
+                  Phone number: {{ school.phoneNumber }}
+                </p>
+              </v-card-content>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
     </v-card>
   </v-dialog>
 </template>
@@ -53,9 +67,17 @@ export default {
     button() {
       return this.isDark ? '#272727' : '#ebebeb';
     },
+    sortedSchools() {
+      const sorted = this.schools;
+      sorted.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
+      return sorted;
+    },
   },
   methods: {
     ...mapActions('schools', { findSchools: 'find' }),
+    formatAddress(address) {
+      return `${address.street}, ${address.suburb}, ${address.postcode}, ${address.state}`;
+    },
   },
   async mounted() {
     const schoolData = await this.findSchools();
