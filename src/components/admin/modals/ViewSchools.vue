@@ -13,12 +13,13 @@
           <v-icon> mdi-close </v-icon>
         </v-btn>
       </v-toolbar>
+      {{ listSchools }}
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   props: ['value', 'dark'],
@@ -27,7 +28,7 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters('schools', { listSchools: 'list' }),
+    ...mapGetters('schools', { listSchools: 'list' }),
     showDialog: {
       get() {
         return this.value;
@@ -47,6 +48,7 @@ export default {
     },
   },
   methods: {
+
   },
 };
 </script>
