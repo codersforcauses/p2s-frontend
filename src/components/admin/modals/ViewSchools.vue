@@ -17,23 +17,41 @@
           <v-expansion-panel-content
           v-for='school in sortedSchools'
           :key=school._id
+          class='pa-1'
           >
             <template v-slot:header>
               {{ school.name }}
             </template>
-            <v-card
-              class='pa-2 ma-3'
-            >
+            <v-card>
               <v-card-content>
-                <p>
-                  Address: {{ formatAddress(school.address) }}
-                </p>
-                <p>
-                  Phone number: {{ school.phoneNumber }}
-                </p>
-                <p>
-                  Region: {{ regions[school.region].name }}
-                </p>
+                <v-list>
+                  <v-list-tile>
+                    <v-icon
+                    left
+                    >
+                      mdi-map-marker
+                    </v-icon>
+                    <span> Address: {{ formatAddress(school.address) }}</span>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-icon
+                    left
+                    >
+                      mdi-phone
+                    </v-icon>
+                    <p>Phone number: {{ school.phoneNumber }}</p>
+                  </v-list-tile>
+                  <v-list-item>
+                    <v-list-tile>
+                        <v-icon
+                        left
+                        >
+                          mdi-sitemap
+                      </v-icon>
+                      Region: {{ regions[school.region].name }}
+                    </v-list-tile>
+                  </v-list-item>
+                </v-list>
               </v-card-content>
             </v-card>
           </v-expansion-panel-content>
