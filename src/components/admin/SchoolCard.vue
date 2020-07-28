@@ -25,11 +25,9 @@
       <view-schools v-model='viewDialog' v-bind="{ dark }" />
       <v-btn  flat
               round
-              @click='createDialog = true'
       >
         Create New
       </v-btn>
-      <new-school v-model='createDialog' v-bind="{ dark }" />
     </v-card-actions>
   </v-card>
 </template>
@@ -42,9 +40,6 @@ export default {
     viewDialog: false,
   }),
   components: {
-    'new-school': () => ({
-      component: import('./modals/NewSchool.vue'),
-    }),
     'view-schools': () => ({
       component: import('./modals/ViewSchools.vue'),
     }),
