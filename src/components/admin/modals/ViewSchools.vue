@@ -31,7 +31,9 @@
                 <p>
                   Phone number: {{ school.phoneNumber }}
                 </p>
-                {{ regions }}
+                <p>
+                  Region: {{ regions[school.region].name }}
+                </p>
               </v-card-content>
             </v-card>
           </v-expansion-panel-content>
@@ -71,7 +73,7 @@ export default {
     },
     sortedSchools() {
       const sorted = this.schools;
-      sorted.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
+      sorted.sort((a, b) => (a.name > b.name ? 1 : -1));
       return sorted;
     },
   },
@@ -87,7 +89,11 @@ export default {
     const regionData = await this.findRegions();
 
     this.schools = schoolData.data;
-    this.regions = regionData.data;
+    this.regions = regionData.data.reduce((acc, region) => {
+      // eslint-disable-next-line
+      acc[region._id] = region;
+      return acc;
+    }, {});
   },
 };
 </script>
