@@ -16,11 +16,11 @@
     </v-card-title>
 
     <v-card-actions class="pa-0">
-      <v-btn  flat
+      <v-btn flat
               round
-              @click='viewDialog = true'
+              to='/schools'
       >
-        View All
+        View Schools
       </v-btn>
       <view-schools v-model='viewDialog' v-bind="{ dark }" />
       <v-btn  flat
