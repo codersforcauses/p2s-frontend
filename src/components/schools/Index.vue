@@ -25,11 +25,12 @@
               :key='school._id'
               >
                 <v-list-tile-content>
-                  <v-list-tile-title
-                  v-text='school.name'
-                  class="text--primary"
+                  <v-btn flat
+                         round
+                         @click='selectSchool(school)'
                   >
-                  </v-list-tile-title>
+                    {{ school.name }}
+                  </v-btn>
                 </v-list-tile-content>
               </v-list-item>
             </v-list>
@@ -97,7 +98,6 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-btn @click='drawer=!drawer'>Toggle</v-btn>
     </v-container>
   </div>
 </template>
@@ -159,6 +159,10 @@ export default {
     },
     formatAddress(address) {
       return `${address.street}, ${address.suburb}, ${address.postcode}, ${address.state}`;
+    },
+    selectSchool(school) {
+      this.currentSchool = school;
+      this.drawer = true;
     },
   },
   async mounted() {
