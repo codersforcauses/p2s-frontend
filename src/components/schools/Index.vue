@@ -4,8 +4,11 @@
     fluid>
       <v-layout
       row
+      justify-center
       >
-      <v-flex xs12>
+      <v-flex
+      lg4
+      >
         <v-card>
           <v-card-title
           class='headline ma-0'
@@ -45,36 +48,59 @@
       v-model='drawer'
       absolute
       temporary
+      right
       >
-        Hello world
+        <v-toolbar>
+          <v-btn
+          icon
+          >
+            <v-icon
+            @click='drawer=false'
+            >
+              mdi-close
+            </v-icon>
+          </v-btn>
+          <v-spacer/>
+          <h1 class='headline ma-0'>
+            {{ currentSchool.name }}
+          </h1>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-img
+        src='http://www.jeremiahpinto.com/img/jerry.jpg'
+        >
+        </v-img>
+        <v-list>
+          <v-list-tile>
+            <v-icon
+            left
+            class='material-icons'
+            >
+              mdi-map-marker
+            </v-icon>
+            Address: {{ formatAddress(currentSchool.address) }}
+          </v-list-tile>
+          <v-list-tile>
+            <v-icon
+            left
+            class='material-icons'
+            >
+              mdi-phone
+            </v-icon>
+            Phone number: {{ formatAddress(currentSchool.address) }}
+          </v-list-tile>
+          <v-list-tile>
+            <v-icon
+            left
+            >
+              mdi-sitemap
+            </v-icon>
+            Region: {{ regions[currentSchool.region].name }}
+          </v-list-tile>
+        </v-list>
       </v-navigation-drawer>
       <v-btn @click='drawer=!drawer'>Toggle</v-btn>
     </v-container>
-    <!-- <v-navigation-drawer
-      v-model='drawer'
-      >
-        {{ currentSchool.name }}
-            <v-list>
-              <v-list-tile>
-                <v-icon
-                left
-                class='material-icons'
-                >
-                  mdi-map-marker
-                </v-icon>
-                Address: {{ formatAddress(currentSchool.address) }}
-              </v-list-tile>
-              <v-list-tile>
-                <v-icon
-                left
-                class='material-icons'
-                >
-                  mdi-phone
-                </v-icon>
-                Phone number: {{ currentSchool.phoneNumber }}
-              </v-list-tile>
-            </v-list>
-      </v-navigation-drawer> -->
   </div>
 </template>
 
@@ -104,6 +130,7 @@ export default {
       schools: [],
       currentSchool: null,
       drawer: false,
+      regions: {},
     };
   },
   computed: {
@@ -113,6 +140,7 @@ export default {
   },
   methods: {
     ...mapActions('schools', { findSchools: 'find' }),
+    ...mapActions('regions', { findRegions: 'find' }),
     async fetchSchools() {
       const schoolData = await this.findSchools({
         query: {
@@ -135,8 +163,14 @@ export default {
       return `${address.street}, ${address.suburb}, ${address.postcode}, ${address.state}`;
     },
   },
-  mounted() {
+  async mounted() {
+    const regionData = await this.findRegions();
     this.fetchSchools();
+    this.regions = regionData.data.reduce((acc, region) => {
+      // eslint-disable-next-line
+      acc[region._id] = region;
+      return acc;
+    }, {});
   },
 };
 </script>
