@@ -16,11 +16,13 @@
     </v-card-title>
 
     <v-card-actions class="pa-0">
-      <v-btn  flat
+      <v-btn flat
               round
+              to='/schools'
       >
-        View All
+        View Schools
       </v-btn>
+      <view-schools v-model='viewDialog' v-bind="{ dark }" />
       <v-btn  flat
               round
       >
@@ -33,6 +35,12 @@
 <script>
 export default {
   props: ['primary'],
+  data: () => ({
+    createDialog: false,
+    viewDialog: false,
+  }),
+  components: {
+  },
 };
 </script>
 
