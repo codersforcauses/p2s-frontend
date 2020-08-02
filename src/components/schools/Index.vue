@@ -61,9 +61,7 @@
             </v-icon>
           </v-btn>
           <v-spacer/>
-          <h1 class='headline ma-0'>
-            {{ currentSchool.name }}
-          </h1>
+          {{ currentSchool.name }}
         </v-toolbar>
         <v-divider></v-divider>
         <v-img
@@ -87,7 +85,7 @@
             >
               mdi-phone
             </v-icon>
-            Phone number: {{ formatAddress(currentSchool.address) }}
+            Phone number: {{ currentSchool.phoneNumber }}
           </v-list-tile>
           <v-list-tile>
             <v-icon
