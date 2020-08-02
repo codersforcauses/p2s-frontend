@@ -40,9 +40,6 @@ export default {
     viewDialog: false,
   }),
   components: {
-    'view-schools': () => ({
-      component: import('./modals/ViewSchools.vue'),
-    }),
   },
 };
 </script>
